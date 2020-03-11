@@ -12,7 +12,6 @@ def auth_abandoned(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print(args,kwargs,func,'##################')
         return func(*args, **kwargs)
 
     return wrapper

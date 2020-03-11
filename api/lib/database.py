@@ -25,6 +25,7 @@ class CRUDMixin(FormatMixin):
     @classmethod
     def create(cls, flush=False, **kwargs):
         return cls(**kwargs).save(flush=flush)
+        
     def update(self, flush=False, **kwargs):
         kwargs.pop("id", None)
         for attr, value in six.iteritems(kwargs):
