@@ -24,6 +24,7 @@ def args_required(*required_args):
     def decorate(func):
         print(2)
         @wraps(func)
+        
         def wrapper(*args, **kwargs):
             print(3)
             print(required_args)
