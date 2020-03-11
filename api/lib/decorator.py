@@ -27,7 +27,8 @@ def args_required(*required_args):
 
 
 
-        
+
+
         def wrapper(*args, **kwargs):
             print(3)
             print(required_args)
