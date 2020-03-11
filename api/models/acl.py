@@ -26,6 +26,7 @@ class UserQuery(BaseQuery):
         super(UserQuery, self)._join(*args, **kwargs)
 
     def authenticate(self, login, password):
+        print(login,password,'authenticate')
         user = self.filter(db.or_(User.username == login,
                                   User.email == login)).filter(User.deleted.is_(False)).first()
         if user:
