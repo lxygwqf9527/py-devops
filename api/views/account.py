@@ -24,6 +24,7 @@ class LoginView(APIView):
         username = request.values.get("username") or request.values.get("email")
         password = request.values.get("password")
         user, authenticated = User.query.authenticate(username, password)
+        print(user,authenticated)
         if not user:
             return abort(403, "User <{0}> does not exist".format(username))
         if not authenticated:
