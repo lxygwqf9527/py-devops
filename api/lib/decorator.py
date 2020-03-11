@@ -26,6 +26,7 @@ def args_required(*required_args):
         @wraps(func)
 
 
+
         
         def wrapper(*args, **kwargs):
             print(3)
