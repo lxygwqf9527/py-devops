@@ -38,7 +38,7 @@ def create_app(config_object="settings"):
     :param config_object: The configuration object to use.
     """
     app = Flask(__name__.split(".")[0])
-    print(000000)
+    print(000000,'===')
     app.config.from_object(config_object)
     print(100)
     register_extensions(app)
