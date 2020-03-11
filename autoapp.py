@@ -5,9 +5,9 @@ from flask import g
 from flask_login import current_user
 
 from api.app import create_app
-
-app = create_app()
 print(3000)
+app = create_app()
+
 
 
 @app.before_request
