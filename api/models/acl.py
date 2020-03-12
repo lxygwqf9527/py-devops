@@ -35,36 +35,36 @@ class UserQuery(BaseQuery):
             authenticated = False
         return user, authenticated
 
-    def authenticate_with_key(self, key, secret, args, path):
-        user = self.filter(User.key == key).filter(User.deleted.is_(False)).filter(User.block == 0).first()
-        if not user:
-            return None, False
-        if user and hashlib.sha1('{0}{1}{2}'.format(
-                path, user.secret, "".join(args)).encode("utf-8")).hexdigest() == secret:
-            authenticated = True
-        else:
-            authenticated = False
+    # def authenticate_with_key(self, key, secret, args, path):
+    #     user = self.filter(User.key == key).filter(User.deleted.is_(False)).filter(User.block == 0).first()
+    #     if not user:
+    #         return None, False
+    #     if user and hashlib.sha1('{0}{1}{2}'.format(
+    #             path, user.secret, "".join(args)).encode("utf-8")).hexdigest() == secret:
+    #         authenticated = True
+    #     else:
+    #         authenticated = False
 
-        return user, authenticated
+    #     return user, authenticated
 
-    def search(self, key):
-        query = self.filter(db.or_(User.email == key,
-                                   User.nickname.ilike('%' + key + '%'),
-                                   User.username.ilike('%' + key + '%'))).filter(User.deleted.is_(False))
-        return query
+    # def search(self, key):
+    #     query = self.filter(db.or_(User.email == key,
+    #                                User.nickname.ilike('%' + key + '%'),
+    #                                User.username.ilike('%' + key + '%'))).filter(User.deleted.is_(False))
+    #     return query
 
-    def get_by_username(self, username):
-        user = self.filter(User.username == username).filter(User.deleted.is_(False)).first()
+    # def get_by_username(self, username):
+    #     user = self.filter(User.username == username).filter(User.deleted.is_(False)).first()
 
-        return user
+    #     return user
 
-    def get_by_nickname(self, nickname):
-        user = self.filter(User.nickname == nickname).filter(User.deleted.is_(False)).first()
+    # def get_by_nickname(self, nickname):
+    #     user = self.filter(User.nickname == nickname).filter(User.deleted.is_(False)).first()
 
-        return user
+    #     return user
 
-    def get(self, uid):
-        user = self.filter(User.uid == uid).filter(User.deleted.is_(False)).first()
+    # def get(self, uid):
+    #     user = self.filter(User.uid == uid).filter(User.deleted.is_(False)).first()
 
         return copy.deepcopy(user)
 
@@ -93,11 +93,11 @@ class User(CRUDModel, SoftDeleteMixin):
     def __str__(self):
         return self.username
     
-    def is_active(self):
-        return not self.block
+    # def is_active(self):
+    #     return not self.block
 
-    def get_id(self):
-        return self.uid
+    # def get_id(self):
+    #     return self.uid
     
     @staticmethod
     def is_authenticated():
@@ -112,7 +112,7 @@ class User(CRUDModel, SoftDeleteMixin):
     password = db.synonym("_password", descriptor=property(_get_password, _set_password))
 
     def check_password(self, password):
-        print(self.password,password)
+
         if self.password is None:
             return False
         return self.password == password

@@ -16,23 +16,23 @@ def auth_abandoned(func):
 
     return wrapper
 
-def auth_required(func):
-    if request.json is not None:
-        setattr(request, 'values', request.json)
-    else:
-        setattr(request, 'values', request.values.to_dict())
+# def auth_required(func):
+#     if request.json is not None:
+#         setattr(request, 'values', request.json)
+#     else:
+#         setattr(request, 'values', request.values.to_dict())
 
-    current_app.logger.debug(request.values)
+#     current_app.logger.debug(request.values)
 
-    @wraps(func)
-    def wrapper(*args, **kwargs):
+#     @wraps(func)
+#     def wrapper(*args, **kwargs):
 
-        if not getattr(func, 'authenticated', True):
-            return func(*args, **kwargs)
+#         if not getattr(func, 'authenticated', True):
+#             return func(*args, **kwargs)
 
-        if _auth_with_session() or _auth_with_key() or _auth_with_token() or _auth_with_ip_white_list():
-            return func(*args, **kwargs)
+#         if _auth_with_session() or _auth_with_key() or _auth_with_token() or _auth_with_ip_white_list():
+#             return func(*args, **kwargs)
 
-        abort(401)
+#         abort(401)
 
-    return wrapper
+#     return wrapper

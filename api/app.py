@@ -41,8 +41,8 @@ def create_app(config_object="settings"):
     app.config.from_object(config_object)
     register_extensions(app)
     register_blueprints(app)
-    register_error_handlers(app)
-    register_shell_context(app)
+    # register_error_handlers(app)
+    # register_shell_context(app)
     register_commands(app)
     configure_logger(app)
     return app
@@ -66,23 +66,23 @@ def register_blueprints(app):
         if item[0].startswith("blueprint") and isinstance(item[1], Blueprint):
             app.register_blueprint(item[1])
 
-def register_error_handlers(app):
-    """Register error handlers."""
-    def render_error(error):
-        """Render error template."""
-        import traceback
-        app.logger.error(traceback.format_exc())
-        error_code = getattr(error, "code", 500)
-        return make_response(jsonify(message=str(error)), error_code)
+# def register_error_handlers(app):
+#     """Register error handlers."""
+#     def render_error(error):
+#         """Render error template."""
+#         import traceback
+#         app.logger.error(traceback.format_exc())
+#         error_code = getattr(error, "code", 500)
+#         return make_response(jsonify(message=str(error)), error_code)
 
-def register_shell_context(app):
-    """Register shell context objects."""
+# def register_shell_context(app):
+#     """Register shell context objects."""
 
-    def shell_context():
-        """Shell context objects."""
-        return {"db": db, "User": User}
+#     def shell_context():
+#         """Shell context objects."""
+#         return {"db": db, "User": User}
 
-    app.shell_context_processor(shell_context)
+#     app.shell_context_processor(shell_context)
 
 def register_commands(app):
     """Register Click commands."""
