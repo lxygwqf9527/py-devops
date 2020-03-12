@@ -33,7 +33,6 @@ class UserQuery(BaseQuery):
             authenticated = user.check_password(password)
         else:
             authenticated = False
-        print(user,authenticated)
         return user, authenticated
 
     def authenticate_with_key(self, key, secret, args, path):
@@ -113,6 +112,7 @@ class User(CRUDModel, SoftDeleteMixin):
     password = db.synonym("_password", descriptor=property(_get_password, _set_password))
 
     def check_password(self, password):
+        print(self.password)
         if self.password is None:
             return False
         return self.password == password
