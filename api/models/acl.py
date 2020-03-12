@@ -26,7 +26,6 @@ class UserQuery(BaseQuery):
         super(UserQuery, self)._join(*args, **kwargs)
 
     def authenticate(self, login, password):
-        print(login,password,'authenticate')
         user = self.filter(db.or_(User.username == login,
                                   User.email == login)).filter(User.deleted.is_(False)).first()
         if user:
@@ -34,7 +33,7 @@ class UserQuery(BaseQuery):
             authenticated = user.check_password(password)
         else:
             authenticated = False
-
+        print(user,authenticated)
         return user, authenticated
 
     def authenticate_with_key(self, key, secret, args, path):
@@ -93,7 +92,7 @@ class User(CRUDModel, SoftDeleteMixin):
     avatar = db.Column(db.String(128))
 
     def __str__(self):
-        return 'cao'
+        return self.username
     
     def is_active(self):
         return not self.block
