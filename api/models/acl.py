@@ -112,7 +112,7 @@ class User(CRUDModel, SoftDeleteMixin):
     password = db.synonym("_password", descriptor=property(_get_password, _set_password))
 
     def check_password(self, password):
-        print(self.password)
+        print(self.password,password)
         if self.password is None:
             return False
         return self.password == password
