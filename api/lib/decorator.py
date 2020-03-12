@@ -31,8 +31,9 @@ def args_required(*required_args):
                 if arg not in request.values:
                     print(request.values,']]]]]]]]]]]')
                     return abort(400, "Argument <{0}> is required".format(arg))
+            print(func,'pioifjkjhjhzz')
             return func(*args, **kwargs)
-
+        print(wrapper,'xzvvv')
         return wrapper
-
+    print(decorate,'asdf')
     return decorate

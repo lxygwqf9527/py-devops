@@ -15,7 +15,7 @@ def auth_abandoned(func):
     def wrapper(*args, **kwargs):
         print(args,kwargs,'++++++')
         return func(*args, **kwargs)
-
+    print(wrapper,'qwer')
     return wrapper
 
 def auth_required(func):
