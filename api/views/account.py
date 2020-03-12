@@ -17,7 +17,7 @@ from api.resource import APIView
 class LoginView(APIView):
     url_prefix = "/login"
 
-    @args_required("user")
+    @args_required("username")
     @args_required("password")
     @auth_abandoned
     def post(self):

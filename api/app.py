@@ -39,11 +39,8 @@ def create_app(config_object="settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
-    print(100)
     register_extensions(app)
-    print(200)
     register_blueprints(app)
-    print(300)
     register_error_handlers(app)
     register_shell_context(app)
     register_commands(app)
