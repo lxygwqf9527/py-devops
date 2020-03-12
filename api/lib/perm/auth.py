@@ -9,13 +9,11 @@ from flask import current_app
 
 def auth_abandoned(func):
     setattr(func, "authenticated", False)
-    print(func,'====')
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print(args,kwargs,'++++++')
         return func(*args, **kwargs)
-    print(wrapper,'qwer')
+
     return wrapper
 
 def auth_required(func):

@@ -20,20 +20,15 @@ def kwargs_required(*required_args):
     return decorate
 
 def args_required(*required_args):
-    print(1)
     def decorate(func):
-        print(2,'-----')
         @wraps(func)
         def wrapper(*args, **kwargs):
-            print(3,'`````')
-            print(required_args)
             for arg in required_args:
                 if arg not in request.values:
                     print(request.values,']]]]]]]]]]]')
                     return abort(400, "Argument <{0}> is required".format(arg))
-            print(func,'pioifjkjhjhzz')
             return func(*args, **kwargs)
-        print(wrapper,'xzvvv')
+
         return wrapper
-    print(decorate,'asdf')
+
     return decorate
