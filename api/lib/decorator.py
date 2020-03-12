@@ -22,11 +22,10 @@ def kwargs_required(*required_args):
 def args_required(*required_args):
     print(1)
     def decorate(func):
-        print(2,3)
+        print(2,'-----')
         @wraps(func)
-
         def wrapper(*args, **kwargs):
-            print(3)
+            print(3,'`````')
             print(required_args)
             for arg in required_args:
                 if arg not in request.values:
