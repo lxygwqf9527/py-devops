@@ -93,7 +93,7 @@ class User(CRUDModel, SoftDeleteMixin):
     avatar = db.Column(db.String(128))
 
     def __str__(self):
-        return self.username
+        return 'cao'
     
     def is_active(self):
         return not self.block
