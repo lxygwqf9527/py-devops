@@ -13,7 +13,6 @@ class APIView(Resource):
     method_decorators = [auth_required]
 
     def __init__(self):
-        print(method_decorators)
         super(APIView, self).__init__()
 
     @staticmethod
