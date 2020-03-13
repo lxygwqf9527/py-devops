@@ -12,9 +12,9 @@ from flask import Flask
 from flask import make_response, jsonify
 from flask.blueprints import Blueprint
 from flask.cli import click
-print('api.views===========')
+
 import api.views
-print('api.views------------')
+
 from api.extensions import (
     bcrypt,
     cors,
