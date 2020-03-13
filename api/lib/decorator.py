@@ -20,6 +20,7 @@ from flask import request
 #     return decorate
 
 def args_required(*required_args):
+    print(required_args)
     def decorate(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
