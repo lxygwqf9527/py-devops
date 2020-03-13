@@ -85,7 +85,7 @@ def auth_required(func):
     def wrapper(*args, **kwargs):
         print(args,kwargs,'-------------')
         if not getattr(func, 'authenticated', True):
-            print(func.__dir__)
+            print(dir(func))
             return func(*args, **kwargs)
 
         if _auth_with_session() or _auth_with_key() or _auth_with_token() or _auth_with_ip_white_list():
