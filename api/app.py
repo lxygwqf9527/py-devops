@@ -14,6 +14,7 @@ from flask.blueprints import Blueprint
 from flask.cli import click
 
 import api.views
+print('api.views------------')
 from api.extensions import (
     bcrypt,
     cors,
