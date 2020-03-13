@@ -83,7 +83,7 @@ def auth_required(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-
+        print(args,kwargs,'-------------')
         if not getattr(func, 'authenticated', True):
             return func(*args, **kwargs)
 
