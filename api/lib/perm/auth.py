@@ -72,7 +72,8 @@ def auth_abandoned(func):
     return wrapper
 
 def auth_required(func):
-    print(func,'=============================================================')
+
+    print(func,'=============================================================',request.values)
     if request.json is not None:
         setattr(request, 'values', request.json)
     else:
