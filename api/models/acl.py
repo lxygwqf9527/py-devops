@@ -93,11 +93,11 @@ class User(CRUDModel, SoftDeleteMixin):
     def __str__(self):
         return self.username
     
-    # def is_active(self):
-    #     return not self.block
+    def is_active(self):
+        return not self.block
 
-    # def get_id(self):
-    #     return self.uid
+    def get_id(self):
+        return self.uid
     
     @staticmethod
     def is_authenticated():
