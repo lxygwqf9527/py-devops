@@ -73,7 +73,6 @@ def auth_abandoned(func):
 
 def auth_required(func):
 
-    print(func,'=============================================================',request.values)
     if request.json is not None:
         setattr(request, 'values', request.json)
     else:
@@ -83,9 +82,7 @@ def auth_required(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print(args,kwargs,'-------------')
         if not getattr(func, 'authenticated', True):
-            print(func.authenticated)
             return func(*args, **kwargs)
 
         if _auth_with_session() or _auth_with_key() or _auth_with_token() or _auth_with_ip_white_list():
