@@ -125,11 +125,11 @@ class Role(Model):
     app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
     uid = db.Column(db.Integer, db.ForeignKey("users.uid"))
 
-# class RoleRelation(Model):
-#     __tablename__ = "acl_role_relations"
+class RoleRelation(Model):
+    __tablename__ = "acl_role_relations"
 
-#     parent_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
-#     child_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+    parent_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+    child_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
 
 # class ResourceType(Model):
 #     __tablename__ = "acl_resource_types"
@@ -177,3 +177,4 @@ class Role(Model):
 #     perm_id = db.Column(db.Integer, db.ForeignKey('acl_permissions.id'))
 
 #     perm = db.relationship("Permission", backref='acl_role_permissions.perm_id')
+

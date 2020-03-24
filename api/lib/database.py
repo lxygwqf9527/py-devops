@@ -76,22 +76,19 @@ class CRUDMixin(FormatMixin):
         exclude = exclude.strip().split(",") if exclude and isinstance(exclude, six.string_types) else (exclude or [])
         print(db_session,fl,exclude,'-------------')
         keys = cls.get_columns()
-        print(keys,'========')
         fl = [k for k in fl if k in keys]
-        print(fl,'-----------fl1')
         fl = [k for k in keys if k not in exclude and not k.isupper()] if exclude else fl
-        print(fl,'-----------fl2')
         fl = list(filter(lambda x: "." not in x, fl))
-        print(fl,'-----------fl3')
 
         if hasattr(cls, "deleted") and deleted is not None:
             kwargs["deleted"] = deleted
-
+        print(kwargs)
         if fl:
             query = db_session.query(*[getattr(cls, k) for k in fl])
             query = query.filter_by(**kwargs)
             result = [{k: getattr(i, k) for k in fl} for i in query]
         else:
+            print(getattr(cls,'query'))
             result = [i.to_dict() if to_dict else i for i in getattr(cls, 'query').filter_by(**kwargs)]
 
         return result[0] if first and result else (None if first else result)

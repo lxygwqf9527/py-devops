@@ -13,6 +13,7 @@ from api.lib.decorator import args_required
 from api.lib.perm.auth import auth_abandoned
 from api.models.acl import User, Role
 from api.resource import APIView
+from api.lib.perm.acl.role import RoleRelationCRUD
 
 class LoginView(APIView):
     url_prefix = "/login"
@@ -37,7 +38,7 @@ class LoginView(APIView):
             'iat': datetime.datetime.now(),
             'exp': datetime.datetime.now() + datetime.timedelta(minutes=24 * 60 * 7)},
             current_app.config['SECRET_KEY'])
-        
+        print(token)
         role = Role.get_by(uid=user.uid, first=True, to_dict=False)
         if role:
             parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
