@@ -4,6 +4,9 @@ import six
 
 from api.models.acl import Role
 from api.extensions import db
+from api.lib.perm.acl.cache import RoleCache
+from api.lib.perm.acl.cache import RoleRelationCache
+from api.models.acl import RoleRelation
 
 
 
@@ -43,7 +46,7 @@ class RoleRelationCRUD(object):
 
     @classmethod
     def recursive_parent_ids(cls, rid):
-        print(cls,'-----------------')
+        print(cls,'-----------------',rid)
         all_parent_ids = set()
 
         def _get_parent(_id):
