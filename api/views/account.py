@@ -14,6 +14,7 @@ from api.lib.perm.auth import auth_abandoned
 from api.models.acl import User, Role
 from api.resource import APIView
 from api.lib.perm.acl.role import RoleRelationCRUD
+from api.lib.perm.acl.cache import RoleCache
 
 class LoginView(APIView):
     url_prefix = "/login"
