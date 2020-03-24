@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from api.extensions import cache
+from api.models.acl import Role
 
 class RoleCache(object):
     PREFIX_ID = "Role::id::{0}"
