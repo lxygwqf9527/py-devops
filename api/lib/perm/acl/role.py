@@ -52,6 +52,7 @@ class RoleRelationCRUD(object):
         def _get_parent(_id):
             all_parent_ids.add(_id)
             parent_ids = RoleRelationCache.get_parent_ids(_id)
+            print(parent_ids)
             for parent_id in parent_ids:
                 _get_parent(parent_id)
 
