@@ -157,8 +157,8 @@ class RolePermission(Model):
     __tablename__ = "acl_role_permissions"
 
     rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
-    resource_id = db.Column(db.Integer, db.ForeignKey('acl_menus.id'))
-    group_id = db.Column(db.Integer, db.ForeignKey('acl_menus.id'))
+    menu_id = db.Column(db.Integer, db.ForeignKey('acl_menus.id'))
+
     perm_id = db.Column(db.Integer, db.ForeignKey('acl_permissions.id'))
 
     perm = db.relationship("Permission", backref='acl_role_permissions.perm_id')
