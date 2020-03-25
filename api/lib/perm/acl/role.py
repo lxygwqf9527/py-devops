@@ -35,7 +35,7 @@ class RoleRelationCRUD(object):
     @staticmethod
     def get_parent_ids(rid):
         res = RoleRelation.get_by(child_id=rid, to_dict=False)
-
+        print(res,"res:-===================")
         return [i.parent_id for i in res]
 
     @staticmethod
