@@ -151,6 +151,11 @@ class Resource(Model):
 
     name = db.Column(db.String(128), nullable=False)
     resource_type_id = db.Column(db.Integer, db.ForeignKey("acl_resource_types.id"))
+    # 当resource_type_id 为menu时使用以下字段
+    title = db.Column(db.String(64), nullable=False) 
+    key = db.Column(db.String(64), nullable=False)
+    icon = db.Column(db.String(64), nullable=False)
+    # 结束
 
     app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
 
