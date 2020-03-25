@@ -89,8 +89,8 @@ class User(CRUDModel, SoftDeleteMixin):
     has_logined = db.Column(db.Boolean, default=False)
     wx_id = db.Column(db.String(32))
     avatar = db.Column(db.String(128))
-    rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
     
+
     def __str__(self):
         return self.username
     
