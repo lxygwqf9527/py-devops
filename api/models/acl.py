@@ -125,6 +125,7 @@ class Role(Model):
     name = db.Column(db.Text, nullable=False)
     is_app_admin = db.Column(db.Boolean, default=False)
     app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
+    users = db.relationship("User", backref='Role.id')
 
 class RoleRelation(Model):
     __tablename__ = "acl_role_relations"
