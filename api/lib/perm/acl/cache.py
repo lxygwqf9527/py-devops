@@ -35,11 +35,9 @@ class RoleRelationCache(object):
     @classmethod
     def get_parent_ids(cls, rid):
         parent_ids = cache.get(cls.PREFIX_PARENT.format(rid))
-        print(parent_ids,'parent_ids')
         if not parent_ids:
             from api.lib.perm.acl.role import RoleRelationCRUD
             parent_ids = RoleRelationCRUD.get_parent_ids(rid)
-            print(parent_ids,'ppppppppppppppppppppp')
             cache.set(cls.PREFIX_PARENT.format(rid), parent_ids, timeout=0)
 
         return parent_ids

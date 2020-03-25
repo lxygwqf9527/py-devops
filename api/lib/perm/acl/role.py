@@ -15,7 +15,6 @@ class RoleRelationCRUD(object):
     @staticmethod
     def get_parents(rids=None, uids=None):
         rid2uid = dict()
-        print(rids,uids)
         if uids is not None:
             uids = [uids] if isinstance(uids, six.integer_types) else uids
             rids = db.session.query(Role).filter(Role.deleted.is_(False)).filter(Role.uid.in_(uids))
@@ -35,7 +34,7 @@ class RoleRelationCRUD(object):
     @staticmethod
     def get_parent_ids(rid):
         res = RoleRelation.get_by(child_id=rid, to_dict=False)
-        print(res,"res:-===================")
+        print(res,'-----')
         return [i.parent_id for i in res]
 
     @staticmethod
@@ -46,13 +45,11 @@ class RoleRelationCRUD(object):
 
     @classmethod
     def recursive_parent_ids(cls, rid):
-        print(cls,'-----------------',rid)
         all_parent_ids = set()
 
         def _get_parent(_id):
             all_parent_ids.add(_id)
             parent_ids = RoleRelationCache.get_parent_ids(_id)
-            print(parent_ids)
             for parent_id in parent_ids:
                 _get_parent(parent_id)
 

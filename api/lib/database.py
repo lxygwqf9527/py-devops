@@ -83,15 +83,11 @@ class CRUDMixin(FormatMixin):
             kwargs["deleted"] = deleted
         if fl:
             query = db_session.query(*[getattr(cls, k) for k in fl])
-            print(query,'1-==========================#')
             query = query.filter_by(**kwargs)
-            print(query,'2==============#')
             result = [{k: getattr(i, k) for k in fl} for i in query]
-            print(result,'result==========================')
         else:
             result = [i.to_dict() if to_dict else i for i in getattr(cls, 'query').filter_by(**kwargs)]
-            print(kwargs,getattr(cls, 'query').filter_by(**kwargs),'|||||||||||||||||||||||||||||-',result)
-            print(result[0] if first and result else (None if first else result),'[return]')
+            
         return result[0] if first and result else (None if first else result)
 
     @classmethod
