@@ -90,8 +90,8 @@ class CRUDMixin(FormatMixin):
             print(result,'result==========================')
         else:
             result = [i.to_dict() if to_dict else i for i in getattr(cls, 'query').filter_by(**kwargs)]
-            print(kwargs,getattr(cls, 'query').filter_by(**kwargs),'|||||||||||||||||||||||||||||-')
-
+            print(kwargs,getattr(cls, 'query').filter_by(**kwargs),'|||||||||||||||||||||||||||||-',result)
+            print(result[0] if first and result else (None if first else result),'[return]')
         return result[0] if first and result else (None if first else result)
 
     @classmethod
