@@ -68,13 +68,23 @@ class UserQuery(BaseQuery):
 
         return copy.deepcopy(user)
 
+
+
+class Role(Model):
+    __tablename__ = "acl_roles"
+
+    name = db.Column(db.Text, nullable=False)
+    is_app_admin = db.Column(db.Boolean, default=False)
+    app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
+    users = db.relationship("User", backref='Role.id')
+
 class User(CRUDModel, SoftDeleteMixin):
     __tablename__ = 'users'
     # __bind_key__ = "user"
     query_class = UserQuery
 
     uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+    
     username = db.Column(db.String(32), unique=True)
     nickname = db.Column(db.String(20), nullable=True)
     department = db.Column(db.String(20))
@@ -118,14 +128,6 @@ class User(CRUDModel, SoftDeleteMixin):
         if self.password is None:
             return False
         return self.password == password
-
-class Role(Model):
-    __tablename__ = "acl_roles"
-
-    name = db.Column(db.Text, nullable=False)
-    is_app_admin = db.Column(db.Boolean, default=False)
-    app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
-    users = db.relationship("User", backref='Role.id')
 
 class RoleRelation(Model):
     __tablename__ = "acl_role_relations"
