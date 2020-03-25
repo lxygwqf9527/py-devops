@@ -84,7 +84,7 @@ class User(CRUDModel, SoftDeleteMixin):
     query_class = UserQuery
 
     uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    
+    rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
     username = db.Column(db.String(32), unique=True)
     nickname = db.Column(db.String(20), nullable=True)
     department = db.Column(db.String(20))
