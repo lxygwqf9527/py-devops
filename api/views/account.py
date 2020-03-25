@@ -39,8 +39,8 @@ class LoginView(APIView):
             'iat': datetime.datetime.now(),
             'exp': datetime.datetime.now() + datetime.timedelta(minutes=24 * 60 * 7)},
             current_app.config['SECRET_KEY'])
-        print(token)
         role = Role.get_by(uid=user.uid, first=True, to_dict=False)
+        print(role)
         if role:
             parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
             parent_roles = [RoleCache.get(i).name for i in parent_ids]
