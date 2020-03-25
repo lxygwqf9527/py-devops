@@ -149,7 +149,7 @@ class Permission(Model):
     __tablename__ = "acl_permissions"
 
     name = db.Column(db.String(64), nullable=False)
-    resource_type_id = db.Column(db.Integer, db.ForeignKey("acl_resource_types.id"))
+    Menu = db.Column(db.Integer, db.ForeignKey("acl_menus.id"))
 
     app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
 
@@ -157,8 +157,8 @@ class RolePermission(Model):
     __tablename__ = "acl_role_permissions"
 
     rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
-    resource_id = db.Column(db.Integer, db.ForeignKey('acl_resources.id'))
-    group_id = db.Column(db.Integer, db.ForeignKey('acl_resource_groups.id'))
+    resource_id = db.Column(db.Integer, db.ForeignKey('acl_menus.id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('acl_menus.id'))
     perm_id = db.Column(db.Integer, db.ForeignKey('acl_permissions.id'))
 
     perm = db.relationship("Permission", backref='acl_role_permissions.perm_id')
