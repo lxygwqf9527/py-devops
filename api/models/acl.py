@@ -89,7 +89,8 @@ class User(CRUDModel, SoftDeleteMixin):
     has_logined = db.Column(db.Boolean, default=False)
     wx_id = db.Column(db.String(32))
     avatar = db.Column(db.String(128))
-
+    rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+    
     def __str__(self):
         return self.username
     
@@ -123,7 +124,6 @@ class Role(Model):
     name = db.Column(db.Text, nullable=False)
     is_app_admin = db.Column(db.Boolean, default=False)
     app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
-    uid = db.Column(db.Integer, db.ForeignKey("users.uid"))
 
 class RoleRelation(Model):
     __tablename__ = "acl_role_relations"
@@ -158,7 +158,6 @@ class RolePermission(Model):
 
     rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
     menu_id = db.Column(db.Integer, db.ForeignKey('acl_menus.id'))
-
     perm_id = db.Column(db.Integer, db.ForeignKey('acl_permissions.id'))
 
     perm = db.relationship("Permission", backref='acl_role_permissions.perm_id')
