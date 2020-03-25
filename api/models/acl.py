@@ -129,11 +129,11 @@ class User(CRUDModel, SoftDeleteMixin):
             return False
         return self.password == password
 
-class RoleRelation(Model):
-    __tablename__ = "acl_role_relations"
+# class RoleRelation(Model):
+#     __tablename__ = "acl_role_relations"
 
-    parent_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
-    child_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+#     parent_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+#     child_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
 
 class Menu(Model):
     __tablename__ = "acl_menus"
