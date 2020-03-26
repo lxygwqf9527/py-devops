@@ -66,7 +66,7 @@ class UserQuery(BaseQuery):
     # def get(self, uid):
     #     user = self.filter(User.uid == uid).filter(User.deleted.is_(False)).first()
 
-        return copy.deepcopy(user)
+        # return copy.deepcopy(user)
 
 
 
