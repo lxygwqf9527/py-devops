@@ -28,10 +28,9 @@ class LoginView(APIView):
         password = request.values.get("password")
         user, authenticated = User.query.authenticate(username, password)
         if not user:
-            return abort(403, "User <{0}> does not exist".format(username))
+            return self.jsonify(msg="User <{0}> does not exist".format(username))
         if not authenticated:
-            return abort(403, "invalid username or password")
-        
+            return self.jsonify(msg=invalid username or password")
         login_user(user)
 
         token = jwt.encode({
@@ -39,7 +38,7 @@ class LoginView(APIView):
             'iat': datetime.datetime.now(),
             'exp': datetime.datetime.now() + datetime.timedelta(minutes=24 * 60 * 7)},
             current_app.config['SECRET_KEY'])
-        role = Role.get_by(id=user.rid, first=True, to_dict=False)
+        role = Role.get_by(uid=user.rid, first=True, to_dict=False)
         print(role)
         if role:
             parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
