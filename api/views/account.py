@@ -30,7 +30,7 @@ class LoginView(APIView):
         if not user:
             return abort(403,"User <{0}> does not exist".format(username))
         if not authenticated:
-            return abort(403,"invalid username or password"))
+            return abort(403,"invalid username or password")
         login_user(user)
 
         token = jwt.encode({
