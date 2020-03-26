@@ -18,7 +18,8 @@ class APIView(Resource):
     @staticmethod
     def jsonify(*args, **kwargs):
         return jsonify(*args, **kwargs)
-
+        
+API_PACKAGE = "api"
 
 def register_resources(resource_path, rest_api):
     for root, _, files in os.walk(os.path.join(resource_path)):
