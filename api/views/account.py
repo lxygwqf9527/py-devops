@@ -3,7 +3,7 @@
 import datetime
 
 import jwt
-from flask import abort
+from flask import abort,Response
 from flask import current_app
 from flask import request
 from flask import session
@@ -28,9 +28,9 @@ class LoginView(APIView):
         password = request.values.get("password")
         user, authenticated = User.query.authenticate(username, password)
         if not user:
-            return abort("User <{0}> does not exist".format(username))
+            return abort(Response("User <{0}> does not exist".format(username)))
         if not authenticated:
-            return abort("invalid username or password")
+            return abort(Response("invalid username or password"))
         login_user(user)
 
         token = jwt.encode({
