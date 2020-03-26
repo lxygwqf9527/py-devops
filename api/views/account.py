@@ -30,7 +30,7 @@ class LoginView(APIView):
         if not user:
             return self.jsonify(msg="User <{0}> does not exist".format(username))
         if not authenticated:
-            return self.jsonify(msg=invalid username or password")
+            return self.jsonify(msg="invalid username or password")
         login_user(user)
 
         token = jwt.encode({
