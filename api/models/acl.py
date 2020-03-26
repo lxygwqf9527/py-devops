@@ -77,6 +77,12 @@ class Role(Model):
     is_app_admin = db.Column(db.Boolean, default=False)
     app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
     users = db.relationship("User", backref='Role.id')
+    
+class RoleRelation(Model):
+__tablename__ = "acl_role_relations"
+
+parent_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+child_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
 
 class User(CRUDModel, SoftDeleteMixin):
     __tablename__ = 'users'
