@@ -35,7 +35,6 @@ class RoleRelationCache(object):
     @classmethod
     def get_parent_ids(cls, rid):
         parent_ids = cache.get(cls.PREFIX_PARENT.format(rid))
-        print(parent_ids,'=========')
         if not parent_ids:
             from api.lib.perm.acl.role import RoleRelationCRUD
             parent_ids = RoleRelationCRUD.get_parent_ids(rid)
@@ -81,3 +80,26 @@ class RoleRelationCache(object):
         cache.delete(cls.PREFIX_CHILDREN.format(rid))
         cache.delete(cls.PREFIX_RESOURCES.format(rid))
 
+class MenuCacahe(object):
+    PREFIX_ID = "Menu::id::{0}"
+
+class PermissionCache(object):
+    PREFIX_ID = "Permission::id::{0}"
+    PREFIX_NAME = "Permission::name::{0}"
+
+    @classmethod
+    def get(cls, key):
+        perm = cache.get(cls.PREFIX_ID.format(key))
+        perm = perm or cache.get(cls.PREFIX_NAME.format(key))
+        if perm is None:
+            perm = Permission.get_by_id(key)
+            perm = perm or Permission.get_by(name=key, first=True, to_dict=False)
+            if perm is not None:
+                cache.set(cls.PREFIX_ID.format(key), perm)
+
+        return perm
+
+    @classmethod
+    def clean(cls, key):
+        cache.delete(cls.PREFIX_ID.format(key))
+        cache.delete(cls.PREFIX_NAME.format(key))
