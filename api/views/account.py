@@ -42,6 +42,7 @@ class LoginView(APIView):
         role = Role.get_by(id=user.rid, first=True, to_dict=False)
         if role:
             parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
+            print(parent_ids)
             parent_roles = [RoleCache.get(i).name for i in parent_ids]
         else:
             parent_roles = []
@@ -49,7 +50,8 @@ class LoginView(APIView):
                               avatar=user.avatar,
                               userName=user.username,
                               nickName=user.nickname,
-                              parentRoles=parent_roles)
+                              parentRoles=parent_roles,
+                              rid=rid)
 
         return self.jsonify(token=token.decode(),status=200)
     
