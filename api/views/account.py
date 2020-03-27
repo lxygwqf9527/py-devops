@@ -42,8 +42,8 @@ class LoginView(APIView):
         role = Role.get_by(id=user.rid, first=True, to_dict=False)
         if role:
             parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
-            parent_roles,rids = [ (RoleCache.get(i).name,RoleCache.get(i).id) for i in parent_ids]
-            print(parent_roles,rids)
+            parent_roles = [ (RoleCache.get(i).name,RoleCache.get(i).id) for i in parent_ids]
+            print(parent_roles)
         else:
             parent_roles = []
         session["acl"] = dict(uid=user.uid,
@@ -51,7 +51,7 @@ class LoginView(APIView):
                               userName=user.username,
                               nickName=user.nickname,
                               parentRoles=parent_roles,
-                              rids=rids)
+                              )
 
         return self.jsonify(token=token.decode(),status=200)
     
