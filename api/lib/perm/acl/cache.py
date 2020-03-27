@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from api.extensions import cache
-from api.models.acl import Role
+from api.models.acl import Role, User
 
 class RoleCache(object):
     PREFIX_ID = "Role::id::{0}"
@@ -111,7 +111,7 @@ class UserCache(object):
         cache.delete(cls.PREFIX_ID.format(user.uid))
         cache.delete(cls.PREFIX_NAME.format(user.username))
         cache.delete(cls.PREFIX_NICK.format(user.nickname))
-        
+
 class MenuCacahe(object):
     PREFIX_ID = "Menu::id::{0}"
 
