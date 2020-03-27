@@ -51,7 +51,7 @@ class LoginView(APIView):
                               userName=user.username,
                               nickName=user.nickname,
                               parentRoles=parent_roles,
-                              rid=rid)
+                              rid=parent_ids)
 
         return self.jsonify(token=token.decode(),status=200)
     
