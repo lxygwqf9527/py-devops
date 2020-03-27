@@ -26,6 +26,7 @@ class LoginView(APIView):
 
         username = request.values.get("username") or request.values.get("email")
         password = request.values.get("password")
+        print(username,password)
         user, authenticated = User.query.authenticate(username, password)
         if not user:
             return self.jsonify(msg="User <{0}> does not exist".format(username),status=403)
