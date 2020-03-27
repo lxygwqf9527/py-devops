@@ -24,6 +24,7 @@ def args_required(*required_args):
         @wraps(func)
         def wrapper(*args, **kwargs):
             for arg in required_args:
+                print(required_args,arg)
                 if arg not in request.values:
                     return abort(400, "Argument <{0}> is required".format(arg))
             return func(*args, **kwargs)
