@@ -17,5 +17,4 @@ class GetUserInfoView(APIView):
         avatar = current_user.avatar
         return self.jsonify(result=dict(name=name,
                                         role=role,
-                                        rid=rids,
                                         avatar=avatar))
