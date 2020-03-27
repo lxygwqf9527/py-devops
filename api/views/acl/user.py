@@ -3,6 +3,7 @@
 from flask import request
 from flask import session
 from flask_login import current_user
+from api.resource import APIView
 
 class GetUserInfoView(APIView):
     url_prefix = "/users/info"
