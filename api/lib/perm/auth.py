@@ -77,7 +77,7 @@ def auth_required(func):
         setattr(request, 'values', request.json)
     else:
         setattr(request, 'values', request.values.to_dict())
-
+    print(request.values)
     current_app.logger.debug(request.values)
 
     @wraps(func)
