@@ -12,8 +12,9 @@ class GetUserInfoView(APIView):
         print(session.get("CAS_USERNAME"),current_user.nickname,'usersinfo name')
         print(session.get("acl", {}).get("parentRoles", []),'permissions=1')
         name = session.get("CAS_USERNAME") or current_user.nickname
-        role = dict(permissions=session.get("acl", {}).get("parentRoles", []),session.get("acl", {}).get("rid", []))
+        role = dict(permissions=session.get("acl", {}).get("parentRoles", []),rids=session.get("acl", {}).get("rid", []))
         avatar = current_user.avatar
         return self.jsonify(result=dict(name=name,
                                         role=role,
+                                        rid=rids,
                                         avatar=avatar))
