@@ -9,6 +9,3 @@ class MenuPermissionView(APIView):
 
     def get(self, role_id=None):
         return self.jsonify(PermissionCRUD.get_all(role_id))
-    
-    def options(self,role_id=None):
-        print(role_id)
