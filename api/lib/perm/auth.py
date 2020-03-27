@@ -4,9 +4,13 @@
 from __future__ import unicode_literals
 
 from functools import wraps
+
+import jwt
 from flask import request
 from flask import current_app
 from flask import session
+from flask_login import login_user
+from flask import g
 
 def _auth_with_key():
     key = request.values.get('_key')
