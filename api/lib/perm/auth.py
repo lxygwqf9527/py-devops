@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 from functools import wraps
 from flask import request
 from flask import current_app
+from flask import session
 
 def _auth_with_key():
     key = request.values.get('_key')
