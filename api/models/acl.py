@@ -53,15 +53,15 @@ class UserQuery(BaseQuery):
     #                                User.username.ilike('%' + key + '%'))).filter(User.deleted.is_(False))
     #     return query
 
-    # def get_by_username(self, username):
-    #     user = self.filter(User.username == username).filter(User.deleted.is_(False)).first()
+    def get_by_username(self, username):
+        user = self.filter(User.username == username).filter(User.deleted.is_(False)).first()
 
-    #     return user
+        return user
 
-    # def get_by_nickname(self, nickname):
-    #     user = self.filter(User.nickname == nickname).filter(User.deleted.is_(False)).first()
+    def get_by_nickname(self, nickname):
+        user = self.filter(User.nickname == nickname).filter(User.deleted.is_(False)).first()
 
-    #     return user
+        return user
 
     # def get(self, uid):
     #     user = self.filter(User.uid == uid).filter(User.deleted.is_(False)).first()
