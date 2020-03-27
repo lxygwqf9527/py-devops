@@ -42,7 +42,7 @@ class LoginView(APIView):
         role = Role.get_by(id=user.rid, first=True, to_dict=False)
         if role:
             parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
-            parent_roles,rids = [RoleCache.get(i).name,RoleCache.get(i).id for i in parent_ids]
+            parent_roles,rids = [ (RoleCache.get(i).name,RoleCache.get(i).id) for i in parent_ids]
             print(parent_roles,rids)
         else:
             parent_roles = []
