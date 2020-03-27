@@ -28,6 +28,7 @@ class LoginView(APIView):
         password = request.values.get("password")
         user, authenticated = User.query.authenticate(username, password)
         if not user:
+            return abort(403,'111111111')
             return self.jsonify(msg="User <{0}> does not exist".format(username),status=403)
         if not authenticated:
             return self.jsonify(msg="invalid username or password",status=403)
@@ -39,7 +40,6 @@ class LoginView(APIView):
             'exp': datetime.datetime.now() + datetime.timedelta(minutes=24 * 60 * 7)},
             current_app.config['SECRET_KEY'])
         role = Role.get_by(id=user.rid, first=True, to_dict=False)
-        print(role)
         if role:
             parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
             parent_roles = [RoleCache.get(i).name for i in parent_ids]

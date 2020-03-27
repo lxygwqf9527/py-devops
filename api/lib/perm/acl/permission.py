@@ -15,7 +15,6 @@ class PermissionCRUD(object):
         perms = RolePermission.get_by(rid=role_id, to_dict=False)
 
         for perm in perms:
-            print(perm)
             perm_dict = PermissionCache.get(perm.perm_id).to_dict()
             perm_dict.update(dict(rid=perm.rid))
             result.setdefault(RoleCache.get(perm.rid).name, []).append(perm_dict)

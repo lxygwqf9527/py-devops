@@ -9,8 +9,9 @@ from flask import jsonify
 from flask_restful import Resource
 from api.lib.perm.auth import auth_required
 
+# 视图继承类
 class APIView(Resource):
-    method_decorators = [auth_required]
+    method_decorators = [auth_required]  # 进来之前要先执行的认证函数
 
     def __init__(self):
         super(APIView, self).__init__()

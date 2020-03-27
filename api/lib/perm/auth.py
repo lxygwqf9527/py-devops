@@ -21,6 +21,8 @@ def _auth_with_key():
 
 
 def _auth_with_session():
+    print(1,session["acl"]["userName"])
+    print(login_user(UserCache.get(session["acl"]["userName"])))
     if isinstance(getattr(g, 'user', None), User):
         login_user(g.user)
         return True
@@ -72,7 +74,6 @@ def auth_abandoned(func):
     return wrapper
 
 def auth_required(func):
-    print(request.values,'-------')
     if request.json is not None:
         setattr(request, 'values', request.json)
     else:
