@@ -28,10 +28,9 @@ class LoginView(APIView):
         password = request.values.get("password")
         user, authenticated = User.query.authenticate(username, password)
         if not user:
-            return abort(403,'111111111')
-            return self.jsonify(msg="User <{0}> does not exist".format(username),status=403)
+            return abort(403, "User <{0}> does not exist".format(username))
         if not authenticated:
-            return self.jsonify(msg="invalid username or password",status=403)
+            return abort(403, "invalid username or password")
         login_user(user)
 
         token = jwt.encode({
@@ -43,7 +42,6 @@ class LoginView(APIView):
         if role:
             parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
             parent_roles = [ (RoleCache.get(i).name,RoleCache.get(i).id) for i in parent_ids]
-            print(parent_roles)
         else:
             parent_roles = []
         session["acl"] = dict(uid=user.uid,
