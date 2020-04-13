@@ -51,7 +51,7 @@ class LoginView(APIView):
                               parentRoles=parent_roles,
                               )
 
-        return self.jsonify(token=token.decode(),status=200)
+        return self.jsonify(token=token.decode())
     
 class LogoutView(APIView):
     url_prefix = "/logout"
