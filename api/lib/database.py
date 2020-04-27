@@ -102,7 +102,7 @@ class CRUDMixin(FormatMixin):
 # class Model(SoftDeleteMixin, TimestampMixin, CRUDMixin, db.Model, SurrogatePK):
 #     __abstract__ = True
 
-class CRUDModel(db.Model, CRUDMixin):
+class Model(db.Model, CRUDMixin):
     __abstract__ = True
 
 
