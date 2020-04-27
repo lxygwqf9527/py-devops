@@ -146,5 +146,17 @@ class Role(Model):
     name = db.Column(db.String(50))
     desc = db.Column(db.String(255), null=True)
     page_perms = db.Column(db.Text,null=True)
-    deploy_perms = 
-    users = db.relationship("User", backref='Role.id')
+    deploy_perms = db.Column(db.Text,null=True)
+    
+    created_at = db.Column(db.String(20), default=human_datetime)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def to_dict(self, *args, **kwargs):
+        tmp = super().to_dict(*args, **kwargs)
+        tmp['page_perms'] = json.loads(self.page_perms) if self.page_perms else None
+        tmp['deploy_perms'] = json.loads(self.deploy_perms) if self.deploy_perms else None
+        tmp['used'] = self.user_set.count()
+        return tmp
+    
+    def __str__(self):
+        return self.name

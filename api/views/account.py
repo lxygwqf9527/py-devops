@@ -23,7 +23,6 @@ class LoginView(APIView):
     @args_required("password")
     @auth_abandoned
     def post(self):
-
         username = request.values.get("username") or request.values.get("email")
         password = request.values.get("password")
         user, authenticated = User.query.authenticate(username, password)
