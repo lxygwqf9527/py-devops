@@ -69,7 +69,7 @@ class UserQuery(BaseQuery):
 
         # return copy.deepcopy(user)
 
-class User(CRUDModel, SoftDeleteMixin):
+class User(Model):
     __tablename__ = 'users'
     # __bind_key__ = "user"
     query_class = UserQuery
