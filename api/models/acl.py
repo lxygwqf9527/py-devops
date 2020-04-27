@@ -12,14 +12,15 @@ from api.extensions import db
 from api.lib.database import CRUDModel
 from api.lib.database import Model
 from api.lib.database import SoftDeleteMixin
+from api.lib.utils import human_datetime
 
-class App(Model):
-    __tablename__ = "acl_apps"
+# class App(Model):
+#     __tablename__ = "acl_apps"
 
-    name = db.Column(db.String(64), index=True)
-    description = db.Column(db.Text)
-    app_id = db.Column(db.Text)
-    secret_key = db.Column(db.Text)
+#     name = db.Column(db.String(64), index=True)
+#     description = db.Column(db.Text)
+#     app_id = db.Column(db.Text)
+#     secret_key = db.Column(db.Text)
 
 class UserQuery(BaseQuery):
     def _join(self, *args, **kwargs):
@@ -68,22 +69,6 @@ class UserQuery(BaseQuery):
 
         # return copy.deepcopy(user)
 
-
-
-class Role(Model):
-    __tablename__ = "acl_roles"
-
-    name = db.Column(db.Text, nullable=False)
-    is_app_admin = db.Column(db.Boolean, default=False)
-    app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
-    users = db.relationship("User", backref='Role.id')
-    
-class RoleRelation(Model):
-    __tablename__ = "acl_role_relations"
-
-    parent_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
-    child_id = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
-
 class User(CRUDModel, SoftDeleteMixin):
     __tablename__ = 'users'
     # __bind_key__ = "user"
@@ -100,34 +85,18 @@ class User(CRUDModel, SoftDeleteMixin):
     token_expired = db.Column(db.Integer, null=True)
     last_login = db.Column(db.String(20))
     last_ip = db.Column(db.String(50))
-    role = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    role = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
-
-    
-    department = db.Column(db.String(20))
-    catalog = db.Column(db.String(64))
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    mobile = db.Column(db.String(14), unique=True)
-    
-    key = db.Column(db.String(32), nullable=False)
-    secret = db.Column(db.String(32), nullable=False)
-    date_joined = db.Column(db.DateTime, default=datetime.utcnow)
-    last_login = db.Column(db.DateTime, default=datetime.utcnow)
-    block = db.Column(db.Boolean, default=False)
-    has_logined = db.Column(db.Boolean, default=False)
-    wx_id = db.Column(db.String(32))
-    avatar = db.Column(db.String(128))
-    
+    created_at = db.Column(db.String(20), default=human_datetime)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'),null=True)
+    deleted_at = db.Column(db.String(20), null=True)
+    deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'),null=True)
 
     def __str__(self):
         return self.username
     
-    def is_active(self):
-        return not self.block
-
     def get_id(self):
-        return self.uid
+        return self.id
     
     @staticmethod
     def is_authenticated():
@@ -148,33 +117,34 @@ class User(CRUDModel, SoftDeleteMixin):
         return self.password == password
 
 
-class Menu(Model):
-    __tablename__ = "acl_menus"
+    @property
+    def page_perms(self):
+        if self.role and self.role.page_perms:
+            data = []
+            perms = json.loads(self.role.page_perms)
+            for m, v in perms.items():
+                for p, d in v.items():
+                    data.extend(f'{m}.{p}.{x}' for x in d)
+            return data
+        else:
+            return []
 
-    name = db.Column(db.String(64), nullable=False) 
-    key = db.Column(db.String(64), nullable=False)
-    icon = db.Column(db.String(64), nullable=False)
+    @property
+    def deploy_perms(self):
+        perms = json.loads(self.role.deploy_perms) if self.role.deploy_perms else {}
+        perms.setdefault('apps', [])
+        perms.setdefault('envs', [])
+        return perms
+    
+    def has_perms(self, codes):
+        # return self.is_supper or self.role in codes
+        return self.is_supper
 
-class MenuRealation(Model):
-    __tablename__ = "acl_menu_relations"
+class Role(Model):
+    __tablename__ = "roles"
 
-    parent_id = db.Column(db.Integer, db.ForeignKey('acl_menus.id'))
-    child_id = db.Column(db.Integer, db.ForeignKey('acl_menus.id'))
-
-
-class Permission(Model):
-    __tablename__ = "acl_permissions"
-
-    name = db.Column(db.String(64), nullable=False)
-    Menu = db.Column(db.Integer, db.ForeignKey("acl_menus.id"))
-
-    app_id = db.Column(db.Integer, db.ForeignKey("acl_apps.id"))
-
-class RolePermission(Model):
-    __tablename__ = "acl_role_permissions"
-
-    rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
-    perm_id = db.Column(db.Integer, db.ForeignKey('acl_permissions.id'))
-
-    perm = db.relationship("Permission", backref='acl_role_permissions.perm_id')
-
+    name = db.Column(db.String(50))
+    desc = db.Column(db.String(255), null=True)
+    page_perms = db.Column(db.Text,null=True)
+    deploy_perms = 
+    users = db.relationship("User", backref='Role.id')

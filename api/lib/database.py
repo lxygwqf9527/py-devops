@@ -5,6 +5,20 @@ import six
 
 from api.extensions import db
 
+# 混入类，提供Model实例to_dict方法
+class ModelMixin(object):
+    __slots__ = ()
+
+    def to_dict(self, excludes: tuple = None, selects: tuple = None) -> dict:
+        if not hasattr(self, '_meta'):
+            raise TypeError('<%r> does not a django.db.models.Model object.' % self)
+        elif selects:
+            return {f: getattr(self, f) for f in selects}
+        elif excludes:
+            return {f.attname: getattr(self, f.attname) for f in self._meta.fields if f.attname not in excludes}
+        else:
+            return {f.attname: getattr(self, f.attname) for f in self._meta.fields}
+            
 # class FormatMixin(object):
 #     def to_dict(self):
 #         res = dict()
