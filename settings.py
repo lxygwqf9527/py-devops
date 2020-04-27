@@ -22,12 +22,12 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 ERROR_CODES = [400, 401, 403, 404, 405, 500, 502]
 
 # # database
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@192.168.1.50:3307/{db}?charset=utf8'.format(
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@192.168.1.44:3307/{db}?charset=utf8'.format(
     user='root',
     password='123456',
     db='cmdb')
 SQLALCHEMY_BINDS = {
-    "user": 'mysql+pymysql://{user}:{password}@192.168.1.50:3307/{db}?charset=utf8'.format(
+    "user": 'mysql+pymysql://{user}:{password}@192.168.1.44:3307/{db}?charset=utf8'.format(
     user='root',
     password='123456',
     db='cmdb')
@@ -40,7 +40,7 @@ SQLALCHEMY_ENGINE_OPTIONS = {
 
 # # cache
 CACHE_TYPE = "redis"
-CACHE_REDIS_HOST = "192.168.1.50"
+CACHE_REDIS_HOST = "192.168.1.44"
 CACHE_REDIS_PORT = 6379
 CACHE_KEY_PREFIX = "CMDB::"
 CACHE_DEFAULT_TIMEOUT = 3000
@@ -61,8 +61,8 @@ MAIL_PASSWORD = ''
 DEFAULT_MAIL_SENDER = ''
 
 # # queue
-CELERY_RESULT_BACKEND = "redis://192.168.1.50:6379/3"
-BROKER_URL = 'redis://192.168.1.50:6379/3'
+CELERY_RESULT_BACKEND = "redis://192.168.1.44:6379/3"
+BROKER_URL = 'redis://192.168.1.44:6379/3'
 BROKER_VHOST = '/'
 
 

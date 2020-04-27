@@ -89,15 +89,27 @@ class User(CRUDModel, SoftDeleteMixin):
     # __bind_key__ = "user"
     query_class = UserQuery
 
-    uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    rid = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(32), unique=True)
     nickname = db.Column(db.String(20), nullable=True)
+    _password = db.Column("password", db.String(80))
+    type = db.Column(db.String(20), default='default')
+    is_supper = db.Column(db.Boolean,default=False)
+    is_active = db.Column(db.Boolean,default=True)
+    access_token = db.Column(db.String(32))
+    token_expired = db.Column(db.Integer, null=True)
+    last_login = db.Column(db.String(20))
+    last_ip = db.Column(db.String(50))
+    role = db.Column(db.Integer, db.ForeignKey('acl_roles.id'))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+    
     department = db.Column(db.String(20))
     catalog = db.Column(db.String(64))
     email = db.Column(db.String(100), unique=True, nullable=False)
     mobile = db.Column(db.String(14), unique=True)
-    _password = db.Column("password", db.String(80))
+    
     key = db.Column(db.String(32), nullable=False)
     secret = db.Column(db.String(32), nullable=False)
     date_joined = db.Column(db.DateTime, default=datetime.utcnow)
