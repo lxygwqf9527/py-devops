@@ -133,6 +133,7 @@ class User(Model):
 class Role(Model):
     __tablename__ = "roles"
 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
     page_perms = db.Column(db.Text,nullable=True)
