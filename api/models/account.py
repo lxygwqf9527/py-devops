@@ -9,9 +9,7 @@ from flask_sqlalchemy import BaseQuery
 
 
 from api.extensions import db
-from api.lib.database import CRUDModel
 from api.lib.database import Model
-from api.lib.database import SoftDeleteMixin
 from api.lib.utils import human_datetime
 
 # class App(Model):
