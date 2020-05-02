@@ -12,7 +12,7 @@ from flask import session
 from flask_login import login_user
 from flask import g
 
-from api.models.acl import User
+from api.models.account import User
 from api.lib.perm.acl.cache import UserCache
 
 def _auth_with_key():
