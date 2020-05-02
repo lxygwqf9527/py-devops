@@ -13,7 +13,7 @@ from api.lib.decorator import args_required
 from api.lib.perm.auth import auth_abandoned
 from api.models.account import User, Role
 from api.resource import APIView
-from api.lib.perm.acl.role import RoleRelationCRUD
+# from api.lib.perm.acl.role import RoleRelationCRUD
 # from api.lib.perm.acl.cache import RoleCache
 
 class LoginView(APIView):
