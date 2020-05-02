@@ -12,14 +12,6 @@ from api.extensions import db
 from api.lib.database import Model
 from api.lib.utils import human_datetime
 
-# class App(Model):
-#     __tablename__ = "acl_apps"
-
-#     name = db.Column(db.String(64), index=True)
-#     description = db.Column(db.Text)
-#     app_id = db.Column(db.Text)
-#     secret_key = db.Column(db.Text)
-
 class UserQuery(BaseQuery):
     def _join(self, *args, **kwargs):
         super(UserQuery, self)._join(*args, **kwargs)
@@ -80,15 +72,15 @@ class User(Model):
     is_supper = db.Column(db.Boolean,default=False)
     is_active = db.Column(db.Boolean,default=True)
     access_token = db.Column(db.String(32))
-    token_expired = db.Column(db.Integer, null=True)
+    token_expired = db.Column(db.Integer, nullable=True)
     last_login = db.Column(db.String(20))
     last_ip = db.Column(db.String(50))
     role = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
     created_at = db.Column(db.String(20), default=human_datetime)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'),null=True)
-    deleted_at = db.Column(db.String(20), null=True)
-    deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'),null=True)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=True)
+    deleted_at = db.Column(db.String(20), nullable=True)
+    deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
 
     def __str__(self):
         return self.username
@@ -142,9 +134,9 @@ class Role(Model):
     __tablename__ = "roles"
 
     name = db.Column(db.String(50))
-    desc = db.Column(db.String(255), null=True)
-    page_perms = db.Column(db.Text,null=True)
-    deploy_perms = db.Column(db.Text,null=True)
+    desc = db.Column(db.String(255), nullable=True)
+    page_perms = db.Column(db.Text,nullable=True)
+    deploy_perms = db.Column(db.Text,nullable=True)
     
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
