@@ -66,6 +66,7 @@ class User(Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(32), unique=True)
+    email = db.Column(db.String(32), unique=True)
     nickname = db.Column(db.String(20), nullable=True)
     _password = db.Column("password", db.String(80))
     type = db.Column(db.String(20), default='default')

@@ -25,6 +25,7 @@ class LoginView(APIView):
     def post(self):
         username = request.values.get("username") or request.values.get("email")
         password = request.values.get("password")
+        type = request.values.get('type')
         user, authenticated = User.query.authenticate(username, password)
         x_real_ip = request.headers.get('x-real-ip', '')
         if not user:

@@ -80,7 +80,6 @@ def auth_abandoned(func):
     return wrapper
 
 def auth_required(func):
-    print(request.form,'------------------------')
     if request.json is not None:
         setattr(request, 'values', request.json)
     else:
