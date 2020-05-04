@@ -35,10 +35,10 @@ class LoginView(APIView):
         if not authenticated:
             return abort(403, "invalid username or password")
         
-        if form.type == 'ldap':
+        if type == 'ldap':
             pass
             # ldap未完成
-            
+
         login_user(user)
 
         token = jwt.encode({
