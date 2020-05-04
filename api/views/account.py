@@ -25,13 +25,20 @@ class LoginView(APIView):
     def post(self):
         username = request.values.get("username") or request.values.get("email")
         password = request.values.get("password")
-        type = request.values.get('type')
         user, authenticated = User.query.authenticate(username, password)
+        type = request.values.get('type')
         x_real_ip = request.headers.get('x-real-ip', '')
+        if user and not user.is_active:
+            return abort(403,"账户已被系统禁用")
         if not user:
             return abort(403, "User <{0}> does not exist".format(username))
         if not authenticated:
             return abort(403, "invalid username or password")
+        
+        if form.type == 'ldap':
+            pass
+            # ldap未完成
+            
         login_user(user)
 
         token = jwt.encode({

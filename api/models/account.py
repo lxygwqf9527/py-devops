@@ -18,7 +18,7 @@ class UserQuery(BaseQuery):
 
     def authenticate(self, login, password):
         user = self.filter(db.or_(User.username == login,
-                                  User.email == login)).filter(User.deleted.is_(False)).first()
+                                  User.email == login)).first()
         if user:
             current_app.logger.info(user)
             authenticated = user.check_password(password)
