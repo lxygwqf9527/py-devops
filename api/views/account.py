@@ -26,7 +26,7 @@ class LoginView(APIView):
         username = request.values.get("username") or request.values.get("email")
         password = request.values.get("password")
         user, authenticated = User.query.authenticate(username, password)
-        type = request.values.get('type')
+        log_type = request.values.get('type')
         x_real_ip = request.headers.get('x-real-ip', '')
         if user and not user.is_active:
             return abort(403,"账户已被系统禁用")
@@ -35,7 +35,7 @@ class LoginView(APIView):
         if not authenticated:
             return abort(403, "invalid username or password")
         
-        if type == 'ldap':
+        if log_type == 'ldap':
             pass
             # ldap未完成
 
