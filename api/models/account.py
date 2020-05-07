@@ -107,7 +107,6 @@ class User(Model):
             return False
         return self.password == password
 
-
     @property
     def page_perms(self):
         if self.role and self.role.page_perms:

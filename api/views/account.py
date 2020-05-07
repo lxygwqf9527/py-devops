@@ -16,6 +16,8 @@ from api.resource import APIView
 # from api.lib.perm.acl.role import RoleRelationCRUD
 # from api.lib.perm.acl.cache import RoleCache
 
+
+
 class LoginView(APIView):
     url_prefix = "/login"
 
@@ -38,29 +40,38 @@ class LoginView(APIView):
         if log_type == 'ldap':
             pass
             # ldap未完成
-
+        else:
+            if user and user.deleted_by is None:
+                return handle_user_info(user, x_real_ip)
+                
         login_user(user)
 
-        token = jwt.encode({
-            'sub': user.email,
-            'iat': datetime.datetime.now(),
-            'exp': datetime.datetime.now() + datetime.timedelta(minutes=24 * 60 * 7)},
-            current_app.config['SECRET_KEY'])
-        role = Role.get_by(id=user.rid, first=True, to_dict=False)
+        # token = jwt.encode({
+        #     'sub': user.email,
+        #     'iat': datetime.datetime.now(),
+        #     'exp': datetime.datetime.now() + datetime.timedelta(minutes=24 * 60 * 7)},
+        #     current_app.config['SECRET_KEY'])
+        role = Role.get_by(id=user.id, first=True, to_dict=False)
         if role:
-            parent_ids = RoleRelationCRUD.recursive_parent_ids(role.id)
-            parent_roles = [ (RoleCache.get(i).name,RoleCache.get(i).id) for i in parent_ids]
-        else:
-            parent_roles = []
-        session["acl"] = dict(uid=user.uid,
-                              avatar=user.avatar,
-                              userName=user.username,
-                              nickName=user.nickname,
-                              parentRoles=parent_roles,
-                              )
-
+            
         return self.jsonify(token=token.decode())
-    
+
+def handle_user_info(user, x_real_ip):
+    cache.delete(user.username)
+    token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
+    user.access_token = user.access_token if token_isvalid else uuid.uuid4().hex
+    user.token_expired = time.time() + 8 * 60 * 60
+    user.last_login = human_datetime()
+    user.last_ip = x_real_ip
+    user.save()
+    return json_response({
+        'access_token': user.access_token,
+        'nickname': user.nickname,
+        'is_supper': user.is_supper,
+        'has_real_ip': True if x_real_ip else False,
+        'permissions': [] if user.is_supper else user.page_perms
+    })
+
 class LogoutView(APIView):
     url_prefix = "/logout"
 

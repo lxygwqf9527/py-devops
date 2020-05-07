@@ -112,8 +112,7 @@ class UserCache(object):
         cache.delete(cls.PREFIX_NAME.format(user.username))
         cache.delete(cls.PREFIX_NICK.format(user.nickname))
 
-class MenuCacahe(object):
-    PREFIX_ID = "Menu::id::{0}"
+
 
 class PermissionCache(object):
     PREFIX_ID = "Permission::id::{0}"
