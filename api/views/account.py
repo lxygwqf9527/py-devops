@@ -43,17 +43,12 @@ class LoginView(APIView):
         else:
             if user and user.deleted_by is None:
                 return handle_user_info(user, x_real_ip)
-                
+
         login_user(user)
 
-        # token = jwt.encode({
-        #     'sub': user.email,
-        #     'iat': datetime.datetime.now(),
-        #     'exp': datetime.datetime.now() + datetime.timedelta(minutes=24 * 60 * 7)},
-        #     current_app.config['SECRET_KEY'])
         role = Role.get_by(id=user.id, first=True, to_dict=False)
         if role:
-            pas
+            pass
         return self.jsonify(token=token.decode())
 
 def handle_user_info(user, x_real_ip):

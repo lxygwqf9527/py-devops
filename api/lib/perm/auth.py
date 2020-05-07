@@ -35,6 +35,7 @@ def auth_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not getattr(func, 'authenticated', True):
+            print(11111111111111111)
             return func(*args, **kwargs)
         abort(401)
 
