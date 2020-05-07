@@ -53,7 +53,7 @@ class LoginView(APIView):
         #     current_app.config['SECRET_KEY'])
         role = Role.get_by(id=user.id, first=True, to_dict=False)
         if role:
-            
+            pas
         return self.jsonify(token=token.decode())
 
 def handle_user_info(user, x_real_ip):
