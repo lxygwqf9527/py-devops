@@ -43,7 +43,7 @@ class LoginView(APIView):
         else:
             if user and user.deleted_by is None:
                 return handle_user_info(user, x_real_ip)
-        value = UserCache.get(username)
+        value = UserCache.get_count_error(username)
         if value >= 3:
             if user and user.is_active:
                 user.is_active = False
@@ -56,7 +56,7 @@ class LoginView(APIView):
             pass
 
 def handle_user_info(user, x_real_ip):
-    UserCache.delete(user.username)
+    UserCache.del_count_error(user.username)
     token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
     user.access_token = user.access_token if token_isvalid else uuid.uuid4().hex
     user.token_expired = time.time() + 8 * 60 * 60
