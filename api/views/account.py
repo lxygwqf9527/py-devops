@@ -67,7 +67,7 @@ def handle_user_info(user, x_real_ip):
     user.last_login = human_datetime()
     user.last_ip = x_real_ip
     print(user.to_dict(),'---------')
-    user.save()
+    user.update()
     return jsonify(
         access_token= user.access_token,
         nickname=user.nickname,

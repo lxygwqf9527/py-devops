@@ -26,6 +26,15 @@ class CRUDMixin(ModelMixin):
     def __init__(self, **kwargs):
         super(CRUDMixin, self).__init__(**kwargs)
     
+    def update(self, flush=False, **kwargs):
+        kwargs.pop("id", None)
+        for attr, value in six.iteritems(kwargs):
+            if value is not None:
+                setattr(self, attr, value)
+        if flush:
+            return self.save(flush=flush)
+        return self.save()
+    
     @classmethod
     def save(self, commit=True, flush=False):
         db.session.add(self)
