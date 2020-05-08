@@ -15,7 +15,7 @@ class ModelMixin(object):
                 res[k.name] = getattr(self, k.name)
             else:
                 res[k.name] = getattr(self, k.name).strftime('%Y-%m-%d %H:%M:%S')
-        return res
+        return res.pop('_sa_instance_state', None)
 
     @classmethod
     def get_columns(cls):
@@ -27,9 +27,7 @@ class CRUDMixin(ModelMixin):
         super(CRUDMixin, self).__init__(**kwargs)
     
     def update(self, flush=False, **kwargs):
-        for i in self.__dict__:
-            print(i,'-----------')
-        kwargs.pop("id", None)
+        kwargs.pop("id", None) # id不需要更新，所以刨除id
         for attr, value in six.iteritems(kwargs):
             #print(attr,value,'==============')
             if value is not None:
@@ -51,7 +49,7 @@ class CRUDMixin(ModelMixin):
             raise CommitException(str(e))
 
         return self
-        
+
     @classmethod
     def get_by(cls, first=False, to_dict=True, fl=None, exclude=None, deleted=False, use_master=False, **kwargs):
         db_session = db.session if not use_master else db.session().using_bind("master")
