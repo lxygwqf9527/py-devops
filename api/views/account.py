@@ -11,9 +11,8 @@ from flask import request
 from flask import session
 from flask_login import login_user, logout_user
 
-from models.account import User, Role
-from resource import APIView
-
+from api.models.account import User, Role
+from api.resource import APIView
 from api.libs import human_datetime, args_required
 from api.libs.cache import UserCache
 from api.libs.perm import auth_abandoned
