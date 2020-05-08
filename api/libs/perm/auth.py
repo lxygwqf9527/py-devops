@@ -12,7 +12,7 @@ from flask import session
 from flask_login import login_user
 from flask import g
 
-from models.account import User
+from api.models.account import User
 
 
 def auth_abandoned(func):

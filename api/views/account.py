@@ -14,9 +14,9 @@ from flask_login import login_user, logout_user
 from models.account import User, Role
 from resource import APIView
 
-from libs import human_datetime, args_required
-from libs.cache import UserCache
-from libs.perm import auth_abandoned
+from api.libs import human_datetime, args_required
+from api.libs.cache import UserCache
+from api.libs.perm import auth_abandoned
 
 
 
