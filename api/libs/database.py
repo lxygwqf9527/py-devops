@@ -52,7 +52,7 @@ class CRUDMixin(ModelMixin):
         return self
 
     @classmethod
-    def get_by(cls, first=False, to_dict=True, fl=None, exclude=None, deleted=False, use_master=False, **kwargs):
+    def get_by(cls, first=False, to_dict=True, fl=None, exclude=None, deleted=None, use_master=False, **kwargs):
         db_session = db.session if not use_master else db.session().using_bind("master")
         fl = fl.strip().split(",") if fl and isinstance(fl, six.string_types) else (fl or [])
         exclude = exclude.strip().split(",") if exclude and isinstance(exclude, six.string_types) else (exclude or [])
@@ -71,7 +71,7 @@ class CRUDMixin(ModelMixin):
             result = [{k: getattr(i, k) for k in fl} for i in query]
         else:
             result = [i.to_dict() if to_dict else i for i in getattr(cls, 'query').filter_by(**kwargs)]
-            print(result,kwargs)
+            print(result)
 
         return result[0] if first and result else (None if first else result)
 
