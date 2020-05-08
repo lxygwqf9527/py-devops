@@ -25,12 +25,12 @@ ERROR_CODES = [400, 401, 403, 404, 405, 500, 502]
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@192.168.1.44:3307/{db}?charset=utf8'.format(
     user='root',
     password='123456',
-    db='cmdb')
+    db='ptdevops')
 SQLALCHEMY_BINDS = {
     "user": 'mysql+pymysql://{user}:{password}@192.168.1.44:3307/{db}?charset=utf8'.format(
     user='root',
     password='123456',
-    db='cmdb')
+    db='ptdevops')
 }
 SQLALCHEMY_ECHO = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False

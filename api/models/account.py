@@ -70,7 +70,12 @@ class User(Model):
     token_expired = db.Column(db.Integer, nullable=True)
     last_login = db.Column(db.String(20))
     last_ip = db.Column(db.String(50))
-    role = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    role = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
+
+    created_at = db.Column(db.String(20), default=human_datetime)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    deleted_at = db.Column(db.String(20), nullable=True)
+    deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'), nullable=True)
 
 
     def __str__(self):
@@ -120,13 +125,16 @@ class User(Model):
         # return self.is_supper or self.role in codes
         return self.is_supper
 
-class Role(CRUDModel, CreateMixin):
+class Role(CRUDModel):
     __tablename__ = "roles"
 
     name = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
-    page_perms = db.Column(db.Text,nullable=True)
-    deploy_perms = db.Column(db.Text,nullable=True)
+    page_perms = db.Column(db.Text, nullable=True)
+    deploy_perms = db.Column(db.Text, nullable=True)
+
+    created_at = db.Column(db.String(20), default=human_datetime)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)

@@ -39,20 +39,12 @@ class CRUDMixin(ModelMixin):
 
         return self
 
-class DeleteMixin(object):
-    deleted_at = db.Column(db.String(20), nullable=True)
-    deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
-
-class CreateMixin(object):
-    created_at = db.Column(db.String(20), default=human_datetime)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=True)
-
 class SurrogatePK(object):
     __table_args__ = {"extend_existing": True}
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
-class Model(db.Model, CRUDMixin, DeleteMixin, CreateMixin, SurrogatePK):
+class Model(db.Model, CRUDMixin, SurrogatePK):
     __abstract__ = True
 
 class CRUDModel(db.Model, CRUDMixin):
