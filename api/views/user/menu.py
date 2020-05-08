@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from flask import request
+from flask import request, abort
 
 from api.resource import APIView
 
