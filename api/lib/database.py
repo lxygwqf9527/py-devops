@@ -7,7 +7,6 @@ from api.extensions import db
 
 
 class ModelMixin(object):
-    
     def to_dict(self):
         res = dict()
         for k in getattr(self, "__table__").columns:

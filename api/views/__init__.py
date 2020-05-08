@@ -16,7 +16,7 @@ account_rest = Api(blueprint_account)
 account_rest.add_resource(LoginView, LoginView.url_prefix)
 account_rest.add_resource(LogoutView, LogoutView.url_prefix)
 
-# acl
-blueprint_acl_v1 = Blueprint('acl_api_v1', __name__, url_prefix='/api/v1/acl')
+# user
+blueprint_acl_v1 = Blueprint('acl_api_v1', __name__, url_prefix='/api/v1/user')
 rest = Api(blueprint_acl_v1)
-register_resources(os.path.join(HERE, "acl"), rest)
+register_resources(os.path.join(HERE, "user"), rest)

@@ -17,6 +17,9 @@ class UserQuery(BaseQuery):
         super(UserQuery, self)._join(*args, **kwargs)
 
     def authenticate(self, login, password):
+        '''
+            根据username或者email当用户
+        '''
         user = self.filter(db.or_(User.username == login,
                                   User.email == login)).first()
         if user:
@@ -24,44 +27,36 @@ class UserQuery(BaseQuery):
             authenticated = user.check_password(password)
         else:
             authenticated = False
+            
         return user, authenticated
 
-    # def authenticate_with_key(self, key, secret, args, path):
-    #     user = self.filter(User.key == key).filter(User.deleted.is_(False)).filter(User.block == 0).first()
-    #     if not user:
-    #         return None, False
-    #     if user and hashlib.sha1('{0}{1}{2}'.format(
-    #             path, user.secret, "".join(args)).encode("utf-8")).hexdigest() == secret:
-    #         authenticated = True
-    #     else:
-    #         authenticated = False
-
-    #     return user, authenticated
-
-    # def search(self, key):
-    #     query = self.filter(db.or_(User.email == key,
-    #                                User.nickname.ilike('%' + key + '%'),
-    #                                User.username.ilike('%' + key + '%'))).filter(User.deleted.is_(False))
-    #     return query
-
     def get_by_username(self, username):
-        user = self.filter(User.username == username).filter(User.deleted.is_(False)).first()
+        '''
+            根据username查询
+        '''
+        user = self.filter(User.username == username).filter(User.deleted_by.is_(None)).first()
 
         return user
 
     def get_by_nickname(self, nickname):
-        user = self.filter(User.nickname == nickname).filter(User.deleted.is_(False)).first()
+        '''
+            根据nickname查询
+        '''
+        user = self.filter(User.nickname == nickname).filter(User.deleted_by.is_(None)).first()
 
         return user
 
-    # def get(self, uid):
-    #     user = self.filter(User.uid == uid).filter(User.deleted.is_(False)).first()
+    def get(sefl, id):
+        '''
+            根据id查询
+        '''
 
-        # return copy.deepcopy(user)
+        user = self.filter(User.id == id).filter(User.deleted_by.is_(None)).first()
+
+        return copy.deepcopy(user)
 
 class User(Model):
     __tablename__ = 'users'
-    # __bind_key__ = "user"
     query_class = UserQuery
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

@@ -20,6 +20,9 @@ from flask import request
 #     return decorate
 
 def args_required(*required_args):
+    '''
+    判断请求是否有[某个]值
+    '''
     def decorate(func):
         @wraps(func)
         def wrapper(*args, **kwargs):

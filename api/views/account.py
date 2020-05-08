@@ -13,14 +13,14 @@ from api.lib.decorator import args_required
 from api.lib.perm.auth import auth_abandoned
 from api.models.account import User, Role
 from api.resource import APIView
-# from api.lib.perm.acl.role import RoleRelationCRUD
-# from api.lib.perm.acl.cache import RoleCache
+from api.lib.cache import UserCache
 
 
 
 class LoginView(APIView):
     url_prefix = "/login"
-
+    
+    # 装饰器，查看request.value是否有某个值
     @args_required("username")
     @args_required("password")
     @auth_abandoned
@@ -43,16 +43,20 @@ class LoginView(APIView):
         else:
             if user and user.deleted_by is None:
                 return handle_user_info(user, x_real_ip)
-
+        value = UserCache.get(username)
+        if value >= 3:
+            if user and user.is_active:
+                user.is_active = False
+                user.save()
+            return abort(403,"账户已被禁用")
         login_user(user)
 
         role = Role.get_by(id=user.id, first=True, to_dict=False)
         if role:
             pass
-        return self.jsonify(token=token.decode())
 
 def handle_user_info(user, x_real_ip):
-    cache.delete(user.username)
+    UserCache.delete(user.username)
     token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
     user.access_token = user.access_token if token_isvalid else uuid.uuid4().hex
     user.token_expired = time.time() + 8 * 60 * 60

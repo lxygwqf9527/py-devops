@@ -35,8 +35,9 @@ def auth_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not getattr(func, 'authenticated', True):
-            print(11111111111111111)
+            # 先判断有没有authenticated这个属性是否为True，是的话表示通过认证
             return func(*args, **kwargs)
+        # 在判断session or key or token or ip_white_list，满足一样即可
         abort(401)
 
     return wrapper
