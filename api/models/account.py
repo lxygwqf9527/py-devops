@@ -9,7 +9,9 @@ from flask_sqlalchemy import BaseQuery
 
 
 from api.extensions import db
-from api.libs import Model, CRUDModel, CreateMixin
+from api.libs import Model, CRUDModel
+from api.libs.utils import human_datetime
+
 
 
 class UserQuery(BaseQuery):
