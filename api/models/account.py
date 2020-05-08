@@ -9,8 +9,8 @@ from flask_sqlalchemy import BaseQuery
 
 
 from api.extensions import db
-from api.lib.database import Model
-from api.lib.utils import human_datetime
+from api.libs.database import Model
+from api.libs.utils import human_datetime
 
 class UserQuery(BaseQuery):
     def _join(self, *args, **kwargs):
