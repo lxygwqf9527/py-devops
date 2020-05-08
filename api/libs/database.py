@@ -15,7 +15,7 @@ class ModelMixin(object):
                 res[k.name] = getattr(self, k.name)
             else:
                 res[k.name] = getattr(self, k.name).strftime('%Y-%m-%d %H:%M:%S')
-        return res.pop('_sa_instance_state', None)
+        return res
 
     @classmethod
     def get_columns(cls):
@@ -38,6 +38,7 @@ class CRUDMixin(ModelMixin):
     
     @classmethod
     def save(self, commit=True, flush=False):
+        print(self._sa_instance_state)
         db.session.add(self)
         try:
             if flush:
