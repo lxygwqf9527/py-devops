@@ -75,9 +75,9 @@ class User(Model):
     role = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
 
     created_at = db.Column(db.String(20), default=human_datetime)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    created_by = db.Column(db.Integer, db.ForeignKey('users'), nullable=True)
     deleted_at = db.Column(db.String(20), nullable=True)
-    deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'), nullable=True)
+    deleted_by = db.Column(db.Integer,db.ForeignKey('users'), nullable=True)
 
 
     def __str__(self):
@@ -136,7 +136,7 @@ class Role(CRUDModel):
     deploy_perms = db.Column(db.Text, nullable=True)
 
     created_at = db.Column(db.String(20), default=human_datetime)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    created_by = db.Column(db.Integer, db.ForeignKey('users'))
 
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)
