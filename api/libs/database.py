@@ -62,8 +62,8 @@ class CRUDMixin(ModelMixin):
         fl = [k for k in keys if k not in exclude and not k.isupper()] if exclude else fl
         fl = list(filter(lambda x: "." not in x, fl))
 
-        if hasattr(cls, "deleted") and deleted is not None:
-            kwargs["deleted"] = deleted
+        if hasattr(cls, "deleted_at") and deleted is not None:
+            kwargs["deleted_at"] = deleted
 
         if fl:
             query = db_session.query(*[getattr(cls, k) for k in fl])
