@@ -8,7 +8,7 @@ import six
 from flask import jsonify
 from flask_restful import Resource
 
-from api.libs import auth_required
+from libs.perm import auth_required
 
 # 视图继承类
 class APIView(Resource):
