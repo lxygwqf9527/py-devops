@@ -63,13 +63,13 @@ def handle_user_info(user, x_real_ip):
     user.last_login = human_datetime()
     user.last_ip = x_real_ip
     user.save()
-    return json_response({
-        'access_token': user.access_token,
-        'nickname': user.nickname,
-        'is_supper': user.is_supper,
-        'has_real_ip': True if x_real_ip else False,
-        'permissions': [] if user.is_supper else user.page_perms
-    })
+    return jsonify(
+        access_token= user.access_token,
+        nickname=user.nickname,
+        is_supper=user.is_supper,
+        has_real_ip=True if x_real_ip else False,
+        permissions=[] if user.is_supper else user.page_perms
+    )
 
 class LogoutView(APIView):
     url_prefix = "/logout"
