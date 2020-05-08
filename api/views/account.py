@@ -66,7 +66,6 @@ def handle_user_info(user, x_real_ip):
     user.token_expired = time.time() + 8 * 60 * 60
     user.last_login = human_datetime()
     user.last_ip = x_real_ip
-    print(user.to_dict(),'---------')
     user.update()
     return jsonify(
         access_token= user.access_token,

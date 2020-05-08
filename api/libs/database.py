@@ -27,9 +27,11 @@ class CRUDMixin(ModelMixin):
         super(CRUDMixin, self).__init__(**kwargs)
     
     def update(self, flush=False, **kwargs):
+        for i in self.__dict__:
+            print(i,'-----------')
         kwargs.pop("id", None)
         for attr, value in six.iteritems(kwargs):
-            print(attr,value,'==============')
+            #print(attr,value,'==============')
             if value is not None:
                 setattr(self, attr, value)
         if flush:
