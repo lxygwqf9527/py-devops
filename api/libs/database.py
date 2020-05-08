@@ -51,6 +51,29 @@ class CRUDMixin(ModelMixin):
             raise CommitException(str(e))
 
         return self
+        
+    @classmethod
+    def get_by(cls, first=False, to_dict=True, fl=None, exclude=None, deleted=False, use_master=False, **kwargs):
+        db_session = db.session if not use_master else db.session().using_bind("master")
+        fl = fl.strip().split(",") if fl and isinstance(fl, six.string_types) else (fl or [])
+        exclude = exclude.strip().split(",") if exclude and isinstance(exclude, six.string_types) else (exclude or [])
+
+        keys = cls.get_columns()
+        fl = [k for k in fl if k in keys]
+        fl = [k for k in keys if k not in exclude and not k.isupper()] if exclude else fl
+        fl = list(filter(lambda x: "." not in x, fl))
+
+        if hasattr(cls, "deleted") and deleted is not None:
+            kwargs["deleted"] = deleted
+
+        if fl:
+            query = db_session.query(*[getattr(cls, k) for k in fl])
+            query = query.filter_by(**kwargs)
+            result = [{k: getattr(i, k) for k in fl} for i in query]
+        else:
+            result = [i.to_dict() if to_dict else i for i in getattr(cls, 'query').filter_by(**kwargs)]
+
+        return result[0] if first and result else (None if first else result)
 
 class SurrogatePK(object):
     __table_args__ = {"extend_existing": True}
