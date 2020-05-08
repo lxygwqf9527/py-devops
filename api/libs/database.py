@@ -16,7 +16,7 @@ class ModelMixin(object):
             else:
                 res[k.name] = getattr(self, k.name).strftime('%Y-%m-%d %H:%M:%S')
         return res
-        
+
     @classmethod
     def get_columns(cls):
         return {k.name: 1 for k in getattr(cls, "__mapper__").c.values()}
@@ -48,5 +48,5 @@ class SurrogatePK(object):
 class Model(db.Model, CRUDMixin, SurrogatePK):
     __abstract__ = True
 
-class CRUDModel(db.Model, CRUDMixin):
+class CRUDModel(db.Model, CRUDMixin, SurrogatePK):
     __abstract__ = True
