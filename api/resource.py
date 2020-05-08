@@ -7,7 +7,8 @@ from inspect import getmembers, isclass
 import six
 from flask import jsonify
 from flask_restful import Resource
-from api.lib.perm.auth import auth_required
+
+from libs import auth_required
 
 # 视图继承类
 class APIView(Resource):

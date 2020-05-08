@@ -27,7 +27,7 @@ from api.extensions import (
     # es
 )
 
-from .models.account import User
+from models.account import User
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.join(HERE, os.pardir)
