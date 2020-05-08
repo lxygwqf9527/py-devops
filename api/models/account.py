@@ -9,8 +9,8 @@ from flask_sqlalchemy import BaseQuery
 
 
 from api.extensions import db
-from api.libs.database import Model
-from api.libs.utils import human_datetime
+from api.libs import Model, CRUDModel, CreateMixin
+
 
 class UserQuery(BaseQuery):
     def _join(self, *args, **kwargs):
@@ -59,7 +59,6 @@ class User(Model):
     __tablename__ = 'users'
     query_class = UserQuery
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(32), unique=True)
     email = db.Column(db.String(32), unique=True)
     nickname = db.Column(db.String(20), nullable=True)
@@ -73,10 +72,6 @@ class User(Model):
     last_ip = db.Column(db.String(50))
     role = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
-    created_at = db.Column(db.String(20), default=human_datetime)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=True)
-    deleted_at = db.Column(db.String(20), nullable=True)
-    deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
 
     def __str__(self):
         return self.username
@@ -125,17 +120,13 @@ class User(Model):
         # return self.is_supper or self.role in codes
         return self.is_supper
 
-class Role(Model):
+class Role(CRUDModel, CreateMixin):
     __tablename__ = "roles"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
     page_perms = db.Column(db.Text,nullable=True)
     deploy_perms = db.Column(db.Text,nullable=True)
-    
-    created_at = db.Column(db.String(20), default=human_datetime)
-    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)

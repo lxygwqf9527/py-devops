@@ -4,6 +4,7 @@ import datetime
 import six
 
 from api.extensions import db
+from api.libs.utils import human_datetime
 
 
 class ModelMixin(object):
@@ -19,6 +20,40 @@ class ModelMixin(object):
     def get_columns(cls):
         return {k.name: 1 for k in getattr(cls, "__mapper__").c.values()}
 
+class CRUDMixin(ModelMixin):
 
-class Model(db.Model, ModelMixin):
+    def __init__(self, **kwargs):
+        super(CRUDMixin, self).__init__(**kwargs)
+    
+    @classmethod
+    def save(self, commit=True, flush=False):
+        db.session.add(self)
+        try:
+            if flush:
+                db.session.flush()
+            elif commit:
+                db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise CommitException(str(e))
+
+        return self
+
+class DeleteMixin(object):
+    deleted_at = db.Column(db.String(20), nullable=True)
+    deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'),nullable=True)
+
+class CreateMixin(object):
+    created_at = db.Column(db.String(20), default=human_datetime)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=True)
+
+class SurrogatePK(object):
+    __table_args__ = {"extend_existing": True}
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+class Model(db.Model, CRUDMixin, DeleteMixin, CreateMixin, SurrogatePK):
+    __abstract__ = True
+
+class CRUDModel(db.Model, CRUDMixin):
     __abstract__ = True
