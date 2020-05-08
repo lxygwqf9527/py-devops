@@ -18,5 +18,5 @@ class UserCRUD(object):
 
         UserCache.clean(user)
 
-        return user.update(**kwargs)
+        return user.update(first=True,**kwargs)
 
