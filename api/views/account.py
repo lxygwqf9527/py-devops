@@ -62,11 +62,12 @@ class LoginView(APIView):
 def handle_user_info(user, x_real_ip):
     UserCache.del_count_error(user.username)
     token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
-    user.access_token = user.access_token if token_isvalid else uuid.uuid4().hex
-    user.token_expired = time.time() + 8 * 60 * 60
-    user.last_login = human_datetime()
-    user.last_ip = x_real_ip
-    UserCRUD.update(**user.to_dict(),user.id)
+    access_token = user.access_token if token_isvalid else uuid.uuid4().hex
+    token_expired = time.time() + 8 * 60 * 60
+    last_login = human_datetime()
+    last_ip = x_real_ip
+    UserCRUD.update(user.id,{'access_token':access_token,'token_expired':token_expired,
+                            'last_login':last_login,'last_ip':last_ip})
     return jsonify(
         access_token= user.access_token,
         nickname=user.nickname,
