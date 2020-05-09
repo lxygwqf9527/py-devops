@@ -68,7 +68,7 @@ class LoginView(APIView):
         last_ip = x_real_ip
         UserCRUD.update(user.id,access_token=access_token,token_expired=token_expired,
                                 last_login=last_login,last_ip=last_ip)
-        return jsonify(
+        return self.jsonify(
             access_token= user.access_token,
             nickname=user.nickname,
             is_supper=user.is_supper,
