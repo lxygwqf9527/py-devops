@@ -46,7 +46,7 @@ class LoginView(APIView):
             # ldap未完成
         else:
             if user and user.deleted_by is None:
-                return handle_user_info(user, x_real_ip)
+                return self.handle_user_info(user, x_real_ip)
         value = UserCache.get_count_error(username)
         if value >= 3:
             if user and user.is_active:
@@ -59,21 +59,21 @@ class LoginView(APIView):
         if role:
             pass
 
-def handle_user_info(user, x_real_ip):
-    UserCache.del_count_error(user.username)
-    token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
-    access_token = user.access_token if token_isvalid else uuid.uuid4().hex
-    token_expired = time.time() + 8 * 60 * 60
-    last_login = human_datetime()
-    last_ip = x_real_ip
-    UserCRUD.update(user.id,access_token=access_token,token_expired=token_expired,
-                            last_login=last_login,last_ip=last_ip)
-    return jsonify(
-        access_token= user.access_token,
-        nickname=user.nickname,
-        is_supper=user.is_supper,
-        has_real_ip=True if x_real_ip else False,
-        permissions=[] if user.is_supper else user.page_perms
+    def handle_user_info(user, x_real_ip):
+        UserCache.del_count_error(user.username)
+        token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
+        access_token = user.access_token if token_isvalid else uuid.uuid4().hex
+        token_expired = time.time() + 8 * 60 * 60
+        last_login = human_datetime()
+        last_ip = x_real_ip
+        UserCRUD.update(user.id,access_token=access_token,token_expired=token_expired,
+                                last_login=last_login,last_ip=last_ip)
+        return jsonify(
+            access_token= user.access_token,
+            nickname=user.nickname,
+            is_supper=user.is_supper,
+            has_real_ip=True if x_real_ip else False,
+            permissions=[] if user.is_supper else user.page_perms
     )
 
 class LogoutView(APIView):

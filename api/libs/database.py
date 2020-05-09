@@ -29,7 +29,6 @@ class CRUDMixin(ModelMixin):
     def update(self, flush=False, **kwargs):
         kwargs.pop("id", None) # id不需要更新，所以刨除id
         for attr, value in six.iteritems(kwargs):
-            #print(attr,value,'==============')
             if value is not None:
                 setattr(self, attr, value)
         if flush:
@@ -37,7 +36,6 @@ class CRUDMixin(ModelMixin):
         return self.save()
     
     def save(self, commit=True, flush=False):
-        print(type(self),'#############')
         db.session.add(self)
         try:
             if flush:
@@ -70,7 +68,6 @@ class CRUDMixin(ModelMixin):
             result = [{k: getattr(i, k) for k in fl} for i in query]
         else:
             result = [i.to_dict() if to_dict else i for i in getattr(cls, 'query').filter_by(**kwargs)]
-            print(result,'-----------')
 
         return result[0] if first and result else (None if first else result)
 
