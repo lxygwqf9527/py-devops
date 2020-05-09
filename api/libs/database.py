@@ -36,7 +36,6 @@ class CRUDMixin(ModelMixin):
             return self.save(flush=flush)
         return self.save()
     
-    @classmethod
     def save(self, commit=True, flush=False):
         print(type(self),'#############')
         db.session.add(self)
