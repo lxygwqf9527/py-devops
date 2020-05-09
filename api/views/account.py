@@ -59,7 +59,7 @@ class LoginView(APIView):
         if role:
             pass
 
-    def handle_user_info(user, x_real_ip):
+    def handle_user_info(self, user, x_real_ip):
         UserCache.del_count_error(user.username)
         token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
         access_token = user.access_token if token_isvalid else uuid.uuid4().hex
