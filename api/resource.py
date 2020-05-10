@@ -20,7 +20,7 @@ class APIView(Resource):
 
     @staticmethod
     def jsonify(*args, **kwargs):
-        print(args,kwargs,'----------')
+        # print(args,kwargs,'----------')
     # content = AttrDict(data=data, error=error)
     # if error:
     #     content.data = ''
