@@ -19,9 +19,9 @@ class APIView(Resource):
         super(APIView, self).__init__()
 
     @staticmethod
-    def jsonify(*args, **kwargs):
-        print(args,kwargs,'----------')
-    # content = AttrDict(data=data, error=error)
+    def jsonify(data='' error=''):
+        content = AttrDict(data=data, error=error)
+        print(content)
     # if error:
     #     content.data = ''
     # elif hasattr(data, 'to_dict'):
