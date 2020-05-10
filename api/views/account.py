@@ -72,12 +72,12 @@ class LoginView(APIView):
                                 last_login=last_login,last_ip=last_ip)
         login_user(user)
         
-        return self.jsonify(
-            access_token= user.access_token,
+        return self.jsonify({
+            access_token = user.access_token,
             nickname=user.nickname,
             is_supper=user.is_supper,
             has_real_ip=True if x_real_ip else False,
-            permissions=[] if user.is_supper else user.page_perms
+            permissions=[] if user.is_supper else user.page_perms}
     )
 
 class LogoutView(APIView):
