@@ -8,6 +8,7 @@ import six
 from flask import jsonify
 from flask_restful import Resource
 
+from api.libs.utils import AttrDict
 from api.libs.perm import auth_required
 
 # 视图继承类
@@ -19,6 +20,15 @@ class APIView(Resource):
 
     @staticmethod
     def jsonify(*args, **kwargs):
+        print(args,kwargs)
+    # content = AttrDict(data=data, error=error)
+    # if error:
+    #     content.data = ''
+    # elif hasattr(data, 'to_dict'):
+    #     content.data = data.to_dict()
+    # elif isinstance(data, (list, QuerySet)) and all([hasattr(item, 'to_dict') for item in data]):
+    #     content.data = [item.to_dict() for item in data]
+    # return HttpResponse(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
         return jsonify(*args, **kwargs)
         
 API_PACKAGE = "api"
