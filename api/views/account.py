@@ -39,7 +39,15 @@ class LoginView(APIView):
         if not user:
             return abort(403, "User <{0}> does not exist".format(username))
         if not authenticated:
+            
+            value = UserCache.get_count_error(username)
+            if value >= 3:
+                if user and user.is_active:
+                    user.is_active = False
+                    user.save()
+                return abort(403,"账户已被禁用")
             return abort(403, "invalid username or password")
+            
         role = Role.get_by(id=user.id, first=True, to_dict=True)
             
         if log_type == 'ldap':
@@ -53,13 +61,7 @@ class LoginView(APIView):
                               role=role)
                 return self.handle_user_info(user, x_real_ip)
             
-        value = UserCache.get_count_error(username)
-
-        if value >= 3:
-            if user and user.is_active:
-                user.is_active = False
-                user.save()
-            return abort(403,"账户已被禁用")
+        
 
     def handle_user_info(self, user, x_real_ip):
         UserCache.del_count_error(user.username)
