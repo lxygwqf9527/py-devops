@@ -50,12 +50,14 @@ class UserCache(object):
     
     @classmethod
     def get_count_error(cls,key):
-        error = cache.get(cls.PREFIX_ERROR.format(key))
-        if not error:
-            cls.set_count_error(key,0)
-            error = cache.get(cls.PREFIX_ERROR.format(key))
+        value = cache.get(cls.PREFIX_ERROR.format(key))
+        if not value:
+            cls.set_count_error(key,1)
+            value = cache.get(cls.PREFIX_ERROR.format(key))
+        else:
+            cache.set_count_error(key,value+1)
             
-        return error
+        return value
     
     @classmethod
     def del_count_error(cls,key):
