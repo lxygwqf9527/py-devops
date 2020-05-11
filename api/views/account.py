@@ -47,7 +47,7 @@ class LoginView(APIView):
                     user.save()
                 return abort(403,"账户已被禁用")
             return abort(403, "invalid username or password")
-            
+
         role = Role.get_by(id=user.id, first=True, to_dict=True)
             
         if log_type == 'ldap':
@@ -60,8 +60,6 @@ class LoginView(APIView):
                               nickName=user.nickname,
                               role=role)
                 return self.handle_user_info(user, x_real_ip)
-            
-        
 
     def handle_user_info(self, user, x_real_ip):
         UserCache.del_count_error(user.username)
@@ -79,15 +77,6 @@ class LoginView(APIView):
             "is_supper" : user.is_supper,
             "has_real_ip" : True if x_real_ip else False,
             "permissions" : [] if user.is_supper else user.page_perms})
-
-        
-    #     return self.jsonify(
-    #         access_token = user.access_token,
-    #         nickname=user.nickname,
-    #         is_supper=user.is_supper,
-    #         has_real_ip=True if x_real_ip else False,
-    #         permissions=[] if user.is_supper else user.page_perms
-    # )
 
 class LogoutView(APIView):
     url_prefix = "/logout"
