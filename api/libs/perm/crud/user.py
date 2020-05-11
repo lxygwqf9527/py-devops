@@ -2,6 +2,7 @@ from flask import abort
 
 from api.models.account import User
 from api.libs.cache import UserCache
+
 class UserCRUD(object):
     '''
         User相关的增删改查
