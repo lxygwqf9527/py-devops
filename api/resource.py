@@ -5,12 +5,12 @@ import sys
 from inspect import getmembers, isclass
 
 import six
+import json
 from flask import jsonify, Response
 from flask_restful import Resource
 
 from api.libs.perm import auth_required
 from api.libs.utils import AttrDict, DateTimeEncoder
-
 
 # 视图继承类
 class APIView(Resource):
