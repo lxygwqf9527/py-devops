@@ -5,7 +5,7 @@ import sys
 from inspect import getmembers, isclass
 
 import six
-from flask import jsonify
+from flask import jsonify, Response
 from flask_restful import Resource
 
 from api.libs.perm import auth_required
@@ -22,7 +22,7 @@ class APIView(Resource):
     @staticmethod
     def jsonify(data='', error=''):
         content = AttrDict(data=data, error=error)
-        print(content,)
+        print(content)
     # if error:
     #     content.data = ''
     # elif hasattr(data, 'to_dict'):
@@ -30,7 +30,7 @@ class APIView(Resource):
     # elif isinstance(data, (list, QuerySet)) and all([hasattr(item, 'to_dict') for item in data]):
     #     content.data = [item.to_dict() for item in data]
     # return HttpResponse(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
-        return jsonify(data, DateTimeEncoder)
+        return Response(json.dumps(data, DateTimeEncoder), content_type='application/json')
         
 API_PACKAGE = "api"
 
