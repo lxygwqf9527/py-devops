@@ -22,6 +22,7 @@ class APIView(Resource):
     @staticmethod
     def jsonify(data='', error=''):
         content = AttrDict(data=data, error=error)
+        print(content.data)
     # if error:
     #     content.data = ''
     # elif hasattr(data, 'to_dict'):
