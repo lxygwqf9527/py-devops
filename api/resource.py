@@ -30,8 +30,8 @@ class APIView(Resource):
             content.data = data.to_dict()
         elif isinstance(data, (list, BaseQuery)) and all([hasattr(item, 'to_dict') for item in data]):
             content.data = [item.to_dict() for item in data]
-        res = json.dumps(content, cls=DateTimeEncoder)
-        return jsonify(res)
+        # res = json.dumps(content, cls=DateTimeEncoder)
+        return jsonify(content)
         
 API_PACKAGE = "api"
 
