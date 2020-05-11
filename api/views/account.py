@@ -40,7 +40,7 @@ class LoginView(APIView):
             return abort(403, "User <{0}> does not exist".format(username))
         if not authenticated:
             return abort(403, "invalid username or password")
-        role = Role.get_by(id=user.id, first=True, to_dict=False)
+        role = Role.get_by(id=user.id, first=True, to_dict=True)
             
         if log_type == 'ldap':
             pass
@@ -50,7 +50,7 @@ class LoginView(APIView):
                 session["user"] = dict(id=user.id,
                               userName=user.username,
                               nickName=user.nickname,
-                              role=role.to_dict)
+                              role=role)
                 return self.handle_user_info(user, x_real_ip)
             
         value = UserCache.get_count_error(username)
