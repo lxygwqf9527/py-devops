@@ -138,6 +138,7 @@ class Role(CRUDModel):
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)
         tmp['page_perms'] = json.loads(self.page_perms) if self.page_perms else None
@@ -148,3 +149,5 @@ class Role(CRUDModel):
     def __str__(self):
         return self.name
     
+    def count(self):
+        pass
