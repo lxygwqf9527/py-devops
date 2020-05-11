@@ -55,7 +55,7 @@ class UserCache(object):
             cls.set_count_error(key,1)
             value = cache.get(cls.PREFIX_ERROR.format(key))
         else:
-            cache.set_count_error(key,value+1)
+            cls.set_count_error(key,value+1)
             
         return value
     
