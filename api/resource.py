@@ -31,10 +31,7 @@ class APIView(Resource):
         elif isinstance(data, (list, BaseQuery)) and all([hasattr(item, 'to_dict') for item in data]):
             content.data = [item.to_dict() for item in data]
         res = json.dumps(content, cls=DateTimeEncoder)
-        print(res,'-----------',type(res))
-        return Response(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
-        return Response(json.dumps(data, cls=DateTimeEncoder), content_type='application/json')
-    #return 1
+        return jsonify(res)
         
 API_PACKAGE = "api"
 

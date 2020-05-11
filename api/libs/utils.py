@@ -13,15 +13,12 @@ def human_datetime(date=None):
 # 继承自dict，实现可以通过.来操作元素
 class AttrDict(dict):
     def __setattr__(self, key, value):
-        print('set', key, value)
         self.__setitem__(key, value)
 
     def __getattr__(self, item):
-        print('get', item)
         return self.__getitem__(item)
 
     def __delattr__(self, item):
-        print('del','item')
         self.__delitem__(item)
 
 class DateTimeEncoder(json.JSONEncoder):
