@@ -23,15 +23,15 @@ class APIView(Resource):
     @staticmethod
     def jsonify(data='', error=''):
         content = AttrDict(data=data, error=error)
-        print(content.data)
+
         if error:
             content.data = ''
         elif hasattr(data, 'to_dict'):
             content.data = data.to_dict()
         elif isinstance(data, (list, BaseQuery)) and all([hasattr(item, 'to_dict') for item in data]):
             content.data = [item.to_dict() for item in data]
-        # res = json.dumps(content, cls=DateTimeEncoder)
-        return jsonify(content)
+
+        return Response(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
         
 API_PACKAGE = "api"
 

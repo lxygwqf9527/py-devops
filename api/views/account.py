@@ -50,7 +50,7 @@ class LoginView(APIView):
                 session["user"] = dict(id=user.id,
                               userName=user.username,
                               nickName=user.nickname,
-                              role=role)
+                              role=role.to_dict)
                 return self.handle_user_info(user, x_real_ip)
             
         value = UserCache.get_count_error(username)
