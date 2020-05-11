@@ -8,6 +8,7 @@ import six
 import json
 from flask import jsonify, Response
 from flask_restful import Resource
+from flask_sqlalchemy import BaseQuery
 
 from api.libs.perm import auth_required
 from api.libs.utils import AttrDict, DateTimeEncoder
@@ -27,7 +28,7 @@ class APIView(Resource):
             content.data = ''
         elif hasattr(data, 'to_dict'):
             content.data = data.to_dict()
-        elif isinstance(data, (list, QuerySet)) and all([hasattr(item, 'to_dict') for item in data]):
+        elif isinstance(data, (list, BaseQuery)) and all([hasattr(item, 'to_dict') for item in data]):
             content.data = [item.to_dict() for item in data]
         return Response(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
         return Response(json.dumps(data, cls=DateTimeEncoder), content_type='application/json')
