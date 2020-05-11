@@ -18,3 +18,14 @@ class AttrDict(dict):
 
     def __delattr__(self, item):
         self.__delitem__(item)
+
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(o, datetime_date):
+            return o.strftime('%Y-%m-%d')
+        elif isinstance(o, Decimal):
+            return float(o)
+
+        return json.JSONEncoder.default(self, o)
