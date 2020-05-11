@@ -30,7 +30,8 @@ class APIView(Resource):
             content.data = data.to_dict()
         elif isinstance(data, (list, BaseQuery)) and all([hasattr(item, 'to_dict') for item in data]):
             content.data = [item.to_dict() for item in data]
-        print(json.dumps(content, cls=DateTimeEncoder))
+        res = json.dumps(content, cls=DateTimeEncoder)
+        print(res,'-----------',res.__dict__)
         return Response(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
         return Response(json.dumps(data, cls=DateTimeEncoder), content_type='application/json')
     #return 1
