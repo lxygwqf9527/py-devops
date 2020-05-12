@@ -76,7 +76,7 @@ class User(Model):
     last_ip = db.Column(db.String(50))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
 
-    role = db.relationship('Role', backref=db.backref('users'), lazy='dyamic', foreign_keys=[role_id])
+    role = db.relationship('Role', backref=db.backref('users'), foreign_keys=[role_id])
     
     
     created_at = db.Column(db.String(20), default=human_datetime)
