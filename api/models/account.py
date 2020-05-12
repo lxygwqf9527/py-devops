@@ -119,6 +119,7 @@ class User(Model):
                 for p, d in v.items():
                     print(p,d,'====')
                     data.extend(f'{m}.{p}.{x}' for x in d)
+            print(data,'#######')
             return data
         else:
             return []
