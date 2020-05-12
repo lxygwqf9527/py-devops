@@ -48,7 +48,6 @@ def create_app(config_object="settings"):
     configure_logger(app)
     return app
 
-
 def register_extensions(app):
     """Register Flask extensions."""
     bcrypt.init_app(app)
