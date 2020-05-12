@@ -23,7 +23,7 @@ from api.extensions import (
     login_manager,
     migrate,
     celery,
-    manager
+    # manager
     # rd,
     # es
 )
