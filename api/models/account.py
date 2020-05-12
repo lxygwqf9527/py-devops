@@ -108,6 +108,7 @@ class User(Model):
 
     @property
     def page_perms(self):
+        print(self.role)
         if self.role and self.role.page_perms:
             data = []
             perms = json.loads(self.role.page_perms)
