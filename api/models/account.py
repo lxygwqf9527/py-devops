@@ -76,8 +76,6 @@ class User(Model):
     last_ip = db.Column(db.String(50))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
 
-    role = db.relationship('Role',backref=db.backref('users'), lazy='dyamic')
-
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     deleted_at = db.Column(db.String(20), nullable=True)
@@ -143,6 +141,7 @@ class Role(CRUDModel):
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    user = db.relationship('Users',backref=db.backref('role'), lazy='dyamic')
 
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)
