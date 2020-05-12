@@ -74,7 +74,9 @@ class User(Model):
     token_expired = db.Column(db.Integer, nullable=True)
     last_login = db.Column(db.String(20))
     last_ip = db.Column(db.String(50))
-    role = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
+
+    role = db.relationship('Roles',backref=db.backref('roles'), lazy='dyamic')
 
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
