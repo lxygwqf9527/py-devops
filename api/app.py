@@ -23,7 +23,6 @@ from api.extensions import (
     login_manager,
     migrate,
     celery,
-    # manager
     # rd,
     # es
 )
@@ -57,8 +56,6 @@ def register_extensions(app):
     db.init_app(app)
     cors.init_app(app)
     login_manager.init_app(app)
-    # manager.init_app(app)
-    # manager.add_command('db', MigrateCommand)
     migrate.init_app(app, db)
     # rd.init_app(app)
     # if app.config.get("USE_ES"):
