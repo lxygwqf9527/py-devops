@@ -114,9 +114,6 @@ class User(Model):
         if self.role and self.role.page_perms:
             data = []
             perms = json.loads(self.role.page_perms)
-            print(type(perms))
-            perms = dict(self.role.page_perms)
-            print(type(perms))
             for m, v in perms.items():
                 for p, d in v.items():
                     data.extend(f'{m}.{p}.{x}' for x in d)
