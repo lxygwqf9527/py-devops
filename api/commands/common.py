@@ -15,3 +15,8 @@ def db_setup():
     """create tables
     """
     db.create_all()
+
+@click.command()
+@with_appcontext
+def db():
+    manager.add_command('db', MigrateCommand)
