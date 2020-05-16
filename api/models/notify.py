@@ -10,11 +10,17 @@ class NotifyType(Model):
 
     name = db.Column(db.String(20),nullable=True)
 
+    def __str__(self):
+        return '<NotifyType %r>' % self.name
+
 class NotifySource(Model):
     __tablename__ = 'notifysource'
 
     name = db.Column(db.String(10),nullable=True)
     desc = db.Column(db.String(20),nullable=True)
+
+    def __str__(self):
+        return '<NotifySource %r>' % self.name
 
 class Notify(Model):
     __tablename__ = 'notify'
