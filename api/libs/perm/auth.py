@@ -18,7 +18,8 @@ from api.libs.cache import UserCache
 def _auth_with_session():
     print(g.user,'==============')
     print(login_user(g.user),'----------')
-    print(login_user(UserCache.get(session["user"]["userName"])),'---------')
+    print(session["user"]["userName"],'=++++++++++')
+    # print(login_user(UserCache.get(session["user"]["userName"])),'---------')
     if isinstance(getattr(g, 'user', None), User):
         login_user(g.user)
         return True
