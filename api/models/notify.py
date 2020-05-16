@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+from api.extensions import db
 from api.libs import Model
 from api.libs.cache.notify import NotifyCache
 
