@@ -1,5 +1,5 @@
 from api.extensions import cache
-from api.models.account import User, Notify, Role
+from api.models.account import Role, User,  Notify
 
 class UserCache(object):
     '''
