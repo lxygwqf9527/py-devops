@@ -1,12 +1,12 @@
 # -*- coding:utf-8 -*-
 
 from api.extensions import db
-from api.libs import Model,human_datetime
+from api.libs import Model, human_datetime
 from api.libs.cache.notify import NotifyCache
 
 
 class NotifyType(Model):
-    __tablename__ = 'notifytype'
+    __tablename__ = 'notify_type'
 
     name = db.Column(db.String(20),nullable=True)
 
@@ -14,7 +14,7 @@ class NotifyType(Model):
         return '<NotifyType %r>' % self.name
 
 class NotifySource(Model):
-    __tablename__ = 'notifysource'
+    __tablename__ = 'notify_source'
 
     name = db.Column(db.String(10),nullable=True)
     desc = db.Column(db.String(20),nullable=True)
@@ -26,10 +26,10 @@ class Notify(Model):
     __tablename__ = 'notify'
 
     title = db.Column(db.String(255))
-    source = db.Column(db.Integer, db.ForeignKey('notifysource.id'), nullable=True)
-    type = db.Column(db.Integer, db.ForeignKey('notifytype.id'), nullable=True)
+    source = db.Column(db.Integer, db.ForeignKey('notify_source.id'), nullable=True)
+    type = db.Column(db.Integer, db.ForeignKey('notify_type.id'), nullable=True)
     content = db.Column(db.String(255), nullable=True)
-    unread = db.Column(db.Boolean,default=True)
+    unread = db.Column(db.Boolean, default=True)
     link = db.Column(db.Boolean, nullable=True)
 
     created_at = db.Column(db.String(20), default=human_datetime)
