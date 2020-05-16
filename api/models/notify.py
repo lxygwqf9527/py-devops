@@ -21,7 +21,7 @@ class Notify(Model):
     unread = db.Column(db.Boolean,default=True)
     link = db.Column(db.Boolean, nullable=True)
 
-    created_at = db.Column(db.string(20), default=human_datetime)
+    created_at = db.Column(db.String(20), default=human_datetime)
 
     @classmethod
     def make_notify(cls, source, type, title, content=None, with_quiet=True):
