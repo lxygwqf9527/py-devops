@@ -15,6 +15,7 @@ from flask import g
 from api.models.account import User
 
 def _auth_with_session():
+    print('11111111111111111111111----')
     if isinstance(getattr(g, 'user', None), User):
         login_user(g.user)
         print(login_user(g.user))
