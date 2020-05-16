@@ -15,14 +15,13 @@ from flask import g
 from api.models.account import User
 
 def _auth_with_session():
-    print('11111111111111111111111----')
+    print(login_user(g.user),'----------')
+    print(login_user(UserCache.get(session["user"]["userName"])),'---------')
     if isinstance(getattr(g, 'user', None), User):
         login_user(g.user)
-        print(login_user(g.user))
         return True
     if "user" in session and "userName" in (session["user"] or {}):
         login_user(UserCache.get(session["user"]["userName"]))
-        print(login_user(UserCache.get(session["user"]["userName"])))
         return True
     return False
 
