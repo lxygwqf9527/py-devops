@@ -1,6 +1,6 @@
 from flask import request
 from api.resource import APIView
-from api.models.account import Notify
+from api.models import Notify
 
 class NotifyView(APIView):
     url_prefix = "/notify"
