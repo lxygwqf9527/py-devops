@@ -4,6 +4,18 @@ from api.extensions import db
 from api.libs import Model,human_datetime
 from api.libs.cache.notify import NotifyCache
 
+
+class NotifyType(Model):
+    __tablename__ = 'notifytype'
+
+    name = db.Column(db.String(20))
+
+class NotifySource(Model):
+    __tablename__ = 'notifysource'
+
+    name = db.Column(db.String(10))
+    desc = db.Column(db.String(20))
+
 class Notify(Model):
     __tablename__ = 'notify'
 
@@ -24,14 +36,3 @@ class Notify(Model):
 
     def __str__(self):
         return '<Notify %r>' % self.title
-
-class NotifyType(Model):
-    __tablename__ = 'notifytype'
-
-    name = db.Column(db.String(20))
-
-class NotifySource(Model):
-    __tablename__ = 'notifysource'
-
-    name = db.Column(db.String(10))
-    desc = db.Column(db.String(20))
