@@ -1,5 +1,5 @@
 from api.extensions import cache
-from api.models import User, Role
+from api.models import User
 
 class UserCache(object):
     '''
@@ -64,21 +64,3 @@ class UserCache(object):
         cache.delete(cls.PREFIX_ERROR.format(key))
 
 
-class PermissionCache(object):
-    PREFIX_ID = "Permission:id:{0}"
-
-    @classmethod
-    def get(cls, id):
-        permission = cache.get(cls.PREFIX_ID.format(key))
-
-        if not permission:
-            permission = Role.get_by(id=id).page_perms
-
-        if permission:
-            cls.set(id,permission)
-        
-        return permission
-    
-    @classmethod
-    def set(cls, id, permission):
-        cache.set(cls.PREFIX_ID.format(id),permission)

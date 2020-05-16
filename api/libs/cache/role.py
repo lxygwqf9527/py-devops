@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from api.extensions import cache
-from api.models.account import Role
+from api.models import Role
 
 class RoleCache(object):
     PREFIX_ID = "Role:id:{0}"
@@ -22,3 +22,22 @@ class RoleCache(object):
             role = Role.get_by_id(id)
             if role is not None:
                 cache.set(cls.PREFIX_ID.format(rid), role)        
+
+class PermissionCache(object):
+    PREFIX_ID = "Permission:id:{0}"
+
+    @classmethod
+    def get(cls, id):
+        permission = cache.get(cls.PREFIX_ID.format(key))
+
+        if not permission:
+            permission = Role.get_by(id=id).page_perms
+
+        if permission:
+            cls.set(id,permission)
+        
+        return permission
+    
+    @classmethod
+    def set(cls, id, permission):
+        cache.set(cls.PREFIX_ID.format(id),permission)

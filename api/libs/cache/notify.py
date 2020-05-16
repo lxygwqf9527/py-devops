@@ -11,6 +11,6 @@ class NotifyCache(object):
         cache.set(cls.PREFIX_QUIET, time)
     
     @classmethod
-    def get_by_time(cls, time):
+    def get_by_time(cls):
         return cache.get(cls.PREFIX_QUIET)
 

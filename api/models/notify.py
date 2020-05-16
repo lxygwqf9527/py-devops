@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from api.libs.cache.user import NotifyCache
+from api.libs import Model
+from api.libs.cache.notify import NotifyCache
 
 class Notify(Model):
     TYPES = (

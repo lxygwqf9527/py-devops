@@ -11,10 +11,10 @@ from flask import request
 from flask import session
 from flask_login import login_user, logout_user
 
-from api.models.account import User, Role
+from api.models import User, Role
 from api.resource import APIView
 from api.libs import human_datetime, args_required
-from api.libs.cache import UserCache
+from api.libs import UserCache
 from api.libs.perm import auth_abandoned
 from api.libs.perm.crud import UserCRUD
 
