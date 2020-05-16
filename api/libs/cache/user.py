@@ -76,6 +76,7 @@ class PermissionCache(object):
                      cache.get(cls.PREFIX_NICKNAME.format(key))
 
         if not permission:
+            pass
         
 class NotifyCache(object):
     '''
