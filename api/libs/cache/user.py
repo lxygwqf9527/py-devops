@@ -1,5 +1,5 @@
 from api.extensions import cache
-from api.models.account import User,Notify
+from api.models.account import User, Notify
 
 class UserCache(object):
     '''
@@ -69,14 +69,14 @@ class PermissionCache(object):
     PREFIX_NAME = "Permission:username:{0}"
     PREFIX_NICKNAME = "Permission:nickname:{0}"
 
-     @classmethod
+    @classmethod
     def get(cls, key):
         permission = cache.get(cls.PREFIX_ID.format(key)) or \
                      cache.get(cls.PREFIX_NAME.format(key)) or \
                      cache.get(cls.PREFIX_NICKNAME.format(key))
 
         if not permission:
-
+        
 class NotifyCache(object):
     '''
         通知相关的缓存类
