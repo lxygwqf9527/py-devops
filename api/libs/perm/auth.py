@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 from functools import wraps
 
 import jwt
-from flask import request
+from flask import request, abort
 from flask import current_app
 from flask import session
 from flask_login import login_user
