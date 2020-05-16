@@ -1,5 +1,5 @@
 from api.extensions import cache
-from api.models.account import User, Notify
+from api.models.account import User, Notify, Role
 
 class UserCache(object):
     '''
@@ -66,17 +66,22 @@ class UserCache(object):
 
 class PermissionCache(object):
     PREFIX_ID = "Permission:id:{0}"
-    PREFIX_NAME = "Permission:username:{0}"
-    PREFIX_NICKNAME = "Permission:nickname:{0}"
 
     @classmethod
-    def get(cls, key):
-        permission = cache.get(cls.PREFIX_ID.format(key)) or \
-                     cache.get(cls.PREFIX_NAME.format(key)) or \
-                     cache.get(cls.PREFIX_NICKNAME.format(key))
+    def get(cls, id):
+        permission = cache.get(cls.PREFIX_ID.format(key))
 
         if not permission:
-            pass
+            permission = Role.get_by(id=id).page_perms
+
+        if permission:
+            cls.set(id,permission)
+        
+        return permission
+    
+    @classmethod
+    def set(cls, id, permission):
+        cache.set(cls.PREFIX_ID.format(id),permission)
         
 class NotifyCache(object):
     '''
