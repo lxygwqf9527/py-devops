@@ -1,7 +1,7 @@
 from flask import abort
 
 from api.models import User
-from api.libs import UserCache
+from api.libs.cache import UserCache
 
 class UserCRUD(object):
     '''
