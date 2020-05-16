@@ -35,7 +35,7 @@ def auth_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if getattr(func, 'authenticated'):
-            print(getattr(func, 'authenticated'))
+            print(getattr(func, 'authenticated'),'-================')
         if not getattr(func, 'authenticated', True):
             # 先判断有没有authenticated这个属性是否为True，是的话表示通过认证
             return func(*args, **kwargs)
