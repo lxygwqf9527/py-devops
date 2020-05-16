@@ -19,8 +19,6 @@ from api.libs.perm import auth_abandoned
 from api.libs.perm.crud import UserCRUD
 
 
-
-
 class LoginView(APIView):
     url_prefix = "/login"
     

@@ -3,16 +3,16 @@
 import copy
 import hashlib
 import json
+import time
 from datetime import datetime
 
 from flask import current_app
 from flask_sqlalchemy import BaseQuery
 
-
 from api.extensions import db
 from api.libs import Model, CRUDModel
 from api.libs.utils import human_datetime
-
+from api.libs.cache.notify import NotifyCache
 
 
 
@@ -115,11 +115,8 @@ class User(Model):
             data = []
             perms = json.loads(self.role.page_perms)
             for m, v in perms.items():
-                print(m,v,'-----')
                 for p, d in v.items():
-                    print(p,d,'====')
                     data.extend(f'{m}.{p}.{x}' for x in d)
-            print(data,'#######')
             return data
         else:
             return []
@@ -140,7 +137,7 @@ class Role(CRUDModel):
 
     name = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
-    page_perms = db.Column(db.Text, nullable=True)
+    page_perms = db.Column(db.Text, nullable=True)  # 格式为{"home":{"home":["views"]}} # 第一个home为一级菜单，第二个home为二级菜单，["views"]为三级菜单
     deploy_perms = db.Column(db.Text, nullable=True)
 
     created_at = db.Column(db.String(20), default=human_datetime)
@@ -158,3 +155,31 @@ class Role(CRUDModel):
     
     def count(self):
         pass
+
+
+class Notify(Model):
+    TYPES = (
+        ('1', '通知'),
+        ('2', '待办'),
+    )
+    SOURCES = (
+        ('monitor', '监控中心'),
+        ('schedule', '任务计划'),
+    )
+    title = db.Column(db.String(255))
+    source = db.Column(db.String(10), choices=SOURCES)
+    type = db.Column(db.String(2), choices=TYPES)
+    content = db.Column(db.String(255), nullable=True)
+    unread = db.Column(db.Boolean,default=True)
+    link = db.Column(db.Boolean, nullable=True)
+
+    created_at = db.Column(db.string(20), default=human_datetime)
+
+    @classmethod
+    def make_notify(cls, source, type, title, content=None, with_quiet=True):
+        if not with_quiet or time.time() - NotifyCache.get_by_time() > 3600:
+            NotifyCache.set_by_time(time.time())
+            self.create(source=source, title=title, type=type, content=content)
+
+    def __str__(self):
+        return '<Notify %r>' % self.title

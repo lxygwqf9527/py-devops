@@ -4,8 +4,8 @@ from api.extensions import cache
 from api.models.account import Role
 
 class RoleCache(object):
-    PREFIX_ID = "Role::id::{0}"
-    PREFIX_NAME = "Role::name::{0}"
+    PREFIX_ID = "Role:id:{0}"
+    PREFIX_NAME = "Role:name:{0}"
     
     @classmethod
     def get_by_name(cls,name):

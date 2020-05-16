@@ -25,6 +25,10 @@ class CRUDMixin(ModelMixin):
 
     def __init__(self, **kwargs):
         super(CRUDMixin, self).__init__(**kwargs)
+
+    @classmethod
+    def create(cls, flush=False, **kwargs):
+        return cls(**kwargs).save(flush=flush)
     
     def update(self, flush=False, **kwargs):
         kwargs.pop("id", None) # id不需要更新，所以刨除id

@@ -1,14 +1,15 @@
 from api.extensions import cache
 from api.models.account import User
+from api.mod
 
 class UserCache(object):
     '''
         用户相关的缓存类
     '''
-    PREFIX_ID = "user::id::{0}"
-    PREFIX_NAME = "User::username::{0}"
-    PREFIX_NICK = "User::nickname::{0}"
-    PREFIX_ERROR = "user::error::{0}"
+    PREFIX_ID = "User:id:{0}"
+    PREFIX_NAME = "User:username:{0}"
+    PREFIX_NICK = "User:nickname:{0}"
+    PREFIX_ERROR = "User:error:{0}"
     
     @classmethod
     def get(cls, key):
@@ -63,4 +64,16 @@ class UserCache(object):
     def del_count_error(cls,key):
         cache.delete(cls.PREFIX_ERROR.format(key))
 
-    
+
+class PermissionCache(object):
+    PREFIX_ID = "Permission:id:{0}"
+    PREFIX_NAME = "Permission:username:{0}"
+    PREFIX_NICKNAME = "Permission:nickname:{0}"
+
+     @classmethod
+    def get(cls, key):
+        permission = cache.get(cls.PREFIX_ID.format(key)) or \
+                     cache.get(cls.PREFIX_NAME.format(key)) or \
+                     cache.get(cls.PREFIX_NICKNAME.format(key))
+
+        if not permission:
