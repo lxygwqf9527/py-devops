@@ -14,15 +14,18 @@ from flask import g
 
 from api.models.account import User
 
+def _auth_with_session():
+    if isinstance(getattr(g, 'user', None), User):
+        login_user(g.user)
+        print(login_user(g.user))
+        return True
+    if "user" in session and "userName" in (session["user"] or {}):
+        login_user(UserCache.get(session["user"]["userName"]))
+        print(login_user(UserCache.get(session["user"]["userName"])))
+        return True
+    return False
 
-def auth_abandoned(func):
-    setattr(func, "authenticated", False)
 
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-
-    return wrapper
 
 def auth_required(func):
     if request.json is not None:
@@ -34,12 +37,21 @@ def auth_required(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if getattr(func, 'authenticated'):
-            print(getattr(func, 'authenticated'),'-================')
         if not getattr(func, 'authenticated', True):
             # 先判断有没有authenticated这个属性是否为True，是的话表示通过认证
             return func(*args, **kwargs)
+        if _auth_with_session():
+            return func(*args, **kwargs)
         # 再判断session or key or token or ip_white_list，满足一样即可
         abort(401)
+
+    return wrapper
+
+def auth_abandoned(func):
+    setattr(func, "authenticated", False)
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
 
     return wrapper
