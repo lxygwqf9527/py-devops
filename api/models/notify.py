@@ -6,14 +6,7 @@ from api.libs.cache.notify import NotifyCache
 
 class Notify(Model):
     __tablename__ = 'notify'
-    TYPES = (
-        ('1', '通知'),
-        ('2', '待办'),
-    )
-    SOURCES = (
-        ('monitor', '监控中心'),
-        ('schedule', '任务计划'),
-    )
+
     title = db.Column(db.String(255))
     source = db.Column(db.Integer, db.ForeignKey('notifysource.id'))
     type = db.Column(db.Integer, db.ForeignKey('notifytype.id'))
@@ -42,4 +35,3 @@ class NotifySource(Model):
 
     name = db.Column(db.String(10))
     desc = db.Column(db.String(20))
-    
