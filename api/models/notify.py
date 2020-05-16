@@ -8,20 +8,20 @@ from api.libs.cache.notify import NotifyCache
 class NotifyType(Model):
     __tablename__ = 'notifytype'
 
-    name = db.Column(db.String(20))
+    name = db.Column(db.String(20),nullable=True)
 
 class NotifySource(Model):
     __tablename__ = 'notifysource'
 
-    name = db.Column(db.String(10))
-    desc = db.Column(db.String(20))
+    name = db.Column(db.String(10),nullable=True)
+    desc = db.Column(db.String(20),nullable=True)
 
 class Notify(Model):
     __tablename__ = 'notify'
 
     title = db.Column(db.String(255))
-    source = db.Column(db.Integer, db.ForeignKey('notifysource.id'))
-    type = db.Column(db.Integer, db.ForeignKey('notifytype.id'))
+    source = db.Column(db.Integer, db.ForeignKey('notifysource.id'), nullable=True)
+    type = db.Column(db.Integer, db.ForeignKey('notifytype.id'), nullable=True)
     content = db.Column(db.String(255), nullable=True)
     unread = db.Column(db.Boolean,default=True)
     link = db.Column(db.Boolean, nullable=True)
