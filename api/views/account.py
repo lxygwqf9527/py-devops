@@ -57,7 +57,7 @@ class LoginView(APIView):
                               userName=user.username,
                               nickName=user.nickname,
                               role=role)
-                print(session["user"])
+                print(session["user"],'11111111111111111323232')
                 return self.handle_user_info(user, x_real_ip)
 
     def handle_user_info(self, user, x_real_ip):
