@@ -13,8 +13,10 @@ from flask_login import login_user
 from flask import g
 
 from api.models.account import User
+from api.libs.cache import UserCache
 
 def _auth_with_session():
+    print(g.user,'==============')
     print(login_user(g.user),'----------')
     print(login_user(UserCache.get(session["user"]["userName"])),'---------')
     if isinstance(getattr(g, 'user', None), User):
