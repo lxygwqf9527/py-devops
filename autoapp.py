@@ -13,7 +13,7 @@ def before_request():
     g.user = current_user
 
 @app.after_request
-def after_request():
+def after_request(response):
     g.user = current_user
 
-    return True
+    return response
