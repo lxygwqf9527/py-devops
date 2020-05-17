@@ -9,13 +9,14 @@ import jwt
 from flask import request, abort
 from flask import current_app
 from flask import session
-from flask_login import login_user
+from flask_login import login_user, current_user
 from flask import g
 
 from api.models.account import User
 from api.libs.cache import UserCache
 
 def _auth_with_session():
+    print(current_user,'-------------')
     if isinstance(getattr(g, 'user', None), User):
         login_user(g.user)
         return True
