@@ -7,6 +7,7 @@ For local development, use a .env file to set
 environment variables.
 """
 from environs import Env
+import datetime
 
 env = Env()
 env.read_env()
@@ -17,6 +18,9 @@ SECRET_KEY = env.str("SECRET_KEY")
 BCRYPT_LOG_ROUNDS = env.int("BCRYPT_LOG_ROUNDS", default=13)
 DEBUG_TB_ENABLED = DEBUG
 DEBUG_TB_INTERCEPT_REDIRECTS = False
+
+# session
+PERMANENT_SESSION_LIFETIME = datetime.timedelta(hours==1)
 
 
 ERROR_CODES = [400, 401, 403, 404, 405, 500, 502]
