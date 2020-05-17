@@ -10,6 +10,4 @@ app = create_app()
 
 @app.before_request
 def before_request():
-    
     g.user = current_user
-    print(g.user, current_user)
