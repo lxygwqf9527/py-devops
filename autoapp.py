@@ -11,3 +11,7 @@ app = create_app()
 @app.before_request
 def before_request():
     g.user = current_user
+
+@app.after_request
+def after_request():
+    g.user = current_user
