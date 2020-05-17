@@ -24,7 +24,37 @@ def _auth_with_session():
         return True
     return False
 
+def _auth_with_key():
+    key = request.values.get('_key')
+    secret = request.values.get('_secret')
+    path = request.path
+    keys = sorted(request.values.keys())
+    req_args = [request.values[k] for k in keys if k not in ("_key", "_secret")]
+    user, authenticated = User.query.authenticate_with_key(key, secret, req_args, path)
+    if user and authenticated:
+        login_user(user)
+        return True
+    return False
 
+def _auth_with_token():
+    auth_headers = request.headers.get('Access-Token', '').strip()
+    if not auth_headers:
+        return False
+
+    try:
+        token = auth_headers
+        data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
+        user = User.query.filter_by(email=data['sub']).first()
+        if not user:
+            return False
+
+        login_user(user)
+        g.user = user
+        return True
+    except jwt.ExpiredSignatureError:
+        return False
+    except (jwt.InvalidTokenError, Exception):
+        return False
 
 def auth_required(func):
     if request.json is not None:
