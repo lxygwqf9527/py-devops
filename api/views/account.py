@@ -9,7 +9,7 @@ from flask import abort
 from flask import current_app
 from flask import request
 from flask import session
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 from api.models import User, Role
 from api.resource import APIView
@@ -68,8 +68,9 @@ class LoginView(APIView):
         last_ip = x_real_ip
         UserCRUD.update(user.id,access_token=access_token,token_expired=token_expired,
                                 last_login=last_login,last_ip=last_ip)
+        print(current_user)
         login_user(user)
-        print(login_user(user))
+        print(current_user)
         return self.jsonify({
             "access_token" :  user.access_token,
             "nickname" : user.nickname,
