@@ -9,7 +9,7 @@ from logging.config import dictConfig
 
 # from api.flask_cas import CAS
 from flask import Flask
-from flask import make_response, jsonify
+from flask import make_response, jsonify, session
 from flask.blueprints import Blueprint
 from flask.cli import click
 
@@ -46,6 +46,8 @@ def create_app(config_object="settings"):
     # register_shell_context(app)
     register_commands(app)
     configure_logger(app)
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=1)
     return app
 
 def register_extensions(app):
