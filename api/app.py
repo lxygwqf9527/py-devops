@@ -46,8 +46,6 @@ def create_app(config_object="settings"):
     # register_shell_context(app)
     register_commands(app)
     configure_logger(app)
-    session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=1)
     return app
 
 def register_extensions(app):

@@ -20,7 +20,7 @@ DEBUG_TB_ENABLED = DEBUG
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 # session
-PERMANENT_SESSION_LIFETIME = datetime.timedelta(hours==1)
+PERMANENT_SESSION_LIFETIME = datetime.timedelta(minutes=1)
 
 
 ERROR_CODES = [400, 401, 403, 404, 405, 500, 502]
