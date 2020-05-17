@@ -15,5 +15,5 @@ def before_request():
 @app.after_request
 def after_request(response):
     g.user = current_user
-
+    print(g.user)
     return response
