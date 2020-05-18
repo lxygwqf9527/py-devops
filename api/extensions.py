@@ -13,7 +13,6 @@ from flask_sqlalchemy import SQLAlchemy
 # from api.lib.utils import RedisHandler
 
 bcrypt = Bcrypt()
-login_manager = LoginManager()
 db = SQLAlchemy()
 migrate = Migrate()
 cache = Cache()
@@ -21,3 +20,8 @@ celery = Celery()
 cors = CORS(supports_credentials=True)
 # rd = RedisHandler()
 # es = ESHandler()
+
+# flask-login
+login_manager = LoginManager()
+login_manager.session_protection = 'strong'
+login_manager.login_view = 'LoginView'

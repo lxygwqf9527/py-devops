@@ -13,6 +13,7 @@ from flask import make_response, jsonify, session
 from flask.blueprints import Blueprint
 from flask.cli import click
 
+
 import api.views
 
 from api.extensions import (
@@ -60,6 +61,8 @@ def register_extensions(app):
     # if app.config.get("USE_ES"):
     #     es.init_app(app)
     celery.conf.update(app.config)
+    
+
 
 def register_blueprints(app):
     for item in getmembers(api.views):
