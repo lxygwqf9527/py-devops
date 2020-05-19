@@ -83,6 +83,3 @@ class LogoutView(APIView):
     def post(self):
         logout_user()
         self.jsonify(code=200)
-
-
-
