@@ -21,7 +21,7 @@ class APIView(Resource):
         super(APIView, self).__init__()
 
     @staticmethod
-    def jsonify(data='', error=''):
+    def jsonify(*args, **kwargs):
         content = AttrDict(data=data, error=error)
 
         if error:
