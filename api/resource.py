@@ -6,7 +6,7 @@ from inspect import getmembers, isclass
 
 import six
 import json
-from flask import jsonify, Response
+from flask import jsonify, Response, jsonify
 from flask_restful import Resource
 from flask_sqlalchemy import BaseQuery
 
@@ -30,8 +30,8 @@ class APIView(Resource):
             content.data = data.to_dict()
         elif isinstance(data, (list, BaseQuery)) and all([hasattr(item, 'to_dict') for item in data]):
             content.data = [item.to_dict() for item in data]
-
-        return Response(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
+        return jsonify(*args, **kwargs)
+        # return Response(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
         
 API_PACKAGE = "api"
 
