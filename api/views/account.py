@@ -57,8 +57,8 @@ class LoginView(APIView):
 
     def handle_user_info(self, user, x_real_ip, role):
         session["user"] = dict(id=user.id,
-                              userName=user.username,
-                              nickName=user.nickname,
+                              username=user.username,
+                              nickname=user.nickname,
                               role=role)
         UserCache.del_count_error(user.username)
         token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()

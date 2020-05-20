@@ -15,13 +15,9 @@ env.read_env()
 ENV = env.str("FLASK_ENV", default="production")
 DEBUG = ENV == "development"
 SECRET_KEY = env.str("SECRET_KEY")
-print(SECRET_KEY,'44214125021-509215-2195-21095-1295-02195-921-05912-0592-01')
 BCRYPT_LOG_ROUNDS = env.int("BCRYPT_LOG_ROUNDS", default=13)
 DEBUG_TB_ENABLED = DEBUG
 DEBUG_TB_INTERCEPT_REDIRECTS = False
-
-# session
-PERMANENT_SESSION_LIFETIME = datetime.timedelta(minutes=1)
 
 
 ERROR_CODES = [400, 401, 403, 404, 405, 500, 502]
