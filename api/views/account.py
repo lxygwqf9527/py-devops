@@ -60,7 +60,6 @@ class LoginView(APIView):
                               userName=user.username,
                               nickName=user.nickname,
                               role=role)
-        session.save_session()
         UserCache.del_count_error(user.username)
         token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
         access_token = user.access_token if token_isvalid else uuid.uuid4().hex
