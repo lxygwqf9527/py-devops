@@ -16,6 +16,7 @@ from api.models.account import User
 from api.libs.cache import UserCache
 
 def _auth_with_session():
+    print(session)
     if isinstance(getattr(g, 'user', None), User):
         login_user(g.user)
         return True
@@ -66,8 +67,6 @@ def auth_required(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print(request.cookies,'-------------------------------qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq')
-        print(request.headers,'===============')
         if not getattr(func, 'authenticated', True):
             # 先判断有没有authenticated这个属性是否为True，是的话表示通过认证
             return func(*args, **kwargs)
