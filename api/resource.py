@@ -21,7 +21,7 @@ class APIView(Resource):
         super(APIView, self).__init__()
 
     @staticmethod
-    def jsonify(*args, **kwargs):
+    def jsonify(data='', error=''):
         content = AttrDict(data=data, error=error)
 
         if error:
@@ -30,8 +30,8 @@ class APIView(Resource):
             content.data = data.to_dict()
         elif isinstance(data, (list, BaseQuery)) and all([hasattr(item, 'to_dict') for item in data]):
             content.data = [item.to_dict() for item in data]
-        return jsonify(*args, **kwargs)
-        # return Response(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
+        return jsonify(content)
+        return Response(json.dumps(content, cls=DateTimeEncoder), content_type='application/json')
         
 API_PACKAGE = "api"
 
