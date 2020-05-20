@@ -83,9 +83,10 @@ def create_app(config_object="settings"):
     register_extensions(app)
     register_blueprints(app)
     # register_error_handlers(app)
-    # register_shell_context(app)
+    register_shell_context(app)
     register_commands(app)
     configure_logger(app)
+    app.wsgi_app = ReverseProxy(app.wsgi_app)
     return app
 
 def register_extensions(app):
@@ -117,14 +118,14 @@ def register_blueprints(app):
 #         error_code = getattr(error, "code", 500)
 #         return make_response(jsonify(message=str(error)), error_code)
 
-# def register_shell_context(app):
-#     """Register shell context objects."""
+def register_shell_context(app):
+    """Register shell context objects."""
 
-#     def shell_context():
-#         """Shell context objects."""
-#         return {"db": db, "User": User}
+    def shell_context():
+        """Shell context objects."""
+        return {"db": db, "User": User}
 
-#     app.shell_context_processor(shell_context)
+    app.shell_context_processor(shell_context)
 
 def register_commands(app):
     """Register Click commands."""
