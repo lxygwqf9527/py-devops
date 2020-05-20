@@ -16,7 +16,7 @@ def db_setup():
     """
     db.create_all()
 
-@click.command()
-@with_appcontext
-def db():
-    manager.add_command('db', MigrateCommand)
+# @click.command()
+# @with_appcontext
+# def db():
+#     manager.add_command('db', MigrateCommand)
