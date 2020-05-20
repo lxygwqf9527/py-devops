@@ -53,15 +53,13 @@ class LoginView(APIView):
             # ldap未完成
         else:
             if user and user.deleted_by is None:
-                session["user"] = dict(id=user.id,
+                return self.handle_user_info(user, x_real_ip, role)
+
+    def handle_user_info(self, user, x_real_ip, role):
+        session["user"] = dict(id=user.id,
                               userName=user.username,
                               nickName=user.nickname,
                               role=role)
-                print(session,'===========++++')
-                session.permanent = True
-                return self.handle_user_info(user, x_real_ip)
-
-    def handle_user_info(self, user, x_real_ip):
         UserCache.del_count_error(user.username)
         token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
         access_token = user.access_token if token_isvalid else uuid.uuid4().hex
