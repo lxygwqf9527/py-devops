@@ -17,11 +17,12 @@ from api.libs.cache import UserCache
 
 def _auth_with_session():
     print(session,'======================')
+    print(g.user,'-=-=-=-=-=-=-=-=--==-')
     if isinstance(getattr(g, 'user', None), User):
         login_user(g.user)
         return True
-    if "user" in session and "userName" in (session["user"] or {}):
-        login_user(UserCache.get(session["user"]["userName"]))
+    if "user" in session and "username" in (session["user"] or {}):
+        login_user(UserCache.get(session["user"]["username"]))
         return True
     return False
 
