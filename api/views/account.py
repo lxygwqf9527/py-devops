@@ -58,6 +58,7 @@ class LoginView(APIView):
                               nickName=user.nickname,
                               role=role)
                 print(session,'===========++++')
+                session.permanent = True
                 return self.handle_user_info(user, x_real_ip)
 
     def handle_user_info(self, user, x_real_ip):
