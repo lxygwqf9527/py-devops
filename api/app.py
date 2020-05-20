@@ -41,7 +41,7 @@ def create_app(config_object="settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
-    app.session.permanent = True
+    session.permanent = True
     register_extensions(app)
     register_blueprints(app)
     # register_error_handlers(app)
