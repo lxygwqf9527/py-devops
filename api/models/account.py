@@ -50,7 +50,7 @@ class UserQuery(BaseQuery):
 
         return user
 
-    def get(sefl, id):
+    def get(self, id):
         '''
             根据id查询
         '''
