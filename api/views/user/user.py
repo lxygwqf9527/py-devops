@@ -26,9 +26,9 @@ class SelfView(APIView):
     def patch(self):
         new_password = request.values.get('new_password', None)
         old_password = request.values.get('old_password', None)
-
+        uid = g.user.id
         if  new_password and old_password:
-            uid = g.user.id
+
             if len(new_password) < 6:
                 return self.jsonify(error='请设置至少6位的新密码')
             if g.user.check_password(old_password):
