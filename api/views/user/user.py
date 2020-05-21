@@ -32,7 +32,7 @@ class SelfView(APIView):
             if len(new_password) < 6:
                 return self.jsonify(error='请设置至少6位的新密码')
             if g.user.check_password(old_password):
-                UserCRUD.update(uid,password=new_password) 
+                UserCRUD.update(uid,_password=new_password) 
             else:
                 return self.jsonify(error='原密码错误，请重新输入')
         if request.values.get('nickname', None):
