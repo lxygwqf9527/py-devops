@@ -80,6 +80,6 @@ class LogoutView(APIView):
     url_prefix = "/logout"
 
     @auth_abandoned
-    def post(self):
+    def get(self):
         logout_user()
-        self.jsonify(code=200)
+        self.jsonify(error='')
