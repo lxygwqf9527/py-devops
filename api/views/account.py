@@ -82,4 +82,4 @@ class LogoutView(APIView):
     @auth_abandoned
     def get(self):
         logout_user()
-        self.jsonify(error='')
+        return self.jsonify(error='')
