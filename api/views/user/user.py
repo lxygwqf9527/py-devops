@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+from flask import g
 from flask import request, abort, session
 from flask_login import current_user
 from api.resource import APIView
