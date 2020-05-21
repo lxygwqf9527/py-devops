@@ -38,6 +38,7 @@ class SelfView(APIView):
         if request.values.get('nickname', None):
             UserCRUD.update(uid, request.values.get('nickname'))
         
+        return self.jsonify(error='')
         
             
 
