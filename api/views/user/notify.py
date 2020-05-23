@@ -11,5 +11,5 @@ class NotifyView(APIView):
     
     def patch(self):
         print(request.values,'--------')
-        Notify.(id__in=form.ids).update(unread=False)
+        Notify.get_by(id=request.values.ids).update(unread=False)
         return self.jsonify(error=error)
