@@ -10,7 +10,7 @@ class NotifyView(APIView):
         return self.jsonify(notifies)
     
     def patch(self):
-        for notify Notify.get_by(fl=request.values['ids'],to_dict=False):
+        for notify in Notify.get_by(fl=request.values['ids'],to_dict=False):
             notify.update(unread=False)
         
         return self.jsonify(error='')
