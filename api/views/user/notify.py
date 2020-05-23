@@ -10,6 +10,6 @@ class NotifyView(APIView):
         return self.jsonify(notifies)
     
     def patch(self):
-        
-        Notify.ofilter(id__in=form.ids).update(unread=False)
+        print(request.values,'--------')
+        Notify.(id__in=form.ids).update(unread=False)
         return self.jsonify(error=error)
