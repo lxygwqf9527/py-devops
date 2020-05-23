@@ -11,6 +11,7 @@ class NotifyView(APIView):
     
     def patch(self):
         print(request.values['ids'])
-        res = Notify.query.filter(Notify.id.in_(request.values['ids']).all())
+        res = Notify.query.filter(Notify.id.in_(request.values['ids']))
+        
         print(res)
         return self.jsonify(error='')
