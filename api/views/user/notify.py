@@ -13,4 +13,4 @@ class NotifyView(APIView):
         for notifys in Notify.get_by(id=request.values['ids']):
             notifys.update(unread=False)
 
-        return self.jsonify(error=error)
+        return self.jsonify(error='')
