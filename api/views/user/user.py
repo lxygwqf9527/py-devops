@@ -36,6 +36,7 @@ class SelfView(APIView):
             else:
                 return self.jsonify(error='原密码错误，请重新输入')
         if request.values.get('nickname', None):
+            print(request.values.get('nickname'),'fajshfsahgflksagfuiagsiusaguisgalisgflisgafliasgfliu')
             UserCRUD.update(uid, nickname=request.values.get('nickname'))
         
         return self.jsonify(error='')
