@@ -5,6 +5,16 @@ from api.libs.database import Model
 from api.libs.utils import human_datetime
 import json
 
+class DetectionType(Model):
+    __tablename__ = 'detection_types'
+
+    name = db.Column(db.String(50))
+
+class DetectionStatus(Model):
+    __tablename__ = 'detection_status'
+
+    name = db.Column(db.String(50))
+
 class Detection(Model):
     __tablename__ = 'detections'
 
@@ -37,15 +47,3 @@ class Detection(Model):
         tmp['notify_mode'] = json.loads(self.notify_mode)
         tmp['notify_grp'] = json.loads(self.notify_grp)
         return tmp
-
-class DetectionType(Model):
-    __tablename__ = 'detection_types'
-
-    name = db.Column(db.String(50))
-
-
-class DetectionStatus(Model):
-    __tablename__ = 'detection_status'
-
-    name = db.Column(db.String(50))
-

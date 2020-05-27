@@ -6,6 +6,21 @@ from api.extensions import db
 from api.libs.database import Model
 from api.libs.utils import human_datetime
 
+class TaskTrigger(Model):
+    __tablename__ = 'task_triggers'
+    
+    name = db.Column(db.String(50))
+
+    def __str__(self):
+        return '<TaskTrigger %r>' % self.name
+
+class TaskStatus(Model):
+    __tablename__ = 'task_status'
+    
+    name = db.Column(db.String(50))
+    def __str__(self):
+        return '<TaskStatus %r>' % self.name
+
 class Task(Model):
     __tablename__ = 'tasks'
 
@@ -34,20 +49,3 @@ class Task(Model):
     
     def __str__(self):
         return '<Task %r>' % self.name
-
-class TaskTrigger(Model):
-    __tablename__ = 'task_triggers'
-    
-    name = db.Column(db.String(50))
-
-    def __str__(self):
-        return '<TaskTrigger %r>' % self.name
-
-class TaskStatus(Model):
-    __tablename__ = 'task_status'
-    
-    name = db.Column(db.String(50))
-    def __str__(self):
-        return '<TaskStatus %r>' % self.name
-
-
