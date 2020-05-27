@@ -43,7 +43,7 @@ class DeployExtends(Model):
 class DeployExtend1(Model):
     __tablename__ = 'deploy_extend1'
 
-    deploy = db.Column(db.Integer, db.ForiegnKey('deploys.id'))
+    deploy = db.Column(db.Integer, db.ForeignKey('deploys.id'))
     git_repo = db.Column(db.String(255))
     dst_dir = db.Column(db.String(255))
     dst_repo = db.Column(db.String(255))
