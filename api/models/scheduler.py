@@ -28,18 +28,18 @@ class Task(Model):
     type = db.Column(db.String(50))
     command = db.Column(db.Text)
     targets = db.Column(db.Text)
-    trigger = db.Column(db.Integer, db.ForeignKey('task_triggers.id'))
+    # trigger = db.Column(db.Integer, db.ForeignKey('task_triggers.id'))
     trigger_args = db.Column(db.String(255))
     is_active = db.Column(db.Boolean, default=False)
     desc = db.Column(db.String(255), nullable=True)
-    latest_status = db.Column(db.SmallInteger, db.ForeignKey('task_status.id'))
+    # latest_status = db.Column(db.SmallInteger, db.ForeignKey('task_status.id'))
     latest_run_time = db.Column(db.String(20), nullable=True)
     latest_output = db.Column(db.Text)
 
     create_at = db.Column(db.String(20), default=human_datetime)
-    # create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     updated_at = db.Column(db.String(20))
-    # updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)
