@@ -68,7 +68,7 @@ class DeployExtend1(Model):
 class DeployExtend2(Model):
     __tablename__ = 'deploy_extend2'
 
-    deploy = db.Column(db.Integer, db.ForiegnKey('deploys.id'))
+    deploy = db.Column(db.Integer, db.ForeignKey('deploys.id'))
     server_actions = db.Column(db.Text)
     host_actions = db.Column(db.Text)
 
