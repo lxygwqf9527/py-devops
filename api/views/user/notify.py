@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask import request
 from api.resource import APIView
 from api.models import Notify

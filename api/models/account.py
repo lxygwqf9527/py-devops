@@ -86,7 +86,7 @@ class User(Model):
 
 
     def __str__(self):
-        return self.username
+        return '<User %r>' % self.username
     
     def get_id(self):
         return self.id
@@ -151,7 +151,7 @@ class Role(CRUDModel):
         return tmp
     
     def __str__(self):
-        return self.name
+        return '<Role %r>' % self.name
     
     def count(self):
         pass
