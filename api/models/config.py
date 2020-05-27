@@ -8,7 +8,7 @@ from api.libs.utils import human_datetime
 class Environment(Model):
     __tablename__ = 'environments'
 
-    name = db.Columm(db.String(50))
+    name = db.Column(db.String(50))
     key = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
     create_at = db.Column(db.String(20), default=human_datetime)
