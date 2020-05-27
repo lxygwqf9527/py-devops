@@ -65,7 +65,7 @@ class ConfigHistory(Model):
     desc = db.Column(db.String(255), nullable=True)
     is_public = db.Column(db.Boolean)
     old_value = db.Column(db.Text, nullable=True)
-    action = db.Column(db.Integer, db.ForiegnKey('config_history_actions.id'))
+    action = db.Column(db.Integer, db.ForeignKey('config_history_actions.id'))
     updated_at = db.Column(db.String(20))
     updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     
