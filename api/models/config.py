@@ -36,7 +36,7 @@ class Config(Model):
     o_id = db.Column(db.Integer)
     key = db.Column(db.String(50))
     env =  db.Column(db.Integer, db.ForeignKey('environments.id'))
-    value = db.Column(db.text, nullable=True)
+    value = db.Column(db.Text, nullable=True)
     desc = db.Column(db.String(255), nullable=True)
     is_public = db.Column(db.Boolean)
     updated_at = db.Column(db.String(20))
