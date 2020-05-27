@@ -3,8 +3,8 @@
 import json
 
 from api.extensions import db
-from libs.database import Model
-from libs.utils import human_datetime
+from api.libs.database import Model
+from api.libs.utils import human_datetime
 
 class Task(Model):
     __tablename__ = 'tasks'

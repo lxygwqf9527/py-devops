@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 
 from api.extensions import db
-from libs.database import Model
-from libs.utils import human_datetime
+from api.libs.database import Model
+from api.libs.utils import human_datetime
 import json
 
 class Detection(Model):
