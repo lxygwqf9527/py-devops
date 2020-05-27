@@ -34,7 +34,7 @@ class Deploy(Model):
     extend = db.Column(db.Integer, db.ForeignKey('deploy_extends.id'))
 
     def __str__(self):
-        return '<Deoploy %r>' self.app
+        return '<Deoploy %r>' % self.app
 class DeployExtends(Model):
     __tablename__ = 'deploy_extends'
 
@@ -63,7 +63,7 @@ class DeployExtend1(Model):
         return tmp
     
     def __str__(self):
-        return '<DeployExtend1 deploy_id=%r>' self.deploy
+        return '<DeployExtend1 deploy_id=%r>' % self.deploy
 
 class DeployExtend2(Model):
     __tablename__ = 'deploy_extend2'
