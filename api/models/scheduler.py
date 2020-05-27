@@ -37,9 +37,9 @@ class Task(Model):
     latest_output = db.Column(db.Text)
 
     create_at = db.Column(db.String(20), default=human_datetime)
-    create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     updated_at = db.Column(db.String(20))
-    updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    # updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)
