@@ -37,6 +37,31 @@ class ConfigType(Model):
     def __str__(self):
         return '<ConfigType %r>' % self.name
 
+class ConfigHistoryAction(Model):
+    __tablename__ = 'config_history_actions'
+
+    name = db.Column(db.String(50))
+
+    def __str__(self):
+        return 'ConfigHistoryAction %r' % self.name
+
+class Config(Model):
+    __tablename__ = 'configs'
+
+    type = db.Column(db.Integer, db.ForeignKey('config_types.id'))
+    o_id = db.Column(db.Integer)
+    key = db.Column(db.String(50))
+    env =  db.Column(db.Integer, db.ForeignKey('environments.id'))
+    value = db.Column(db.Text, nullable=True)
+    desc = db.Column(db.String(255), nullable=True)
+    is_public = db.Column(db.Boolean)
+    updated_at = db.Column(db.String(20))
+    updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __str__(self):
+        return '<Config %r>' % self.key
+
+
 class ConfigHistory(Model):
     __tablename__ = 'config_histories'
 
@@ -54,28 +79,3 @@ class ConfigHistory(Model):
     
     def __str__(self):
         return '<ConfigHistory %r>' % self.key
-
-class ConfigHistoryAction(Model):
-    __tablename__ = 'config_history_actions'
-
-    name = db.Column(db.String(50))
-
-    def __str__(self):
-        return 'ConfigHistoryAction %r' % self.name
-
-
-class Config(Model):
-    __tablename__ = 'configs'
-
-    type = db.Column(db.Integer, db.ForeignKey('config_types.id'))
-    o_id = db.Column(db.Integer)
-    key = db.Column(db.String(50))
-    env =  db.Column(db.Integer, db.ForeignKey('environments.id'))
-    value = db.Column(db.Text, nullable=True)
-    desc = db.Column(db.String(255), nullable=True)
-    is_public = db.Column(db.Boolean)
-    updated_at = db.Column(db.String(20))
-    updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    def __str__(self):
-        return '<Config %r>' % self.key
