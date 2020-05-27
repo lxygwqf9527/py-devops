@@ -24,7 +24,12 @@ class App(Model):
 
     def __str__(self):
         return '<App %r>' % self.name
-    
+
+class DeployExtends(Model):
+    __tablename__ = 'deploy_extends'
+
+    name = db.Column(db.String(50))
+
 class Deploy(Model):
     __tablename__ = 'deploys'
 
@@ -35,10 +40,6 @@ class Deploy(Model):
 
     def __str__(self):
         return '<Deoploy %r>' % self.app
-class DeployExtends(Model):
-    __tablename__ = 'deploy_extends'
-
-    name = db.Column(db.String(50))
 
 class DeployExtend1(Model):
     __tablename__ = 'deploy_extend1'
