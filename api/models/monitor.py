@@ -19,7 +19,7 @@ class Detection(Model):
     __tablename__ = 'detections'
 
     name = db.Column(db.String(50))
-    # type = db.Column(db.Integer, db.ForeignKey('detection_types.id'))
+    type = db.Column(db.Integer, db.ForeignKey('detection_types.id'))
     addr = db.Column(db.String(255))
     extra = db.Column(db.Text, nullable=True)
     desc = db.Column(db.String(255), nullable=True)
@@ -30,7 +30,7 @@ class Detection(Model):
     fault_times = db.Column(db.SmallInteger, default=0)
     notify_mode = db.Column(db.String(255))
     notify_grp = db.Column(db.String(255))
-    # latest_status = db.Column(db.SmallInteger, db.ForeignKey('detection_status.id'), nullable=True)
+    latest_status = db.Column(db.Integer, db.ForeignKey('detection_status.id'), nullable=True)
     latest_run_time = db.Column(db.String(20), nullable=True)
     latest_fault_time = db.Column(db.Integer, nullable=True)
     latest_notify_time = db.Column(db.Integer, default=0)
