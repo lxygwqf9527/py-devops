@@ -61,7 +61,6 @@ class Config(Model):
     def __str__(self):
         return '<Config %r>' % self.key
 
-
 class ConfigHistory(Model):
     __tablename__ = 'config_histories'
 
