@@ -5,7 +5,7 @@ from api.resource import APIView
 from api.models import App, Host, Task, Detection
 
 class GetStatistic(APIView):
-    prefix = '/statistic'
+    url_prefix = '/statistic'
 
     def get(self):
         data = {
