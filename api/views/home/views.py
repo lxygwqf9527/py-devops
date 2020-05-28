@@ -16,4 +16,5 @@ class GetStatistic(APIView):
         }
         return self.jsonify(data)
 
-class GetAlarm(APIView)
+class GetAlarm(APIView):
+    pass
