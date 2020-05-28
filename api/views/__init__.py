@@ -17,6 +17,11 @@ account_rest.add_resource(LoginView, LoginView.url_prefix)
 account_rest.add_resource(LogoutView, LogoutView.url_prefix)
 
 # user
-blueprint_acl_v1 = Blueprint('acl_api_v1', __name__, url_prefix='/api/v1/user')
-rest = Api(blueprint_acl_v1)
-register_resources(os.path.join(HERE, "user"), rest)
+blueprint_user_v1 = Blueprint('user_api_v1', __name__, url_prefix='/api/v1/user')
+user_rest = Api(blueprint_user_v1)
+register_resources(os.path.join(HERE, "user"), user_rest)
+
+# home
+blueprint_home_v1 = Blueprint('home_api_v1', __name__, url_prefix='/api/v1/home')
+home_rest = Api(blueprint_home_v1)
+register_resources(os.path.join(HERE, "home"), home_rest)
