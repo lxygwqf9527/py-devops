@@ -25,5 +25,5 @@ class GetAlarm(APIView):
         now = datetime.now()
 
         data = {human_date(now - timedelta(days=x + 1)): 0 for x in range(14)}
-        for alarm in Alarm.get_by(status='1', created_at > human_date(now - timedelta(days=14))):
-
+        # for alarm in Alarm.get_by(status='1', created_at > human_date(now - timedelta(days=14))):
+        #     pass
