@@ -6,7 +6,7 @@ from api.libs import Model
 from api.libs import human_datetime
 
 class AlarmStatus(Model):
-    __tablename = 'alarms_status'
+    __tablename__ = 'alarms_status'
 
     name = db.Column(db.String(50))
 
