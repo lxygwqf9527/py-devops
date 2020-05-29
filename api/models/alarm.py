@@ -10,6 +10,9 @@ class AlarmStatus(Model):
 
     name = db.Column(db.String(50))
 
+    def __str__(self):
+        return ('<AlarmStatus %r>') % self.name
+
 class Alarm(Model):
     __tablename__ = 'alarms'
 

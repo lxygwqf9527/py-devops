@@ -55,7 +55,6 @@ class CRUDMixin(ModelMixin):
     @classmethod
     def get_by_in_id(cls, first=False, to_dict=True, ids=None):
         result = [i.to_dict() if to_dict else i for i in cls.query.filter(cls.id.in_(ids)) ]
-        print(result)
 
         return result[0] if first and result else (None if first else result)
 
