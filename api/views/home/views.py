@@ -25,5 +25,5 @@ class GetAlarm(APIView):
         now = datetime.now()
 
         data = {human_datetime(now - timedelta(days=x + 1)): 0 for x in range(14)}
-        for alarm in Alarm.filter(and_(Alarm.status == 1, Alarm.created_at.__gt__(human_datetime(now - timedelta(days=14))))):
+        for alarm in Alarm.query.filter(and_(Alarm.status == 1, Alarm.created_at.__gt__(human_datetime(now - timedelta(days=14))))):
             print(alarm)
