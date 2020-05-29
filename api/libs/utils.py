@@ -10,6 +10,14 @@ def human_datetime(date=None):
         date = datetime.now()
     return date.strftime('%Y-%m-%d %H:%M:%S')
 
+# 转换时间格式到字符串(天)
+def human_date(date=None):
+    if date:
+        assert isinstance(date, datetime)
+    else:
+        date = datetime.now()
+    return date.strftime('%Y-%m-%d')
+
 # 继承自dict，实现可以通过.来操作元素
 class AttrDict(dict):
     def __setattr__(self, key, value):
