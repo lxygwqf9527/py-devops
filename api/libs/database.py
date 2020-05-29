@@ -53,9 +53,7 @@ class CRUDMixin(ModelMixin):
         return self
 
     @classmethod
-    def get_by_in_id(cls, use_master=False, first=False, to_dict=True, ids=None):
-        db_session = db.session if not use_master else db.session().using_bind("master")
-
+    def get_by_in_id(cls, first=False, to_dict=True, ids=None):
         result = [i.to_dict() if to_dict else i for i in cls.query.filter(cls.id.in_(ids)) ]
         print(result)
 
