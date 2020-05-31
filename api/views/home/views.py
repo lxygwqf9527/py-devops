@@ -36,7 +36,7 @@ class GetAlarm(APIView):
         # 获取十四天以内的报警
         for alarm in Alarm.query.filter(and_(Alarm.status == 1, Alarm.created_at.__gt__(human_datetime(now - timedelta(days=14))))):
             date = alarm.created_at[:10]
-            print(date,'date$$!$!#@$@$@$@$')
+            print(date,'date$$!$!#@$@$@$@$',data)
             if date in data:
                 data[date] += 1
         data = [{'date': k, 'value': v} for k, v in data.items()]
