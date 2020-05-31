@@ -30,7 +30,7 @@ class Alarm(Model):
     notify_grp = db.Column(db.String(255))
     status = db.Column(db.Integer, db.ForeignKey('alarms_status.id'))
     duration = db.Column(db.String(50))
-    create_at = db.Column(db.String(20), default=human_datetime)
+    created_at = db.Column(db.String(20), default=human_datetime)
     
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)
