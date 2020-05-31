@@ -35,9 +35,9 @@ class GetAlarm(APIView):
         print(data,'====================--')
         # 获取十四天以内的报警
         for alarm in Alarm.query.filter(and_(Alarm.status == 1, Alarm.created_at.__gt__(human_datetime(now - timedelta(days=14))))):
-            print(alarm,'--------------------------')
             date = alarm.created_at[:10]
             if date in data:
                 data[date] += 1
         data = [{'date': k, 'value': v} for k, v in data.items()]
+        print(data,'fffff==f=f==f=f=f==f=f=f==f=f=f==ff==ff=f=')
         return self.jsonify(data)
