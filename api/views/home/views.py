@@ -40,4 +40,4 @@ class GetAlarm(APIView):
             if date in data:
                 data[date] += 1
         data = [{'date': k, 'value': v} for k, v in data.items()]
-        return self.jsonifyd(data)
+        return self.jsonify(data)
