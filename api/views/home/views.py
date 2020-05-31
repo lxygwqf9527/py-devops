@@ -8,6 +8,9 @@ from api.resource import APIView
 from api.models import App, Host, Task, Detection, Alarm
 
 class GetStatistic(APIView):
+    '''
+        获取总览数据，app，host，task，detection
+    '''
     url_prefix = '/statistic'
 
     def get(self):
@@ -20,6 +23,9 @@ class GetStatistic(APIView):
         return self.jsonify(data)
 
 class GetAlarm(APIView):
+    '''
+        home获取报警函数
+    '''
     url_prefix = '/alarm'
 
     def get(self):
@@ -27,5 +33,5 @@ class GetAlarm(APIView):
 
         data = {human_datetime(now - timedelta(days=x + 1)): 0 for x in range(14)}
         for alarm in Alarm.query.filter(and_(Alarm.status == 1, Alarm.created_at.__gt__(human_datetime(now - timedelta(days=14))))):
-            print(alarm)
+            print(alarm,'--------------------------')
         return self.jsonify(error='')
