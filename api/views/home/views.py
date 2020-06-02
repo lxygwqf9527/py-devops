@@ -48,7 +48,7 @@ class GetRequest(APIView):
     def get(self):
         data = { x.id: {'name': x.name, 'count': 0 } for x in App.query.all() }
         print(data,'=-=-=-=-=-==-=-=-=-=-')
-        for req in DeployRequest.query.filter(DeployRequest.create_at.__gt__(human_date)):
+        for req in DeployRequest.query.filter(DeployRequest.create_at.__gt__(human_date())):
             data[req.deploy.app_id]['count'] += 1
         print(data,'!!!!!!!!!!!!!!!====')
 
