@@ -5,6 +5,9 @@ from api.resource import APIView
 from api.models import Notify
 
 class NotifyView(APIView):
+    """
+        
+    """
     url_prefix = "/notify"
 
     def get(self):

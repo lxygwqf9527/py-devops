@@ -17,6 +17,9 @@ from api.libs import human_datetime
 
 
 class UserQuery(BaseQuery):
+    """
+        user查询类
+    """
     def _join(self, *args, **kwargs):
         super(UserQuery, self)._join(*args, **kwargs)
 
@@ -60,6 +63,9 @@ class UserQuery(BaseQuery):
         return copy.deepcopy(user)
 
 class User(Model):
+    """
+        用户表
+    """
     __tablename__ = 'users'
     query_class = UserQuery
 
@@ -133,6 +139,9 @@ class User(Model):
         return self.is_supper
 
 class Role(CRUDModel):
+    """
+        用户表
+    """
     __tablename__ = "roles"
 
     name = db.Column(db.String(50))

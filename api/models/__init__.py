@@ -9,3 +9,4 @@ from .host import Host
 from .scheduler import Task
 from .monitor import Detection
 from .alarm import AlarmStatus, AlarmGroup, AlarmContact, Alarm
+from .deploy import DeployRequestType, DeployRequestStatus, DeployRequest

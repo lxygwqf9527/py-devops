@@ -35,7 +35,7 @@ class APIView(Resource):
         
 API_PACKAGE = "api"
 
-def register_resources(resource_path, rest_api):
+def register_resources(resource_path, rest_api): # 注册路由，通过被调用的方式
     for root, _, files in os.walk(os.path.join(resource_path)):
         for filename in files:
             if not filename.startswith("_") and filename.endswith("py"):

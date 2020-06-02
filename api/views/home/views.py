@@ -5,7 +5,7 @@ from sqlalchemy import and_
 
 from api.libs import human_date
 from api.resource import APIView
-from api.models import App, Host, Task, Detection, Alarm
+from api.models import App, Host, Task, Detection, Alarm, DeployRequest
 
 class GetStatistic(APIView):
     '''
@@ -24,7 +24,7 @@ class GetStatistic(APIView):
 
 class GetAlarm(APIView):
     '''
-        home获取报警函数
+        home获取报警
     '''
     url_prefix = '/alarm'
 
@@ -39,3 +39,13 @@ class GetAlarm(APIView):
                 data[date] += 1
         data = [{'date': k, 'value': v} for k, v in data.items()]
         return self.jsonify(data)
+
+class GetRequest(APIView):
+    '''
+        deploy发布展示
+    '''
+    data = { x.id: {'name': x.name, 'count': 0 } for x in App.query.all() }
+    print(data,'=-=-=-=-=-==-=-=-=-=-')
+    for req in DeployRequest.query.filter(DeployRequest.create_at.__gt__(human_date)):
+        data[req.deploy.app_id]['count'] += 1
+    print(data,'!!!!!!!!!!!!!!!====')

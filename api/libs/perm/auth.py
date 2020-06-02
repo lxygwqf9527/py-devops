@@ -16,6 +16,7 @@ from api.models.account import User
 from api.libs.cache import UserCache
 
 def _auth_with_session():
+    # session 判断函数
     if isinstance(getattr(g, 'user', None), User):
         login_user(g.user)
         return True

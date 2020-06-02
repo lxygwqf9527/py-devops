@@ -6,6 +6,12 @@ from api.libs import Model
 from api.libs import human_datetime
 
 class AlarmStatus(Model):
+    """
+        alarm status表
+        状态就 1 和 0 
+        0代表已处理
+        1代表没处理
+    """
     __tablename__ = 'alarms_status'
 
     name = db.Column(db.String(50))
@@ -14,6 +20,9 @@ class AlarmStatus(Model):
         return ('<AlarmStatus %r>') % self.name
 
 class Alarm(Model):
+    """
+        alarm表
+    """
     __tablename__ = 'alarms'
 
     MODES = (
@@ -43,6 +52,9 @@ class Alarm(Model):
         return '<Alarm %r>' % self.name
 
 class AlarmGroup(Model):
+    """
+        报警组
+    """
     __tablename__ = 'alarm_groups'
 
     name = db.Column(db.String(50))
@@ -60,6 +72,9 @@ class AlarmGroup(Model):
         return '<AlarmGroup %r>' % self.name
 
 class AlarmContact(Model):
+    """
+        报警联系人表
+    """
     __tablename__ = 'alarm_contacts'
 
     name = db.Column(db.String(50))

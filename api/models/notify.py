@@ -23,6 +23,7 @@ class NotifySource(Model):
         return '<NotifySource %r>' % self.name
 
 class Notify(Model):
+    """"""
     __tablename__ = 'notify'
 
     title = db.Column(db.String(255))

@@ -74,19 +74,18 @@ class ReverseProxy(object):
         return self.app(environ, start_response)
 
 def create_app(config_object="settings"):
-    """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
-
-    :param config_object: The configuration object to use.
+    """
+        创建app的流程
     """
     app = Flask(__name__.split(".")[0])
-    app.config.from_object(config_object)
-    register_extensions(app)
-    register_blueprints(app)
+    app.config.from_object(config_object) # 导入配置文件
+    register_extensions(app) # 其它插件注册app
+    register_blueprints(app) # 注册蓝图
     # register_error_handlers(app)
-    register_shell_context(app)
-    register_commands(app)
-    configure_logger(app)
-    app.wsgi_app = ReverseProxy(app.wsgi_app)
+    register_shell_context(app) # 注册flask 命令行 比如db有关的 db 升级
+    register_commands(app) # 注册命令
+    configure_logger(app) # 配置log
+    app.wsgi_app = ReverseProxy(app.wsgi_app) # 重写wsgi_app
     return app
 
 def register_extensions(app):
