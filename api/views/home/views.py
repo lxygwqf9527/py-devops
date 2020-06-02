@@ -62,7 +62,7 @@ class GetDeploy(APIView):
 
     def get(self):
         host = Host.query.filter(Host.deleted_at.is_(None)).count()
-        data = { x.id: {'name': x.name, 'count': 0} for x in App.objects.all() }
+        data = { x.id: {'name': x.name, 'count': 0} for x in App.query.all() }
         for dep in Deploy.query.all():
             data[dep.app_id]['count'] += len(json.loads(dep.host_ids))
         data = filter(lambda x: x['count'], data.values())
