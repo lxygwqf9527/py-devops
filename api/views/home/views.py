@@ -45,9 +45,11 @@ class GetRequest(APIView):
         deploy发布展示
     '''
     url_prefix = '/request'
-    
-    data = { x.id: {'name': x.name, 'count': 0 } for x in App.query.all() }
-    print(data,'=-=-=-=-=-==-=-=-=-=-')
-    for req in DeployRequest.query.filter(DeployRequest.create_at.__gt__(human_date)):
-        data[req.deploy.app_id]['count'] += 1
-    print(data,'!!!!!!!!!!!!!!!====')
+    def get(self):
+        data = { x.id: {'name': x.name, 'count': 0 } for x in App.query.all() }
+        print(data,'=-=-=-=-=-==-=-=-=-=-')
+        for req in DeployRequest.query.filter(DeployRequest.create_at.__gt__(human_date)):
+            data[req.deploy.app_id]['count'] += 1
+        print(data,'!!!!!!!!!!!!!!!====')
+
+        return self.jsonify()
