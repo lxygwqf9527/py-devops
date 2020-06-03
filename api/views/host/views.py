@@ -12,7 +12,7 @@ class HostView(APIView):
     '''
         主机视图
     '''
-    url_prefix = '/host'
+    url_prefix = '/hosts'
 
     def get(self):
         '''
