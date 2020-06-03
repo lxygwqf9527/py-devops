@@ -28,8 +28,5 @@ register_resources(os.path.join(HERE, "home"), home_rest)
 
 # host
 blueprint_host_v1 = Blueprint('host_api_v1', __name__, url_prefix='/api/v1/host')
-print(blueprint_host_v1,'host======')
 host_rest = Api(blueprint_host_v1)
-print(host_rest,'host_rest===========')
 register_resources(os.path.join(HERE, "host"), host_rest)
-print(1323232,'33333333333333333333333333')
