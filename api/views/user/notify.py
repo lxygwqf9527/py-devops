@@ -6,7 +6,7 @@ from api.models import Notify
 
 class NotifyView(APIView):
     """
-        
+        notify视图
     """
     url_prefix = "/notify"
 
