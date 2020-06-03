@@ -24,6 +24,6 @@ class AppSetting:
     @classmethod
     def set(cls, key, value, desc=None):
         if key in cls.keys:
-            Setting.objects.update_or_create(key=key, defaults={'value': value, 'desc': desc})
+            Setting.update_or_create(key=key, defaults={'value': value, 'desc': desc})
         else:
             raise KeyError('invalid key')

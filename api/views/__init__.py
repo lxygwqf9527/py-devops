@@ -25,3 +25,8 @@ register_resources(os.path.join(HERE, "user"), user_rest)
 blueprint_home_v1 = Blueprint('home_api_v1', __name__, url_prefix='/api/v1/home')
 home_rest = Api(blueprint_home_v1)
 register_resources(os.path.join(HERE, "home"), home_rest)
+
+# host
+blueprint_host_v1 = Blueprint('host_api_v1', __name__, url_prefix='/api/v1/host')
+host_rest = Api(blueprint_host_v1)
+register_resources(os.path.join(HERE, "host"), host_rest)
