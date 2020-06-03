@@ -43,6 +43,7 @@ def register_resources(resource_path, rest_api): # 注册路由，通过被调�
                 module_path = os.path.join(API_PACKAGE, root[root.index("views"):])
                 if module_path not in sys.path:
                     sys.path.insert(1, module_path)
+                print(os.path.splitext(filename),'-----------------------------')
                 view = __import__(os.path.splitext(filename)[0])
                 print(resource_path, rest_api)
                 print(view,'--','filename',filename)
