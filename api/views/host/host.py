@@ -30,7 +30,7 @@ class HostView(APIView):
         '''
         zone = request.values['zone']
         username = request.values['username']
-        password = request.values.pop('password')
+        password = request.values.pop('password', None)
         hostname = request.values['hostname']
         port = request.values['port']
         if valid_ssh(username, port, username, password):
