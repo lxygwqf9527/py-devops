@@ -27,7 +27,11 @@ class CRUDMixin(ModelMixin):
         super(CRUDMixin, self).__init__(**kwargs)
 
     @classmethod
-    def create(cls, flush=False, **kwargs):
+    def create(cls, flush=False, defaults=None, **kwargs):
+        if defaults:
+            for key, value in defaults.items():
+                kwargs[key] = value
+        print(kwargs)
         return cls(**kwargs).save(flush=flush)
     
     def update(self, flush=False, **kwargs):
@@ -58,7 +62,7 @@ class CRUDMixin(ModelMixin):
         if key:
             key.update(defaults)
         else:
-            cls.create(**kwargs, defaults)
+            cls.create(defaults, **kwargs)
 
     @classmethod
     def get_by_in_id(cls, first=False, to_dict=True, ids=None):
