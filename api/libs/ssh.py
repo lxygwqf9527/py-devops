@@ -26,3 +26,28 @@ class SSH:
         key = RSAKey.generate(2048)
         key.write_private_key(key_obj)
         return key_obj.getvalue(), 'ssh-rsa ' + key.get_base64()
+
+    def add_public_key(self, public_key):
+        command = f'mkdir -p -m 700 ~/.ssh && \
+        echo {public_key!r} >> ~/.ssh/authorized_keys && \
+        chmod 600 ~/.ssh/authorized_keys'
+        code, out = self.exec_command(command)
+        if code != 0:
+            raise Exception(out)
+
+    def ping(self):
+        with self:
+            return True
+    
+    def exec_command(self, command, timeout=1800, environment=None):
+        command = 'set -e\n' + command
+        with self as cli:
+            chan = cli.get_transport().open_session()
+            chan.settimeout(timeout)
+            chan.set_combine_stderr(True)
+            if environment:
+                str_env = ' '.join(f"{k}='{v}'" for k, v in environment.items())
+                command = f'export {str_env} && {command}'
+            chan.exec_command(command)
+            out = chan.makefile("r", -1)
+            return chan.recv_exit_status(), out.read()

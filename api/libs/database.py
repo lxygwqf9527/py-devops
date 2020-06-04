@@ -31,7 +31,6 @@ class CRUDMixin(ModelMixin):
         if defaults:
             for key, value in defaults.items():
                 kwargs[key] = value
-        print(defaults,kwargs)
         return cls(**kwargs).save(flush=flush)
     
     def update(self, flush=False, **kwargs):
@@ -58,7 +57,6 @@ class CRUDMixin(ModelMixin):
 
     @classmethod
     def update_or_create(cls, defaults, *args, **kwargs):
-        print(defaults,kwargs,'--------------------')
         key = cls.get_by(first=True, to_dict=False, **kwargs)
         if key:
             key.update(defaults)

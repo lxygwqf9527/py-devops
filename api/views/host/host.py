@@ -26,13 +26,14 @@ class HostView(APIView):
         '''
             添加主机
         '''
+        id = request.values['id']
         zone = request.values['zone']
         username = request.values['username']
         password = request.values.pop('password', None)
         hostname = request.values['hostname']
         port = request.values['port']
-        if valid_ssh(username, port, username, password):
-            pass
+        if valid_ssh(username, port, username, password) is False:
+            return self.jsonify('auth fail')
 
 def valid_ssh(hostname, port, username, password):
     try:
@@ -42,3 +43,18 @@ def valid_ssh(hostname, port, username, password):
         private_key, public_key = SSH.generate_key()
         AppSetting.set('private_key', private_key, 'ssh private key')
         AppSetting.set('public_key', public_key, 'ssh public key')
+    if password:
+        cli = SSH(hostname, port, username, password=password)
+        code, out = cli.exec_command('mkdir -p -m 700 ~/.ssh && \
+                echo %r >> ~/.ssh/authorized_keys && \
+                chmod 600 ~/.ssh/authorized_keys' % public_key)
+        if code != 0:
+            raise Exception(f'add public key error: {out!r}')
+    else:
+        cli = SSH(hostname, port, username, private_key)
+    
+    try:
+        cli.ping()
+    except AuthenticationException:
+        return False
+    return True
