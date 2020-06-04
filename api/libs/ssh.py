@@ -2,6 +2,7 @@
 
 from paramiko.client import SSHClient, AutoAddPolicy
 from paramiko.config import SSH_PORT
+from paramiko.rsakey import RSAKey
 from paramiko.ssh_exception import AuthenticationException
 from io import StringIO
 
@@ -18,7 +19,7 @@ class SSH:
             'pkey': RSAKey.from_private_key(StringIO(pkey)) if isinstance(pkey, str) else pkey,
             'timeout': connect_timeout,
         }
-        
+
     @staticmethod
     def generate_key():
         key_obj = StringIO()
