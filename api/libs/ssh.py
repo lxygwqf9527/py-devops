@@ -39,6 +39,14 @@ class SSH:
         with self:
             return True
     
+    def get_client(self):
+        if self.client is not None:
+            return self.client
+        self.client = SSHClient()
+        self.client.set_missing_host_key_policy(AutoAddPolicy)
+        self.client.connect(**self.arguments)
+        return self.client
+    
     def exec_command(self, command, timeout=1800, environment=None):
         command = 'set -e\n' + command
         with self as cli:
@@ -51,3 +59,8 @@ class SSH:
             chan.exec_command(command)
             out = chan.makefile("r", -1)
             return chan.recv_exit_status(), out.read()
+
+    def __enter__(self):
+        if self.client is not None:
+            raise RuntimeError('Already connected')
+        return self.get_client()
