@@ -58,7 +58,7 @@ class CRUDMixin(ModelMixin):
         if key:
             key.update(defaults)
         else:
-            print(cls.create(defaults),'==============')
+            cls.create(**kwargs, defaults)
 
     @classmethod
     def get_by_in_id(cls, first=False, to_dict=True, ids=None):
