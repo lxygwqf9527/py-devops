@@ -51,8 +51,9 @@ class CRUDMixin(ModelMixin):
             raise CommitException(str(e))
 
         return self
-    
-    def update_or_create(self, *args, **kwargs):
+        
+    @classmethod
+    def update_or_create(cls, *args, **kwargs):
         print(args,kwargs,'==========================')
 
     @classmethod
