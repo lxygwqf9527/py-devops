@@ -51,10 +51,14 @@ class CRUDMixin(ModelMixin):
             raise CommitException(str(e))
 
         return self
-        
+
     @classmethod
-    def update_or_create(cls, *args, **kwargs):
-        print(args,kwargs,'==========================')
+    def update_or_create(cls, default, *args, **kwargs):
+        key = cls.get_by(kwargs, to_dict=False, first=True)
+        if key:
+            key.update(kwargs)
+        else:
+            key.create(default)
 
     @classmethod
     def get_by_in_id(cls, first=False, to_dict=True, ids=None):
