@@ -64,3 +64,7 @@ class SSH:
         if self.client is not None:
             raise RuntimeError('Already connected')
         return self.get_client()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.client.close()
+        self.client = None
