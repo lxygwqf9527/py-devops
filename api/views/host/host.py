@@ -32,7 +32,7 @@ class HostView(APIView):
         password = request.values.pop('password', None)
         hostname = request.values['hostname']
         port = request.values['port']
-        if valid_ssh(username, port, username, password) is False:
+        if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
 
 def valid_ssh(hostname, port, username, password):
