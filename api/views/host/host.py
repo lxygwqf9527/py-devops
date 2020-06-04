@@ -26,7 +26,7 @@ class HostView(APIView):
         '''
             添加主机
         '''
-        id = request.values['id']
+        id = request.values.pop('id', None)
         zone = request.values['zone']
         username = request.values['username']
         password = request.values.pop('password', None)
