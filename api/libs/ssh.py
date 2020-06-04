@@ -44,7 +44,7 @@ class SSH:
             return self.client
         self.client = SSHClient()
         self.client.set_missing_host_key_policy(AutoAddPolicy)
-        print(slef.arguments,'------------------')
+        print(self.arguments,'------------------')
         self.client.connect(**self.arguments)
         return self.client
     
