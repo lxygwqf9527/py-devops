@@ -29,11 +29,11 @@ class HostView(APIView):
         '''
         id = request.values.pop('id', None)
         zone = request.values.pop('zone', None)
-        name = request.values('name',None)
-        username = request.values('username', None)
+        name = request.values.pop('name',None)
+        username = request.values.pop('username', None)
         password = request.values.pop('password', None)
-        hostname = request.values('hostname', None)
-        port = request.values('port', None)
+        hostname = request.values.pop('hostname', None)
+        port = request.values.pop('port', None)
         if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
 
