@@ -57,7 +57,7 @@ class CRUDMixin(ModelMixin):
         print(defaults,'==============', kwargs, '------------')
         key = cls.get_by(kwargs, to_dict=False, first=True)
         if key:
-            key.update(kwargs)
+            key.update(default)
         else:
             key.create(default)
 
