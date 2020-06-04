@@ -53,8 +53,8 @@ def valid_ssh(hostname, port, username, password):
     else:
         cli = SSH(hostname, port, username, private_key)
     
-    try:
-        cli.ping()
-    except AuthenticationException:
-        return False
+    # try:
+    cli.ping()
+    # except AuthenticationException:
+    #     return False
     return True
