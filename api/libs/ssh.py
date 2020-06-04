@@ -18,3 +18,10 @@ class SSH:
             'pkey': RSAKey.from_private_key(StringIO(pkey)) if isinstance(pkey, str) else pkey,
             'timeout': connect_timeout,
         }
+        
+    @staticmethod
+    def generate_key():
+        key_obj = StringIO()
+        key = RSAKey.generate(2048)
+        key.write_private_key(key_obj)
+        return key_obj.getvalue(), 'ssh-rsa ' + key.get_base64()
