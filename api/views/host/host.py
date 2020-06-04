@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from flask import request
+from paramiko.ssh_exception import AuthenticationException
 
 from api.config.Appsetting import AppSetting
 from api.models import Host
@@ -53,8 +54,8 @@ def valid_ssh(hostname, port, username, password):
     else:
         cli = SSH(hostname, port, username, private_key)
     
-    # try:
+    try:
     cli.ping()
-    # except AuthenticationException:
-    #     return False
+    except AuthenticationException:
+        return False
     return True
