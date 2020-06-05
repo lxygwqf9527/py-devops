@@ -40,7 +40,7 @@ class HostView(APIView):
         if id:
             Host.get_by(id=id, to_dict=False).update(request.values)
         else:
-            request.values['created_by'] = g.user
+            request.values['created_by'] = g.user.id
             Host.create(**request.values)
         return self.jsonify(error='')
 
