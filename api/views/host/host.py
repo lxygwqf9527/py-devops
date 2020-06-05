@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from flask import request
+from flask import request, g
 from paramiko.ssh_exception import AuthenticationException
 
 from api.config.Appsetting import AppSetting
