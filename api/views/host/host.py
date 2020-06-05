@@ -21,7 +21,7 @@ class HostView(APIView):
         '''
         hosts = Host.query.filter(Host.deleted_at.is_(None)).all()
         zones = [i for i in hosts if i.zone ]
-        print(zones)
+        print(zones,'=============')
         return self.jsonify({'zones': zones, 'hosts': [x.to_dict() for x in hosts]})
     
     def post(self):
