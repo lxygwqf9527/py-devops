@@ -36,6 +36,13 @@ class HostView(APIView):
         port = request.values.pop('port', None)
         if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
+        
+        if id:
+            Host.get_by(id=id, to_dict=False).update(request.values)
+        else:
+            request.values['created_by'] = g.user
+            Host.create(**request.values)
+        return self.jsonify(error='')
 
 def valid_ssh(hostname, port, username, password):
     try:
