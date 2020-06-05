@@ -27,13 +27,13 @@ class HostView(APIView):
         '''
             添加主机
         '''
-        id = request.values.pop('id', None)
-        zone = request.values.pop('zone', None)
-        name = request.values.pop('name',None)
-        username = request.values.pop('username', None)
-        password = request.values.pop('password', None)
-        hostname = request.values.pop('hostname', None)
-        port = request.values.pop('port', None)
+        id = request.values.get('id', None)
+        zone = request.values.get('zone', None)
+        name = request.values.get('name',None)
+        username = request.values.get('username', None)
+        password = request.values.get('password', None)
+        hostname = request.values.get('hostname', None)
+        port = request.values.get('port', None)
         if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
         
