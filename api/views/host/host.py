@@ -41,6 +41,7 @@ class HostView(APIView):
             Host.get_by(id=id, to_dict=False).update(request.values)
         else:
             request.values['created_by'] = g.user.id
+            print(request.values,'====================')
             Host.create(**request.values)
         return self.jsonify(error='')
 
