@@ -20,7 +20,7 @@ class HostView(APIView):
             获取所有的zones和主机
         '''
         hosts = Host.query.filter(Host.deleted_at.is_(None)).all()
-        zones = [i for i in hosts if i.zone ]
+        zones = [i.zone for i in hosts if i.zone ]
         print(zones,'=============')
         return self.jsonify({'zones': zones, 'hosts': [x.to_dict() for x in hosts]})
     
