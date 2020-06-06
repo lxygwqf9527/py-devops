@@ -4,10 +4,9 @@ from flask import request, g
 from paramiko.ssh_exception import AuthenticationException
 
 from api.config.Appsetting import AppSetting
-from api.models import Host
 from api.resource import APIView
 from api.libs.ssh import SSH
-
+from api.models import Host, Deploy
 
 class HostView(APIView):
     '''
@@ -44,6 +43,13 @@ class HostView(APIView):
             request.values['created_by'] = g.user.id
             Host.create(**request.values)
         return self.jsonify(error='')
+    
+    def delete(self):
+        ''''
+            删除主机
+        '''
+        deploy = Deploy.get_by(host_ids=request.values['id']).first()
+        print(deploy,'====================')
 
 def valid_ssh(hostname, port, username, password):
     try:
