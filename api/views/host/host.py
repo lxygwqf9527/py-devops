@@ -48,7 +48,7 @@ class HostView(APIView):
         ''''
             删除主机
         '''
-        deploy = Deploy.get_by(host_ids=request.values['id']).first()
+        deploy = Deploy.get_by(host_ids=request.values['id'], to_dict=False).first()
         print(deploy,'====================')
 
 def valid_ssh(hostname, port, username, password):
