@@ -20,7 +20,6 @@ class HostView(APIView):
         '''
         hosts = Host.query.filter(Host.deleted_at.is_(None)).all()
         zones = [i.zone for i in hosts if i.zone ]
-        print(zones,'=============')
         return self.jsonify({'zones': zones, 'hosts': [x.to_dict() for x in hosts]})
     
     def post(self):
@@ -48,12 +47,13 @@ class HostView(APIView):
         ''''
             删除主机
         '''
+        print(1111111111111111111111)
         for deploy in Deploy.query.all():
             print(deploy,'====================')
             print(list(deploy.host_ids))
             if int(request.values['id']) in list(deploy.host_ids):
                 return jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
-        
+        return 
 
 def valid_ssh(hostname, port, username, password):
     try:
