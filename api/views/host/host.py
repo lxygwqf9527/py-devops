@@ -50,8 +50,9 @@ class HostView(APIView):
         '''
         for deploy in Deploy.query.all():
             print(deploy,'====================')
-            if request.values['id'] in list(deploy.host_ids):
-                return jsonify(error=f'应用【{deploy.app_name}】在【{deploy.env_name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
+            print(list(deploy.host_ids))
+            if int(request.values['id']) in list(deploy.host_ids):
+                return jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
         
 
 def valid_ssh(hostname, port, username, password):

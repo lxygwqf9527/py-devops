@@ -38,6 +38,11 @@ class Deploy(Model):
     host_ids = db.Column(db.Text)
     extend = db.Column(db.Integer, db.ForeignKey('deploy_extends.id'))
 
+    create_at = db.Column(db.String(20), default=human_datetime)
+    create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    updated_at = db.Column(db.String(20))
+    updated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+
     def __str__(self):
         return '<Deoploy %r>' % self.app
 
