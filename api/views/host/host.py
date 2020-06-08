@@ -49,7 +49,7 @@ class HostView(APIView):
         '''
         for deploy in Deploy.query.all():
             if int(request.values['id']) in eval(deploy.host_ids):
-                print(1111)
+                print(1111,deploy.app.name,deploy.env.name)
                 return self.jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
         return 
 
