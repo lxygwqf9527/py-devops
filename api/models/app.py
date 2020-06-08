@@ -38,8 +38,8 @@ class Deploy(Model):
     host_ids = db.Column(db.Text)
     extend = db.Column(db.Integer, db.ForeignKey('deploy_extends.id'))
 
-    app = db.relationship('App', backref=db.backref('deploy'), foreign_keys=[role_id])
-    env = db.relationship('Environment', backref=db.backref('deploy'), foreign_keys=[role_id])
+    app = db.relationship('App', backref=db.backref('deploy'), foreign_keys=[app_id])
+    env = db.relationship('Environment', backref=db.backref('deploy'), foreign_keys=[env_id])
     create_at = db.Column(db.String(20), default=human_datetime)
     create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     updated_at = db.Column(db.String(20))
