@@ -18,8 +18,13 @@ class TaskStatus(Model):
     __tablename__ = 'task_status'
     
     name = db.Column(db.String(50))
+
     def __str__(self):
         return '<TaskStatus %r>' % self.name
+
+class History(Model):
+    __tablename__ = 'task_histories'
+    
 
 class Task(Model):
     __tablename__ = 'tasks'
@@ -32,6 +37,7 @@ class Task(Model):
     trigger_args = db.Column(db.String(255))
     is_active = db.Column(db.Boolean, default=False)
     desc = db.Column(db.String(255), nullable=True)
+    latest = db.
     latest_status = db.Column(db.Integer, db.ForeignKey('task_status.id'))
     latest_run_time = db.Column(db.String(20), nullable=True)
     latest_output = db.Column(db.Text)

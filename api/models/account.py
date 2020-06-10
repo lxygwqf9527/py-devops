@@ -89,10 +89,6 @@ class User(Model):
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     deleted_at = db.Column(db.String(20), nullable=True)
     deleted_by = db.Column(db.Integer,db.ForeignKey('users.id'), nullable=True)
-
-
-    def __str__(self):
-        return '<User %r>' % self.username
     
     def get_id(self):
         return self.id
@@ -117,6 +113,9 @@ class User(Model):
 
     @property
     def page_perms(self):
+        '''
+            前端页面权限
+        '''
         if self.role and self.role.page_perms:
             data = []
             perms = json.loads(self.role.page_perms)
@@ -129,14 +128,29 @@ class User(Model):
 
     @property
     def deploy_perms(self):
+        '''
+            发布页面权限
+        '''
         perms = json.loads(self.role.deploy_perms) if self.role.deploy_perms else {}
         perms.setdefault('apps', [])
         perms.setdefault('envs', [])
         return perms
-    
+
+    @property
+    def host_perms(self):
+        return json.loads(self.role.host_perms) if self. role and self.role.host_perms else []
+
+    def has_host_perm(self, host_id):
+        if isinstance(host_id, (list, set, tuple)):
+            return self.is_supper or set(host_id).issubset(set(self.host_perms))
+        return self.is_supper or int(host_id) in self.host_perms
+
     def has_perms(self, codes):
         # return self.is_supper or self.role in codes
         return self.is_supper
+    
+    def __str__(self):
+        return '<User %r>' % self.username
 
 class Role(CRUDModel):
     """
@@ -148,6 +162,7 @@ class Role(CRUDModel):
     desc = db.Column(db.String(255), nullable=True)
     page_perms = db.Column(db.Text, nullable=True)  # 格式为{"home":{"home":["views"]}} # 第一个home为一级菜单，第二个home为二级菜单，["views"]为三级菜单
     deploy_perms = db.Column(db.Text, nullable=True)
+    host_perms = db.Column(db.Text, nullable=True)
 
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -156,11 +171,24 @@ class Role(CRUDModel):
         tmp = super().to_dict(*args, **kwargs)
         tmp['page_perms'] = json.loads(self.page_perms) if self.page_perms else None
         tmp['deploy_perms'] = json.loads(self.deploy_perms) if self.deploy_perms else None
-        # tmp['used'] = self.user_set.count()
+        tmp['host_perms'] = json.loads(self.host_perms) if self.host_perms else None
+        tmp['used'] = self.users_count()
         return tmp
     
+    def add_deploy_perm(self, target, value):
+        perms = json.loads(self.deploy_perms) if self.deploy_perms else {'app': [], 'envs': []}
+        perms[target].append(value)
+        self.deploy_perms = json.dumps(perms)
+        self.save
+    
+    def add_host_perm(self, value):
+        perms = json.loads(self.host_perms) if self.host_perms else []
+        perms.append(value)
+        self.host_perms = json.dumps(perms)
+        self.save()
+    
+    def users_count(self):
+        return self.users
+
     def __str__(self):
         return '<Role %r>' % self.name
-    
-    def count(self):
-        pass

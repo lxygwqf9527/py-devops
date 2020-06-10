@@ -6,7 +6,7 @@ from paramiko.ssh_exception import AuthenticationException
 from api.config.Appsetting import AppSetting
 from api.resource import APIView
 from api.libs.ssh import SSH
-from api.models import Host, Deploy
+from api.models import Host, Deploy, Role, Task
 
 class HostView(APIView):
     '''
@@ -18,9 +18,14 @@ class HostView(APIView):
         '''
             获取所有的zones和主机
         '''
+        host_id = request.values.get('id')
+        if host_id:
+            if not g.user.has_host_perm(host_id):
+                return self.jsonify(error='无权访问该主机')
         hosts = Host.query.filter(Host.deleted_at.is_(None)).all()
         zones = [i.zone for i in hosts if i.zone ]
-        return self.jsonify({'zones': zones, 'hosts': [x.to_dict() for x in hosts]})
+        perms = [x.id for x in hosts] if request.user.is_supper else request.user.host_perms
+        return self.jsonify({'zones': zones, 'hosts': [x.to_dict() for x in hosts], 'perms': perms})
     
     def post(self):
         '''
@@ -51,6 +56,8 @@ class HostView(APIView):
             if int(request.values['id']) in eval(deploy.host_ids):
                 print(1111,deploy.app,deploy.env)
                 return self.jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
+        for role in Role.query.all():
+            if request.values['id']
         return 
 
 def valid_ssh(hostname, port, username, password):
