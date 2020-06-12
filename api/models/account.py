@@ -138,11 +138,14 @@ class User(Model):
 
     @property
     def host_perms(self):
+        print(json.loads(self.role.host_perms) if self.role and self.role.host_perms else [],'1111111111111111111111111')
         return json.loads(self.role.host_perms) if self.role and self.role.host_perms else []
 
     def has_host_perm(self, host_id):
         if isinstance(host_id, (list, set, tuple)):
+            print(self.is_supper or set(host_id).issubset(set(self.host_perms)),'222222222222222222222')
             return self.is_supper or set(host_id).issubset(set(self.host_perms))
+        print(self.is_supper or int(host_id) in self.host_perms,'33333333333333333333333333')
         return self.is_supper or int(host_id) in self.host_perms
 
     def has_perms(self, codes):
