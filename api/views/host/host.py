@@ -42,7 +42,7 @@ class HostView(APIView):
         port = request.values.get('port', None)
         if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
-
+        print(Host.query.filter(db.exists().where(and_(Host.name==name,Host.deleted_by.is_(None)))).scalar())
         if id:
             Host.get_by(id=id, to_dict=False).update(request.values)
         elif Host.query.filter(db.exists().where(and_(Host.name==name,Host.deleted_by.is_(None)))).scalar():
