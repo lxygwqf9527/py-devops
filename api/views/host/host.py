@@ -2,6 +2,7 @@
 
 from flask import request, g
 from paramiko.ssh_exception import AuthenticationException
+from flask_sqlalchemy.sql import exists
 
 from api.config.Appsetting import AppSetting
 from api.resource import APIView
@@ -40,9 +41,10 @@ class HostView(APIView):
         port = request.values.get('port', None)
         if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
+
         if id:
             Host.get_by(id=id, to_dict=False).update(request.values)
-        elif Host.query.filter(Host.name==name,Host.deleted_by.is_(None)).exists():
+        elif Host.query.filter(exists().where(Host.name==name,Host.deleted_by.is_(None))).scalar():
             return self.jsonify(erro='已存在的主机名称【{name}】')
         else:
             request.values['created_by'] = g.user.id
