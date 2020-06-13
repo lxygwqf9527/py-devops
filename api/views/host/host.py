@@ -45,7 +45,7 @@ class HostView(APIView):
 
         if id:
             Host.get_by(id=id, to_dict=False).update(request.values)
-        elif Host.query.filter_by(db.exists().where(and_(Host.name==name,Host.deleted_by.is_(None)))).scalar():
+        elif Host.query.filter(db.exists().and_(Host.name==name,Host.deleted_by.is_(None))).scalar():
             return self.jsonify(erro='已存在的主机名称【{name}】')
         else:
             request.values['created_by'] = g.user.id
