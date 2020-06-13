@@ -40,9 +40,11 @@ class HostView(APIView):
         port = request.values.get('port', None)
         if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
-        
+        print(Host.query.filter(Host.name=name,Host.deleted_by.is_(None)).exists().scalar())print(Host.query.filter(Host.name=name,Host.deleted_by.is_(None)).exists().scalar(),'--------------------------------')
         if id:
             Host.get_by(id=id, to_dict=False).update(request.values)
+        elif Host.query.filter(Host.name=name,Host.deleted_by.is_(None)).exists().scalar():
+            return self.jsonify(erro='已存在的主机名称【{name}】')
         else:
             request.values['created_by'] = g.user.id
             Host.create(**request.values)
