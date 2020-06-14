@@ -59,9 +59,8 @@ class HostView(APIView):
             删除主机
         '''
         data = AttrDict(id=request.values['id'])
-        print(data.id,'-------------------------')
-        deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(fr'\D%s\D' % request.values['id'])).first()
-
+        deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(fr'\D{data.id}\D').first()
+        print(deploy,'=========================$$$$$$$$$$$$$$$')
         #for deploy in Deploy.query.all():
         #    if int(request.values['id']) in eval(deploy.host_ids):
                 #return self.jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
