@@ -42,25 +42,27 @@ class HostView(APIView):
         port = request.values.get('port', None)
         if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
-        print(Host.query.filter(db.exists().where(and_(Host.name==name,Host.deleted_by.is_(None)))),'========================')
         if id:
             Host.get_by(id=id, to_dict=False).update(request.values)
         elif Host.query.filter(db.exists().where(and_(Host.name==name,Host.deleted_by.is_(None)))).scalar():
             return self.jsonify(error='已存在的主机名称【%s】' % name)
         else:
             request.values['created_by'] = g.user.id
-            Host.create(**request.values)
+            host = Host.create(**request.values)
+            if g.user.role:
+                g.user.role.add_host_perm(host.id)
         return self.jsonify(error='')
     
     def delete(self):
         ''''
             删除主机
         '''
-        for deploy in Deploy.query.all():
-            if int(request.values['id']) in eval(deploy.host_ids):
-                print(1111,deploy.app,deploy.env)
-                return self.jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
-        # for role in Role.query.all():
+        deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(r'\D{request.values['id']}\D')).first()
+        print(deploy, '==============#2111111111111111111144444')
+        #for deploy in Deploy.query.all():
+        #    if int(request.values['id']) in eval(deploy.host_ids):
+                #return self.jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
+        #for role in Role.query.all():
         #     if request.values['id']
         # return 
 
