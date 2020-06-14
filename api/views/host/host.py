@@ -4,6 +4,7 @@ from flask import request, g
 from paramiko.ssh_exception import AuthenticationException
 from sqlalchemy import and_
 
+from api.libs.utils import AttrDict
 from api.extensions import db
 from api.config.Appsetting import AppSetting
 from api.resource import APIView
@@ -57,8 +58,10 @@ class HostView(APIView):
         ''''
             删除主机
         '''
+        data = AttrDict(id=request.values['id'])
+        print(data,'-------------------------')
         deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(fr'\D%s\D' % request.values['id'])).first()
-        print(deploy, '==============#2111111111111111111144444')
+
         #for deploy in Deploy.query.all():
         #    if int(request.values['id']) in eval(deploy.host_ids):
                 #return self.jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
