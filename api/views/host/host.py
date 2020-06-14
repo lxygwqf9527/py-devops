@@ -57,7 +57,7 @@ class HostView(APIView):
         ''''
             删除主机
         '''
-        deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(r'\D{request.values['id']}\D')).first()
+        deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(r'\D{ids}\D').format(request.values['id'])).first()
         print(deploy, '==============#2111111111111111111144444')
         #for deploy in Deploy.query.all():
         #    if int(request.values['id']) in eval(deploy.host_ids):
