@@ -4,6 +4,7 @@ from flask import request, g
 from paramiko.ssh_exception import AuthenticationException
 from sqlalchemy import and_
 
+from api.libs.utils import AttrDict
 from api.extensions import db
 from api.config.Appsetting import AppSetting
 from api.resource import APIView
@@ -57,7 +58,8 @@ class HostView(APIView):
         ''''
             删除主机
         '''
-        deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(".*%s.*" % request.values['id'])).first()
+        data = AttrDict(id=request.values['id'])
+        deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(".*{data.id}.*" )).first()
         print(deploy,'1111111111111111111111111')
         #for deploy in Deploy.query.all():
         #    if int(request.values['id']) in eval(deploy.host_ids):
