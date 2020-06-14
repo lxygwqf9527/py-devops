@@ -59,7 +59,7 @@ class HostView(APIView):
             删除主机
         '''
         data = AttrDict(id=request.values['id'])
-        print(data,'-------------------------')
+        print(data.id,'-------------------------')
         deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(fr'\D%s\D' % request.values['id'])).first()
 
         #for deploy in Deploy.query.all():
