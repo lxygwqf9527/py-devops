@@ -62,7 +62,9 @@ class HostView(APIView):
         deploy = Deploy.query.filter(Deploy.host_ids.op('regexp')(fr"(\[.*\,|\[){data.id}(\]|\,.*\])")).first()
         if deploy:
             return self.jsonify(error=f'应用【{deploy.app.name}】在【{deploy.env.name}】的发布配置关联了该主机，请解除关联后再尝试删除该主机')
-        
+        task = Task.query.filter(Task.targets.op('regexp')(fr"(\[.*\,|\[){data.id}(\]|\,.*\])")).first()
+        if task:
+            return self.jsonify(error=f'任务计划中的任务【{task.name}】关联了该主机，请解除关联后再尝试删除该主机')
         # return 
 
 def valid_ssh(hostname, port, username, password):

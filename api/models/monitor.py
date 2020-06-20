@@ -47,3 +47,6 @@ class Detection(Model):
         tmp['notify_mode'] = json.loads(self.notify_mode)
         tmp['notify_grp'] = json.loads(self.notify_grp)
         return tmp
+    
+    def __str__(self):
+        return '<Detection %r>' % slef.name 

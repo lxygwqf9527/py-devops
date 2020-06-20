@@ -12,6 +12,7 @@ class App(Model):
     key = db.Column(db.String(50), unique=True)
     desc = db.Column(db.String(255), nullable=True)
     rel_apps = db.Column(db.Text, nullable=True)
+    rel_services = db.Column(db.Text, nullable=True)
     create_at = db.Column(db.String(20), default=human_datetime)
     create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
@@ -20,7 +21,6 @@ class App(Model):
         tmp['rel_apps'] = json.loads(self.rel_apps) if self.rel_apps else []
         tmp['rel_services'] = json.loads(self.rel_services) if self.rel_services else []
         return tmp
-
 
     def __str__(self):
         return '<App %r>' % self.name
@@ -37,9 +37,12 @@ class Deploy(Model):
     env_id = db.Column(db.Integer, db.ForeignKey('environments.id'))
     host_ids = db.Column(db.Text)
     extend = db.Column(db.Integer, db.ForeignKey('deploy_extends.id'))
+    is_audit = db.Column(db.Boolean)
+    rst_notify = db.Column(db.String(255), nullable=True)
 
     app = db.relationship('App', backref=db.backref('deploy'), foreign_keys=[app_id])
     env = db.relationship('Environment', backref=db.backref('deploy'), foreign_keys=[env_id])
+
     create_at = db.Column(db.String(20), default=human_datetime)
     create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     updated_at = db.Column(db.String(20))
@@ -47,6 +50,20 @@ class Deploy(Model):
 
     def __str__(self):
         return '<Deoploy %r>' % self.app
+    
+    @property
+    def extend_obj(self):
+        cls = DeployExtend1 if self.extend == '1' else DeployExtend2
+        return cls.query.filter(deploy=self).first()
+
+    def to_dict(self, *args, **kwargs):
+        deploy = super().to_dict(*args, **kwargs)
+        deploy['app_name'] = self.app.name if  hasattr(self, 'app_name') else None
+        deploy['host_ids'] = json.loads(self.host_ids)
+        deploy['rst_notify'] = json.loads(self.rst_notify)
+        deploy.update(self.extend_obj.to_dict())
+        return deploy
+
 
 class DeployExtend1(Model):
     __tablename__ = 'deploy_extend1'
@@ -84,7 +101,6 @@ class DeployExtend2(Model):
         tmp = super().to_dict(*args, **kwargs)
         tmp['server_actions'] = json.loads(self.server_actions)
         tmp['host_actions'] = json.loads(self.host_actions)
-
         return tmp
     
     def __str__(self):

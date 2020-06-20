@@ -9,8 +9,8 @@ class AlarmStatus(Model):
     """
         alarm status表
         状态就 1 和 0 
-        0代表已处理
-        1代表没处理
+        0代表报警发生
+        1代表故障恢复
     """
     __tablename__ = 'alarms_status'
 
@@ -45,7 +45,7 @@ class Alarm(Model):
         tmp = super().to_dict(*args, **kwargs)
         tmp['notify_mode'] = ','.join(dict(self.MODES)[x] for x in json.loads(self.notify_mode))
         tmp['notify_grp'] = json.loads(self.notify_grp)
-        tmp['status_alias'] = self.get_status_display()
+        tmp['status_alias'] = self.get_status_display() # 这里有问题
         return tmp
 
     def __str__(self):
@@ -81,6 +81,8 @@ class AlarmContact(Model):
     phone = db.Column(db.String(20), nullable=True)
     email = db.Column(db.String(255), nullable=True)
     ding = db.Column(db.String(255), nullable=True)
+    wx_token = db.Column(db.String(255), nullable=True)
+    qy_wx = db.Column(db.String(255), nullable=True)
     create_at = db.Column(db.String(20), default=human_datetime)
     create_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 

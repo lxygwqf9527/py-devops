@@ -8,14 +8,21 @@ from api.libs.exception import CommitException
 
 
 class ModelMixin(object):
-    def to_dict(self):
-        res = dict()
-        for k in getattr(self, "__table__").columns:
-            if not isinstance(getattr(self, k.name), datetime.datetime):
-                res[k.name] = getattr(self, k.name)
-            else:
-                res[k.name] = getattr(self, k.name).strftime('%Y-%m-%d %H:%M:%S')
-        return res
+    def to_dict(self, excludes: tuple = None, selects: tuple = None) -> dict:
+        if selects:
+            return {f: getattr(self, f) for f in selects}
+        elif excludes:
+            return {f.attname: getattr(self, f.attname) for f in self._meta.fields if f.attname not in excludes}
+        else:
+            return {f.attname: getattr(self, f.attname) for f in self._meta.fields}
+    # def to_dict(self):
+    #     res = dict()
+    #     for k in getattr(self, "__table__").columns:
+    #         if not isinstance(getattr(self, k.name), datetime.datetime):
+    #             res[k.name] = getattr(self, k.name)
+    #         else:
+    #             res[k.name] = getattr(self, k.name).strftime('%Y-%m-%d %H:%M:%S')
+    #     return res
         
     @classmethod
     def get_columns(cls):
