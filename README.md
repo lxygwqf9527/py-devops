@@ -1,3 +1,3 @@
 # 安装
 # 后端api
-- account:
+- [account](https://github.com/faker-DemoKing/devops/blob/master/docs/api/account.md)
