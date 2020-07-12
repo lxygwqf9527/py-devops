@@ -29,6 +29,9 @@ class DeployExtends(Model):
     __tablename__ = 'deploy_extends'
 
     name = db.Column(db.String(50))
+    
+    def __str__(self):
+        return self.name
 
 class Deploy(Model):
     __tablename__ = 'deploys'
