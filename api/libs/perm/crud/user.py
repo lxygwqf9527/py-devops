@@ -1,3 +1,6 @@
+import random
+import string
+import uuid
 from flask import abort
 
 from api.models import User
@@ -19,4 +22,25 @@ class UserCRUD(object):
         UserCache.clean(user)
 
         return user.update(first=True,**kwargs)
+
+    @staticmethod
+    def _gen_key_secret():
+        key = uuid.uuid4().hex
+        secret = ''.join(random.sample(string.ascii_letters + string.digits + '~!@#$%^&*?', 32))
+
+        return key, secret
+
+    @classmethod
+    def add(cls, **kwargs):
+        existed = User.get_by(username=kwargs['username'], email=kwargs['email'])
+        existed and abort(400, "User <{0}> is already existed".format(kwargs['username']))
+
+        is_admin = kwargs.pop('is_admin', False)
+        kwargs['nickname'] = kwargs.get('nickname') or kwargs['username']
+        kwargs['block'] = 0
+        kwargs['key'], kwargs['secret'] = cls._gen_key_secret()
+
+        user = User.create(**kwargs)
+
+        return user
 
