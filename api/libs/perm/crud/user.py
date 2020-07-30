@@ -38,8 +38,9 @@ class UserCRUD(object):
 
         is_admin = kwargs.pop('is_admin', False)
         kwargs['nickname'] = kwargs.get('nickname') or kwargs['username']
-        kwargs['password'] = User._set_password(kwargs['passoword'])
-        user = User.create(**kwargs)
+        # kwargs['password'] = User._set_password(kwargs['passoword'])
+        print(kwargs['password'])
+        #user = User.create(**kwargs)
 
         return user
 
