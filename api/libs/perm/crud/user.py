@@ -32,6 +32,7 @@ class UserCRUD(object):
 
     @classmethod
     def add(cls, **kwargs):
+        print(kwargs)
         existed = User.get_by(username=kwargs['username'], email=kwargs['email'])
         existed and abort(400, "User <{0}> is already existed".format(kwargs['username']))
 
