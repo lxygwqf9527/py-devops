@@ -9,5 +9,5 @@ app = create_app()
 print(current_user,'wdnmd==============================================qiezi')
 
 @app.after_request
-def after_request():
+def reg_user():
     g.user = current_user
