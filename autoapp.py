@@ -9,6 +9,6 @@ app = create_app()
 print(current_user,'wdnmd==============================================qiezi')
 
 @app.after_request
-def after_request(**args):
+def after_request(*args):
     print(args)
     g.user = current_user
