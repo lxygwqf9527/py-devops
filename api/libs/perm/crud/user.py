@@ -25,6 +25,9 @@ class UserCRUD(object):
 
     @staticmethod
     def _gen_key_secret():
+        '''
+            生成key的函数，目前还没完成
+        '''
         key = uuid.uuid4().hex
         secret = ''.join(random.sample(string.ascii_letters + string.digits + '~!@#$%^&*?', 32))
 
@@ -32,15 +35,16 @@ class UserCRUD(object):
 
     @classmethod
     def add(cls, **kwargs):
-        print(kwargs)
+        '''
+            创建user
+        '''
         existed = User.get_by(username=kwargs['username'], email=kwargs['email'])
         existed and abort(400, "User <{0}> is already existed".format(kwargs['username']))
 
         is_admin = kwargs.pop('is_admin', False)
         kwargs['nickname'] = kwargs.get('nickname') or kwargs['username']
-        # kwargs['password'] = User._set_password(kwargs['passoword'])
-        print(kwargs['password'])
-        #user = User.create(**kwargs)
+        kwargs['password'] = User._set_password(kwargs['passoword'])
+        user = User.create(**kwargs)
+        print(user)
 
         return user
-
