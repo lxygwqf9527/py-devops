@@ -41,7 +41,7 @@ def _auth_with_key():
 def _auth_with_token():
     if request.path in settings.AUTHENTICATION_EXCLUDES:
             return None
-        access_token = request.headers.get('x-token') or request.GET.get('x-token')
+        access_token = request.headers.get('x-token')
         if access_token and len(access_token) == 32:
             x_real_ip = request.headers.get('x-real-ip', '')
             user = User.quer.filter(access_token=access_token).first()
