@@ -44,7 +44,7 @@ def _auth_with_token():
     access_token = request.headers.get('x-token') or request.GET.get('x-token')
     if access_token and len(access_token) == 32:
         x_real_ip = request.headers.get('x-real-ip', '')
-        user = User.quer.filter(access_token=access_token).first()
+        user = User.query.filter(access_token=access_token).first()
         # if user and x_real_ip == user.last_ip and user.token_expired >= time.time() and user.is_active:
         if user and user.token_expired >= time.time() and user.is_active:
             request.user = user
