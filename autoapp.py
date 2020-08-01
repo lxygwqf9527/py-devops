@@ -10,5 +10,6 @@ print(current_user,'wdnmd==============================================qiezi')
 
 @app.after_request
 def after_request(*args):
-    print(args)
+    print(args,g.user)
     g.user = current_user
+    return args
