@@ -48,5 +48,5 @@ def add_user(user, password, mail, is_admin):
     assert user is not None
     assert password is not None
     assert mail is not None
-    print((user, password, is_admin))
+    
     UserCRUD.add(username=user, password=password, email=mail, is_admin=is_admin)
