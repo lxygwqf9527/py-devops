@@ -41,16 +41,16 @@ def _auth_with_key():
 def _auth_with_token():
     if request.path in settings.AUTHENTICATION_EXCLUDES:
             return None
-        access_token = request.headers.get('x-token')
-        if access_token and len(access_token) == 32:
-            x_real_ip = request.headers.get('x-real-ip', '')
-            user = User.quer.filter(access_token=access_token).first()
-            # if user and x_real_ip == user.last_ip and user.token_expired >= time.time() and user.is_active:
-            if user and user.token_expired >= time.time() and user.is_active
-                request.user = user
-                user.token_expired = time.time() + 8 * 60 * 60
-                user.save()
-                return True
+    access_token = request.headers.get('x-token') or request.GET.get('x-token')
+    if access_token and len(access_token) == 32:
+        x_real_ip = request.headers.get('x-real-ip', '')
+        user = User.quer.filter(access_token=access_token).first()
+        # if user and x_real_ip == user.last_ip and user.token_expired >= time.time() and user.is_active:
+        if user and user.token_expired >= time.time() and user.is_active
+            request.user = user
+            user.token_expired = time.time() + 8 * 60 * 60
+            user.save()
+            return True
 
 def auth_required(func):
     if request.json is not None:
