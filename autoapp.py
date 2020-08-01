@@ -8,6 +8,6 @@ app = create_app()
 
 print(current_user,'wdnmd==============================================qiezi')
 
-@app.before_request
-def before_request():
+@app.after_request
+def after_request():
     g.user = current_user
