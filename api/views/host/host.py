@@ -27,6 +27,7 @@ class HostView(APIView):
                 return self.jsonify(error='无权访问该主机')
         hosts = Host.query.filter(Host.deleted_at.is_(None)).all()
         zones = [i.zone for i in hosts if i.zone ]
+        print(g.user)
         perms = [x.id for x in hosts] if g.user.is_supper else g.user.host_perms
         return self.jsonify({'zones': zones, 'hosts': [x.to_dict() for x in hosts], 'perms': perms})
     

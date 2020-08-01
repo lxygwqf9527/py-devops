@@ -49,4 +49,4 @@ def add_user(user, password, mail, is_admin):
     assert password is not None
     assert mail is not None
     
-    UserCRUD.add(username=user, password=password, email=mail, is_admin=is_admin)
+    UserCRUD.add(username=user, password=password, email=mail, is_supper=is_admin)
