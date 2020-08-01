@@ -14,6 +14,7 @@ from flask import g
 
 from api.models.account import User
 from api.libs.cache import UserCache
+import settings
 
 def _auth_with_session():
     # session 判断函数
@@ -38,24 +39,18 @@ def _auth_with_key():
     return False
 
 def _auth_with_token():
-    auth_headers = request.headers.get('Access-Token', '').strip()
-    if not auth_headers:
-        return False
-
-    try:
-        token = auth_headers
-        data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
-        user = User.query.filter_by(email=data['sub']).first()
-        if not user:
-            return False
-
-        login_user(user)
-        g.user = user
-        return True
-    except jwt.ExpiredSignatureError:
-        return False
-    except (jwt.InvalidTokenError, Exception):
-        return False
+    if request.path in settings.AUTHENTICATION_EXCLUDES:
+            return None
+        access_token = request.headers.get('x-token') or request.GET.get('x-token')
+        if access_token and len(access_token) == 32:
+            x_real_ip = request.headers.get('x-real-ip', '')
+            user = User.quer.filter(access_token=access_token).first()
+            # if user and x_real_ip == user.last_ip and user.token_expired >= time.time() and user.is_active:
+            if user and user.token_expired >= time.time() and user.is_active
+                request.user = user
+                user.token_expired = time.time() + 8 * 60 * 60
+                user.save()
+                return True
 
 def auth_required(func):
     if request.json is not None:
@@ -70,7 +65,7 @@ def auth_required(func):
         if not getattr(func, 'authenticated', True):
             # 先判断有没有authenticated这个属性是否为True，是的话表示通过认证
             return func(*args, **kwargs)
-        if _auth_with_session():
+        if _auth_with_session() or _auth_with_token():
             return func(*args, **kwargs)
         # 再判断session or key or token or ip_white_list，满足一样即可
         abort(401)

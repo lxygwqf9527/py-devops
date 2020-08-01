@@ -92,3 +92,6 @@ BOOL_TRUE = ['true', 'TRUE', 'True', True, '1', 1, "Yes", "YES", "yes", 'Y', 'y'
 
 
 
+AUTHENTICATION_EXCLUDES = (
+    '/api/login'
+)
