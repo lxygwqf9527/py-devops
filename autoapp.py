@@ -8,4 +8,4 @@ app = create_app()
 
 @app.before_request
 def after_request():
-    g.user = current_user
+    g.user = current_user._get_current_object()
