@@ -6,7 +6,7 @@ from api.app import create_app
 
 app = create_app()
 
-print(current_user)
+print(current_user,'wdnmd==============================================qiezi')
 
 @app.before_request
 def before_request():
