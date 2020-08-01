@@ -6,10 +6,6 @@ from api.app import create_app
 
 app = create_app()
 
-print(current_user,'wdnmd==============================================qiezi')
-
-@app.after_request
-def after_request(*args):
-    print(args,g.user)
+@app.before_request
+def after_request():
     g.user = current_user
-    return args
