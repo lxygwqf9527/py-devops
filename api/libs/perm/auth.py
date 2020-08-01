@@ -46,7 +46,7 @@ def _auth_with_token():
         x_real_ip = request.headers.get('x-real-ip', '')
         user = User.quer.filter(access_token=access_token).first()
         # if user and x_real_ip == user.last_ip and user.token_expired >= time.time() and user.is_active:
-        if user and user.token_expired >= time.time() and user.is_active
+        if user and user.token_expired >= time.time() and user.is_active:
             request.user = user
             user.token_expired = time.time() + 8 * 60 * 60
             user.save()
