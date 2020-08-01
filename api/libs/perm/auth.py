@@ -5,16 +5,17 @@ from __future__ import unicode_literals
 
 from functools import wraps
 
-import jwt
 from flask import request, abort
 from flask import current_app
 from flask import session
 from flask_login import login_user, current_user
 from flask import g
+import time
 
+import settings
 from api.models.account import User
 from api.libs.cache import UserCache
-import settings
+
 
 def _auth_with_session():
     # session 判断函数
