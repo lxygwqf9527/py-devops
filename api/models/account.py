@@ -178,7 +178,7 @@ class Role(CRUDModel):
 
     name = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
-    page_perms = db.Column(db.Text, nullable=True)  # 格式为{"home":{"home":["views"]}} # 第一个home为一级菜单，第二个home为二级菜单，["views"]为三级菜单
+    page_perms = db.Column(db.Text, nullable=True)  # 格式为{"home":{"home":["view"]}} # 第一个home为一级菜单，第二个home为二级菜单，["views"]为三级菜单
     deploy_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     host_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     ssl_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
@@ -218,3 +218,5 @@ class Role(CRUDModel):
 
     def __str__(self):
         return '<Role %r>' % self.name
+
+{"home":{"home":["view"]},"host":{"host":["view"]},"ssl":{"ssl":["view"]}}
