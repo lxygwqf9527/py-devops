@@ -82,8 +82,7 @@ class LogoutView(APIView):
     url_prefix = "/logout"
 
     @auth_abandoned
-    def get(self):
-        print(g.user)
+    def post(self):
         logout_user()
         g.user.token_expired = 0
         g.user.save()
