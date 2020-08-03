@@ -14,7 +14,7 @@ from api.libs import human_datetime
 #         return '<SSLType %r>' self.name
     
 class SSL(Model):
-    __tablename__ = 'ssl'
+    __tablename__ = 'ssls'
 
     name = db.Column(db.String(20),nullable=False)
     ssl_type = db.Column(db.String(50))
