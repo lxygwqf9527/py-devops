@@ -27,4 +27,4 @@ class SSL(Model):
 
 
     def __str__(self):
-        return '<SSL %r>' self.name
+        return '<SSL %r>' % self.name
