@@ -37,6 +37,7 @@ API_PACKAGE = "api"
 
 def register_resources(resource_path, rest_api): # 注册路由，通过被调用的方式
     for root, _, files in os.walk(os.path.join(resource_path)):
+        print(root,_,files,'=======')
         for filename in files:
             if not filename.startswith("_") and filename.endswith("py"):
                 module_path = os.path.join(API_PACKAGE, root[root.index("views"):])
@@ -51,5 +52,4 @@ def register_resources(resource_path, rest_api): # 注册路由，通过被调�
                         resource_cls.url_prefix = ("",)
                     if isinstance(resource_cls.url_prefix, six.string_types):
                         resource_cls.url_prefix = (resource_cls.url_prefix,)
-                    print(resource_cls, *resource_cls.url_prefix,'=====')
                     rest_api.add_resource(resource_cls, *resource_cls.url_prefix)
