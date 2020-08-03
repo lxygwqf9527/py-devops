@@ -30,3 +30,8 @@ register_resources(os.path.join(HERE, "home"), home_rest)
 blueprint_host_v1 = Blueprint('host_api_v1', __name__, url_prefix='/api/v1/host')
 host_rest = Api(blueprint_host_v1)
 register_resources(os.path.join(HERE, "host"), host_rest)
+
+# ssl
+blueprint_ssl_v1 = Blueprint('ssl_api_v1', __name__, url_prefix='/api/v1/ssl')
+ssl_rest = Api(blueprint_ssl_v1)
+register_resources(os.path.join(HERE,"ssl"), ssl_rest)

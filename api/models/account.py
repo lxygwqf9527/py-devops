@@ -167,8 +167,9 @@ class Role(CRUDModel):
     name = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
     page_perms = db.Column(db.Text, nullable=True)  # 格式为{"home":{"home":["views"]}} # 第一个home为一级菜单，第二个home为二级菜单，["views"]为三级菜单
-    deploy_perms = db.Column(db.Text, nullable=True)
-    host_perms = db.Column(db.Text, nullable=True)
+    deploy_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
+    host_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
+    ssl_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
 
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -178,6 +179,7 @@ class Role(CRUDModel):
         tmp['page_perms'] = json.loads(self.page_perms) if self.page_perms else None
         tmp['deploy_perms'] = json.loads(self.deploy_perms) if self.deploy_perms else None
         tmp['host_perms'] = json.loads(self.host_perms) if self.host_perms else None
+        tmp['ssl_perms'] = json.loads(slef.)
         tmp['used'] = self.users_count()
         return tmp
     
@@ -200,8 +202,8 @@ class Role(CRUDModel):
         self.save()
     
     def users_count(self):
-        print(self.users,'Role users_count,===============')
-        return self.users
+
+        return self.users.count
 
     def __str__(self):
         return '<Role %r>' % self.name
