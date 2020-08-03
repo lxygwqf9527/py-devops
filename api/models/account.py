@@ -142,6 +142,13 @@ class User(Model):
             返回用户主机权限
         '''
         return json.loads(self.role.host_perms) if self.role and self.role.host_perms else []
+    
+    @property
+    def ssl_perms(self):
+        '''
+            返回证书权限
+        '''
+        return json.loads(self.role.ssl_perms) if self.role and slef.role.ssl_perms else []
 
     def has_host_perm(self, host_id):
         '''
@@ -150,6 +157,11 @@ class User(Model):
         if isinstance(host_id, (list, set, tuple)):
             return self.is_supper or set(host_id).issubset(set(self.host_perms))
         return self.is_supper or int(host_id) in self.host_perms
+    
+    def has_ssl_perm(self, ssl_id):
+        if isinstance(ssl_id, (list, set, tuple)):
+            return self.is_supper or set(ssl_id).issubset(set(self.ssl_perms))
+        return self.is_supper or int(ssl_id) in self.ssl_perms
 
     def has_perms(self, codes):
         # return self.is_supper or self.role in codes
@@ -190,7 +202,7 @@ class Role(CRUDModel):
         perms = json.loads(self.deploy_perms) if self.deploy_perms else {'app': [], 'envs': []}
         perms[target].append(value)
         self.deploy_perms = json.dumps(perms)
-        self.save
+        self.save()
     
     def add_host_perm(self, value):
         '''
@@ -203,7 +215,7 @@ class Role(CRUDModel):
     
     def users_count(self):
 
-        return self.users.count
+        return self.users.query().count()
 
     def __str__(self):
         return '<Role %r>' % self.name
