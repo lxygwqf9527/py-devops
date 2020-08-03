@@ -40,12 +40,12 @@ def register_resources(resource_path, rest_api): # 注册路由，通过被调�
         for filename in files:
             if not filename.startswith("_") and filename.endswith("py"):
                 module_path = os.path.join(API_PACKAGE, root[root.index("views"):])
-                print(module_path,root.index("views"))
                 if module_path not in sys.path:
                     sys.path.insert(1, module_path)
                 view = __import__(os.path.splitext(filename)[0])
                 resource_list = [o[0] for o in getmembers(view) if isclass(o[1]) and issubclass(o[1], Resource)]
                 resource_list = [i for i in resource_list if i != "APIView"]
+                print(resource_list,'===========')
                 for resource_cls_name in resource_list:
                     resource_cls = getattr(view, resource_cls_name)
                     if not hasattr(resource_cls, "url_prefix"):
