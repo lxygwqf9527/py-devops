@@ -56,7 +56,6 @@ def _auth_with_token():
             return True
 
 def auth_required(func):
-    print(request.headers)
     if request.json is not None:
         setattr(request, 'values', request.json)
     else:

@@ -8,13 +8,15 @@ from api.libs.exception import CommitException
 
 
 class ModelMixin(object):
+    res = dict()
     def to_dict(self, excludes: tuple = None, selects: tuple = None) -> dict:
         if selects:
             return {f: getattr(self, f) for f in selects}
         elif excludes:
-            return {f.attname: getattr(self, f.attname) for f in self._meta.fields if f.attname not in excludes}
+            return {f.name: getattr(self, f.name) for f in getattr(self, "__table__").columns if f.name not in excludes}
         else:
-            return {f.attname: getattr(self, f.attname) for f in self._meta.fields}
+            return {f.name: getattr(self, f.name) for f in getattr(self, "__table__").columns}
+
     # def to_dict(self):
     #     res = dict()
     #     for k in getattr(self, "__table__").columns:
