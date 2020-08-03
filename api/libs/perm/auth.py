@@ -51,9 +51,12 @@ def _auth_with_token():
             request.user = user
             user.token_expired = time.time() + 8 * 60 * 60
             user.save()
+            login_user(user)
+            g.user = user
             return True
 
 def auth_required(func):
+    print(request.headers)
     if request.json is not None:
         setattr(request, 'values', request.json)
     else:
