@@ -10,3 +10,4 @@ from .scheduler import Task
 from .monitor import Detection
 from .alarm import AlarmStatus, AlarmGroup, AlarmContact, Alarm
 from .deploy import DeployRequestType, DeployRequestStatus, DeployRequest
+from .ssl import SSL
