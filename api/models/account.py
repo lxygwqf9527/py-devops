@@ -214,7 +214,7 @@ class Role(CRUDModel):
         self.save()
     
     def users_count(self):
-        print(self.users)
+        print(len(self.users))
         #return self.users.count()
 
     def __str__(self):
