@@ -148,7 +148,7 @@ class User(Model):
         '''
             返回证书权限
         '''
-        return json.loads(self.role.ssl_perms) if self.role and slef.role.ssl_perms else []
+        return json.loads(self.role.ssl_perms) if self.role and self.role.ssl_perms else []
 
     def has_host_perm(self, host_id):
         '''
@@ -218,5 +218,3 @@ class Role(CRUDModel):
 
     def __str__(self):
         return '<Role %r>' % self.name
-
-{"home":{"home":["view"]},"host":{"host":["view"]},"ssl":{"ssl":["view"]}}
