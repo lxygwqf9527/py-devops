@@ -74,6 +74,7 @@ class LoginView(APIView):
             "nickname" : user.nickname,
             "is_supper" : user.is_supper,
             "has_real_ip" : True if x_real_ip else False,
+            'host_perms': [] if user.is_supper else user.host_perms,
             "permissions" : [] if user.is_supper else user.page_perms})
 
 class LogoutView(APIView):
@@ -81,5 +82,7 @@ class LogoutView(APIView):
 
     @auth_abandoned
     def get(self):
-        logout_user()
+        logout_user(g.user)
+        g.user.token_expired = 0
+        g.user.save()
         return self.jsonify(error='')
