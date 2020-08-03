@@ -53,6 +53,7 @@ def _auth_with_token():
             user.save()
             login_user(user)
             g.user = user
+            print(g.user)
             return True
 
 def auth_required(func):
