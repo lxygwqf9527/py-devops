@@ -191,7 +191,7 @@ class Role(CRUDModel):
         tmp['page_perms'] = json.loads(self.page_perms) if self.page_perms else None
         tmp['deploy_perms'] = json.loads(self.deploy_perms) if self.deploy_perms else None
         tmp['host_perms'] = json.loads(self.host_perms) if self.host_perms else None
-        tmp['ssl_perms'] = json.loads(self.ssl_perms)
+        tmp['ssl_perms'] = json.loads(self.ssl_perms) if self.ssl_perms else None
         tmp['used'] = self.users_count()
         return tmp
     
