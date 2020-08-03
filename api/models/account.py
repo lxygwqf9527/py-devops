@@ -215,7 +215,7 @@ class Role(CRUDModel):
     
     def users_count(self):
 
-        return self.users.query().count()
+        return self.users.count()
 
     def __str__(self):
         return '<Role %r>' % self.name
