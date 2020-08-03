@@ -20,4 +20,5 @@ class SSLView(APIView):
         ssl_types = [i.ssl_type for i in ssls if i.ssl_type ]
         perms = [x.id for x in ssls] if g.user.is_supper else g.user.ssl_perms
         # 这里证书字符串和证书私钥也一起提交给了前端，证书太多可能会导致前端数据加载太慢，卡顿的现象出现,后面再优化
+        print({'ssl_types': ssl_types, 'ssls': [x.to_dict() for x in ssls], 'perms': perms})
         return self.jsonify({'ssl_types': ssl_types, 'ssls': [x.to_dict() for x in ssls], 'perms': perms})
