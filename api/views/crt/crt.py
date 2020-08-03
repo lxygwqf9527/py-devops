@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import request
+from flask import request, g
 
 from api.resource import APIView
 from api.models.ssl import SSL
