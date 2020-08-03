@@ -84,6 +84,6 @@ class LogoutView(APIView):
     @auth_abandoned
     def post(self):
         logout_user()
-        g.user.token_expired = 0
-        g.user.save()
+        # g.user.token_expired = 0
+        # g.user.save()
         return self.jsonify(error='')
