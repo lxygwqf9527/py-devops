@@ -19,7 +19,7 @@ class SSL(Model):
 
     name = db.Column(db.String(20),nullable=False)
     ssl_type_id = db.Column(db.Integer, db.ForeignKey('ssl_type.id'))
-    ssl_type = db.relationship('SSLType', backref=db.backref('ssl_type'), lazy='subquery', foreign_keys=[ssl_type_id])
+    ssl_type = db.relationship('SSLType', backref=db.backref('ssl'), lazy='subquery', foreign_keys=[ssl_type_id])
     cer = db.Column(db.Text)
     key = db.Column(db.Text)
 
@@ -39,7 +39,7 @@ class SSLSetting(Model):
     desc = db.Column(db.String(255), nullable=True)
 
     ssl_type_id = db.Column(db.Integer, db.ForeignKey('ssl_type.id'))
-    ssl_type = db.relationship('SSLType', backref=db.backref('ssl_type'), lazy='subquery', foreign_keys=[ssl_type_id])
+    ssl_type = db.relationship('SSLType', backref=db.backref('ssl_setting'), lazy='subquery', foreign_keys=[ssl_type_id])
 
     def __str__(self):
         return '<Setting %r>' % self.key
