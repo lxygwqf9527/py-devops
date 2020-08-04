@@ -11,7 +11,7 @@ class SSLView(APIView):
 
     def get(self):
         '''
-            获取所有的ssl type和ssls
+            获取所有的ssl type和ssls 后面调整为根据用户权限来返回具体证书
         '''
         # ssl_id = request.values.get('id')
         # if ssl_id:
@@ -23,3 +23,8 @@ class SSLView(APIView):
         # 这里证书字符串和证书私钥也一起提交给了前端，证书太多可能会导致前端数据加载太慢，卡顿的现象出现,后面再优化
         print({'ssl_types': ssl_types, 'ssls': [x.to_dict() for x in ssls], 'perms': perms})
         return self.jsonify({'ssl_types': ssl_types, 'ssls': [x.to_dict() for x in ssls], 'perms': perms})
+
+    def post(self):
+        '''
+
+        '''
