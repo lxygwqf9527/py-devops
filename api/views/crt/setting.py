@@ -8,6 +8,8 @@ class SSLSettingView(APIView):
     '''
         证书配置视图
     '''
+    url_prefix = '/setting'
+    
     def get(self):
         data = []
         for i in SSLSetting.query().all():
