@@ -12,7 +12,7 @@ class SSLSettingView(APIView):
 
     def get(self):
         data = []
-        for i in SSLSetting.query().filter().all():
+        for i in SSLSetting.query.all():
             if i.ssl_type:
                 i['ssl_type'] = i.ssl_type.key
             data.append(i)
