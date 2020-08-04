@@ -17,7 +17,8 @@ class SSL(Model):
     __tablename__ = 'ssls'
 
     name = db.Column(db.String(20),nullable=False)
-    ssl_type = db.Column(db.Integer, db.ForeignKey('ssl_type.id'))
+    ssl_type_id = db.Column(db.Integer, db.ForeignKey('ssl_type.id'))
+    ssl_type = db.relationship('SSLType', backref=db.backref('ssl_type'), lazy='subquery', foreign_keys=[ssl_type_id])
     cer = db.Column(db.Text)
     key = db.Column(db.Text)
 
