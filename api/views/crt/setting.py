@@ -23,3 +23,13 @@ class SSLSettingView(APIView):
     
     def post(self):
         print(request.values)
+
+class AcmeView(APIView):
+    url_prefix = '/setting/acme'
+
+    def get(self):
+        print(request.values)
+
+    
+    def post(self):
+        print(request.values)

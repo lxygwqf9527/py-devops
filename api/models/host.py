@@ -14,6 +14,7 @@ class Host(Model):
     port = db.Column(db.Integer)
     username = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
+    acme_install =db.Column(db.Boolean, default=False)
 
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
