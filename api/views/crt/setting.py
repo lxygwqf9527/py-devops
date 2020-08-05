@@ -20,3 +20,6 @@ class SSLSettingView(APIView):
             data.append(res)
         
         return self.jsonify(data)
+    
+    def post(self):
+        print(request.values)
