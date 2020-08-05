@@ -17,7 +17,7 @@ class HostView(APIView):
     '''
     # url_prefix = '/hosts'
 
-    def get(self, host_id):
+    def get(self):
         '''
             获取所有的zones和主机
         '''
