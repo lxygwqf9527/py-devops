@@ -17,14 +17,15 @@ class HostView(APIView):
     '''
     # url_prefix = '/hosts'
 
-    def get(self):
+    def get(self, host_id):
         '''
             获取所有的zones和主机
         '''
-        host_id = request.values.get('id')
+        host_id = request.values.get('id') or host_id
         if host_id:
             if not g.user.has_host_perm(host_id):
                 return self.jsonify(error='无权访问该主机')
+            return self.jsonify(host.query.filter(id=host_id))
         hosts = Host.query.filter(Host.deleted_at.is_(None)).all()
         zones = [i.zone for i in hosts if i.zone ]
         perms = [x.id for x in hosts] if g.user.is_supper else g.user.host_perms
