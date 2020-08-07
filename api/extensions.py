@@ -8,9 +8,9 @@ from flask_cors import CORS
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_socketio import SocketIO
 # from api.lib.utils import ESHandler
-# from api.lib.utils import RedisHandler
+from api.libs.utils import RedisHandler
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
@@ -18,8 +18,9 @@ migrate = Migrate()
 cache = Cache()
 celery = Celery()
 cors = CORS(supports_credentials=True)
-# rd = RedisHandler()
+rd = RedisHandler()
 # es = ESHandler()
+socketio = SocketIO()
 
 # flask-login
 login_manager = LoginManager()

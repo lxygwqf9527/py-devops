@@ -45,6 +45,7 @@ CACHE_REDIS_HOST = "192.168.17.128"
 CACHE_REDIS_PORT = 6379
 CACHE_KEY_PREFIX = "Devops:"
 CACHE_DEFAULT_TIMEOUT = 3000
+REDIS_MAX_CONN = "100"
 
 # # log
 LOG_PATH = './logs/app.log'
@@ -65,6 +66,7 @@ DEFAULT_MAIL_SENDER = ''
 CELERY_RESULT_BACKEND = "redis://192.168.17.128:6379/2"
 BROKER_URL = 'redis://192.168.17.128:6379/2'
 BROKER_VHOST = '/'
+REDIS_DB = 2
 
 BOOL_TRUE = ['true', 'TRUE', 'True', True, '1', 1, "Yes", "YES", "yes", 'Y', 'y']
 

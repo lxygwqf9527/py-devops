@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import request, g
+from flask import request
 
 from api.resource import APIView
 from api.models.ssl import SSL, SSLSetting
@@ -24,7 +24,7 @@ class SSLSettingView(APIView):
     def post(self):
         print(request.values)
 
-class AcmeView(APIView):
+class AcmeSettingView(APIView):
     url_prefix = '/setting/acme'
 
     def get(self):

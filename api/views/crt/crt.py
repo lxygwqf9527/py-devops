@@ -33,4 +33,8 @@ class SSLView(APIView):
     # def post(self):
     #     '''
 
-    #     '''
+    def patch(self):
+        '''
+        证书类别
+        '''
+        print(request.values,11111111111111111)

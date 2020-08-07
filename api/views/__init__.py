@@ -35,3 +35,5 @@ register_resources(os.path.join(HERE, "host"), host_rest)
 blueprint_ssl_v1 = Blueprint('ssl_api_v1', __name__, url_prefix='/api/v1/ssl')
 ssl_rest = Api(blueprint_ssl_v1)
 register_resources(os.path.join(HERE, "crt"), ssl_rest)
+
+# url_prefix = url_prefix = ("/ci/flush", "/ci/<int:ci_id>/flush") 其他用法
