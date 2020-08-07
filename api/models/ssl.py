@@ -2,8 +2,8 @@
 
 
 from api.extensions import db
-from api.libs.utils import Model
 from api.libs.utils import human_datetime
+from api.libs.database import Model
 
 class SSLType(Model):
     __tablename__ = 'ssl_type'

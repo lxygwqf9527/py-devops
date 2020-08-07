@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 
 from api.extensions import db
-from api.libs.utils import Model, human_datetime
+from api.libs.utils import human_datetime
+from api.libs.database import Model
 from api.libs.cache.notify import NotifyCache
 
 

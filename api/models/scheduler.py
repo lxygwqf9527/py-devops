@@ -3,8 +3,8 @@
 import json
 
 from api.extensions import db
-from api.libs.database import Model
 from api.libs.utils import human_datetime
+from api.libs.database import Model
 
 class TaskHistoryStatus(Model):
     __tablename__ = 'task_histories_status'
