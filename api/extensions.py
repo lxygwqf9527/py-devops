@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 # from api.lib.utils import ESHandler
-from api.libs.utils import RedisHandler
+from api.libs import RedisHandler
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
