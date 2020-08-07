@@ -4,7 +4,7 @@ from flask import request
 from sqlalchemy import and_
 import json
 
-from api.libs.decorator import human_date
+from api.libs.utils import human_date
 from api.resource import APIView
 from api.models import App, Host, Task, Detection, Alarm, DeployRequest, Deploy
 
