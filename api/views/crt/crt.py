@@ -38,3 +38,9 @@ class SSLView(APIView):
         证书类别
         '''
         print(request.values,11111111111111111)
+        
+        ssl = SSL.get_by(id=request.values.get('id'),to_dict=False)
+        if not ssl:
+            return self.jsonify(error="未找到指定主机")
+        
+        count = SSL.query.filter_by(ssl_type=ssl.ssl_type,to_dict=False).update(ssl_type=request.values.get('ssl_type'))
