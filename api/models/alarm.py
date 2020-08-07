@@ -2,8 +2,8 @@
 import json
 
 from api.extensions import db
-from api.libs import Model
-from api.libs import human_datetime
+from api.libs.utils import Model
+from api.libs.utils import human_datetime
 
 class AlarmStatus(Model):
     """

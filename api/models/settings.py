@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from api.extensions import db
-from api.libs import Model
+from api.libs.utils import Model
 
 class Setting(Model):
     __tablename__ = 'settings'
