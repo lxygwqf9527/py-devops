@@ -41,7 +41,8 @@ class SSLView(APIView):
             ssl = SSL.get_by(id=request.values.get('id'), to_dict=False, first=True)
             if not ssl:
                 return self.jsonify(error="未找到指定证书")
-            SSLType.get_by(id=ssl.ssl_type_id, to_dict=False, first=True).update(key=request.values.get("ssl_type"))
-            return self.jsonify(SSL.query.filter(ssl_type=request.values.get("ssl_type"), deleted_at=None).count())
+            ssl_type = SSLType.get_by(id=ssl.ssl_type_id, to_dict=False, first=True)
+            ssl_type.update(key=request.values.get("ssl_type"))
+            return self.jsonify(SSL.query.filter(ssl_type_id=ssl_type.id, deleted_at=None).count())
         else:
             return self.jsonify(error="不能跟原来的名字一样")
