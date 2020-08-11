@@ -10,8 +10,10 @@ from api.resource import APIView
 def acme_install_task(host_ids):
     hosts = Host.get_by_in_id(host_ids)
     private_key = AppSetting.get('private_key')
-    cli = SSH(hostname, port, username, private_key)
-    code, out = cli.exec_command('echo 1>>/opt/a')
+    for i in hosts:
+        cli = SSH(hosts.hostname, hosts.port, hosts.username, private_key)
+        code, out = cli.exec_command('echo 1>>/opt/a')
+        print(out,'===========')
 
 class AcmeInstall(APIView):
     url_prefix = ('/acme/install','/acme/status')
