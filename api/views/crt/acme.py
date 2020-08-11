@@ -6,7 +6,7 @@ from api.extensions import celery
 from api.libs.ssh import SSH
 from api.resource import APIView
 
-@celery.task
+@celery.task(name="ssl.acme.install", queue="acme_install")
 def acme_install_task(host_ids):
     hosts = Host.get_by_in_id(host_ids)
     print(hosts,'----------')
