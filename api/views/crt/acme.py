@@ -1,6 +1,7 @@
 from flask import request
 
 from flask import current_app
+from autoapp import app
 from api.models import Host
 from api.extensions import celery
 from api.libs.ssh import SSH
@@ -8,7 +9,7 @@ from api.resource import APIView
 
 @celery.task
 def acme_install_task(host_ids):
-    with current_app.app_context():
+    with app.app_context():
         hosts = Host.get_by_in_id(host_ids)
         print(hosts,'----------')
 
