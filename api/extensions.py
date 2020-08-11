@@ -11,6 +11,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 import redis
+from settings import CELERY_BROKER_URL
 # from api.lib.utils import ESHandler
 
 
@@ -64,7 +65,7 @@ bcrypt = Bcrypt()
 db = SQLAlchemy()
 migrate = Migrate()
 cache = Cache()
-celery = Celery(broker=app.config['CELERY_BROKER_URL'])
+celery = Celery(broker=CELERY_BROKER_URL)
 cors = CORS(supports_credentials=True)
 rd = RedisHandler()
 # es = ESHandler()
