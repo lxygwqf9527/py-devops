@@ -65,8 +65,8 @@ DEFAULT_MAIL_SENDER = ''
 # # queue
 REDIS_MAX_CONN = 100
 CELERY_RESULT_BACKEND = "redis://192.168.17.128:6379/2"
-BROKER_URL = 'redis://192.168.17.128:6379/2'
-BROKER_VHOST = '/'
+CELERY_BROKER_URL = 'redis://192.168.17.128:6379/2'
+# CELERY_BROKER_VHOST = '/'
 REDIS_DB = 2
 
 BOOL_TRUE = ['true', 'TRUE', 'True', True, '1', 1, "Yes", "YES", "yes", 'Y', 'y']
