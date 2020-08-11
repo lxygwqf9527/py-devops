@@ -8,9 +8,8 @@ from api.resource import APIView
 
 @celery.task
 def acme_install_task(host_ids):
-    with g.app.app_context():
-        hosts = Host.get_by_in_id(host_ids)
-        print(hosts,'----------')
+    hosts = Host.get_by_in_id(host_ids)
+    print(hosts,'----------')
 
 class AcmeInstall(APIView):
     url_prefix = ('/acme/install','/acme/status')
