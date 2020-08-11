@@ -24,7 +24,7 @@ class AcmeInstall(APIView):
     
     def post(self):
         
-        acme_install_task.apply_async(request.values.get('host_ids'))
+        acme_install_task.apply_async(args=(request.values.get('host_ids'),), queue="acme_install")
 
         return self.jsonify(error="")
 
