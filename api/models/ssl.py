@@ -5,11 +5,30 @@ from api.extensions import db
 from api.libs.utils import human_datetime
 from api.libs.database import Model
 
+class AcmeType(Model):
+    __tablename__ = 'acme_type'
+
+    name = db.Column(db.String(20),nullable=True)
+
+    def __str__(self):
+        return '<AcmeType %r>' % self.name
+
+class Acme(Model):
+    __tablename__ = 'acme'
+    
+    user = db.Column(db.String(50),nullable=True)
+    key  = db.Column(db.String(50),nullable=True)
+    acme_type_id = db.Column(db.Integer, db.ForeignKey('acme_type.id'))
+    acme_type = db.relationship('AcmeType', backref=db.backref('acme'), lazy='subquery', foreign_keys=[acme_type_id])
+
+    def __str__(self):
+        return '<Acme %r>' % self.user
+
 class SSLType(Model):
     __tablename__ = 'ssl_type'
 
-    key = db.Column(db.String(20),nullable=True)
-    value = db.Column(db.Text)
+    name = db.Column(db.String(20),nullable=True)
+    # value = db.Column(db.Text)
 
     def __str__(self):
         return '<SSLType %r>' % self.key
