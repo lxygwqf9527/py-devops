@@ -23,7 +23,7 @@ class AcmeSettingView(APIView):
         data = {}
         for d in AcmeType.query.all():
             res = Acme.get_by(acme_type_id=d.id, to_dict=True)
-            data={d.name: res}
+            data[d.name] = res
         
         return self.jsonify(data)
     
