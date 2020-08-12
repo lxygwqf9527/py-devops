@@ -2,7 +2,7 @@
 from flask import request
 
 from api.resource import APIView
-from api.models.ssl import SSL, SSLSetting
+from api.models.ssl import SSL, SSLSetting, Acme, AcmeType
 
 class SSLSettingView(APIView):
     '''
@@ -11,15 +11,7 @@ class SSLSettingView(APIView):
     url_prefix = '/setting'
 
     def get(self):
-        data = []
-        for i in SSLSetting.query.all():
-            res = i.to_dict()
-            if i.ssl_type:
-                res['ssl_type_name'] = i.ssl_type.name
-                res['ssl_type_value'] = i.ssl_type.value
-            data.append(res)
-        
-        return self.jsonify(data)
+        print(request.values)
     
     def post(self):
         print(request.values)
@@ -28,8 +20,12 @@ class AcmeSettingView(APIView):
     url_prefix = '/setting/acme'
 
     def get(self):
-        print(request.values)
-
+        data = []
+        for d in AcmeType.query.all():
+            res = Acme.get_by(acme_type_id=d.id, to_dict=True)
+            data.append={d.name: res}
+        
+        return self.jsonify(data)
     
     def post(self):
         print(request.values)

@@ -29,7 +29,7 @@ class HostView(APIView):
         hosts = Host.query.filter(Host.deleted_at.is_(None)).all()
         zones = [i.zone for i in hosts if i.zone ]
         perms = [x.id for x in hosts] if g.user.is_supper else g.user.host_perms
-        return self.jsonify({'zones': zones, 'hosts': [x.to_dict() for x in hosts], 'perms': perms})
+        return self.jsonify({'zones': list(set(zones)), 'hosts': [x.to_dict() for x in hosts], 'perms': perms})
     
     def post(self):
         '''
