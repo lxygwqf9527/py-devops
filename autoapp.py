@@ -6,7 +6,7 @@ from api.app import create_app
 from api.extensions import celery
 
 app = create_app()
-# app.app_context().push()
+app.app_context().push()
 @app.before_request
 def after_request():
     g.user = current_user
