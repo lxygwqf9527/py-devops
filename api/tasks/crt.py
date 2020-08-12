@@ -2,7 +2,8 @@
 from flask import current_app
 
 from api.extensions import celery
-
+from api.models.host import Host
+from api.models.settings import AppSetting
 
 @celery.task
 def acme_install_task(host_ids):
