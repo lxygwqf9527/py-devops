@@ -10,7 +10,7 @@ from api.config.Appsetting import AppSetting
 def acme_install_task(host_ids):
     hosts = Host.get_by_in_id(to_dict=False,ids=host_ids)
     private_key = AppSetting.get('private_key')
-    for i in hosts:
-        cli = SSH(hosts.hostname, hosts.port, hosts.username, private_key)
+    for host in hosts:
+        cli = SSH(host.hostname, host.port, host.username, private_key)
         code, out = cli.exec_command('echo 1>>/opt/a')
         print(out,'===========')
