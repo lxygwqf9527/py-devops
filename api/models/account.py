@@ -122,7 +122,7 @@ class User(Model):
             for m, v in perms.items():
                 for p, d in v.items():
                     for j, z in d.items():
-
+                        print(j, z)
                         data.extend(f'{m}.{p}.{j}.{x}' for x in z)
             return data
         else:
