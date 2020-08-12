@@ -121,7 +121,7 @@ class User(Model):
             perms = json.loads(self.role.page_perms)
             for m, v in perms.items():
                 for p, d in v.items():
-                    if type(d) = dict:
+                    if type(d) == dict:
                         for j, z in d.items():
                             data.extend(f'{m}.{p}.{j}.{x}' for x in z)
                             
