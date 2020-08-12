@@ -11,5 +11,5 @@ def acme_install_task(host_id):
     host = Host.get_by(to_dict=False,first=True,id=host_id)
     private_key = AppSetting.get('private_key')
     cli = SSH(host.hostname, host.port, host.username, private_key)
-    code, out = cli.exec_command('echo 1>>/opt/a')
+    code, out = cli.exec_command('echo 1 >> /opt/a')
     print(out,'===========')
