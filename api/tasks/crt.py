@@ -5,7 +5,7 @@ from api.extensions import celery
 from api.models.host import Host
 from api.libs.utils import AppSetting
 
-@celery.task(name="ssl.acme.install", queue="acme_install")
+@celery.task(name="ssl.acme.install", queue="devops_queue")
 def acme_install_task(host_ids):
     hosts = Host.get_by_in_id(host_ids)
     private_key = AppSetting.get('private_key')

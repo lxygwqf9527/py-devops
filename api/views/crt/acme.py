@@ -16,7 +16,7 @@ class AcmeInstall(APIView):
     
     def post(self):
         # acme_install_task.delay(request.values.get('host_ids'))
-        acme_install_task.apply_async(args=(request.values.get('host_ids'),), queue="acme_install")
+        acme_install_task.apply_async(args=(request.values.get('host_ids'),), queue="devops_queue")
         current_app.logger.info("acme install host_ids: %s" % request.values.get('host_ids'))
         return self.jsonify(error="")
 
