@@ -125,8 +125,7 @@ class User(Model):
                         for j, z in d.items():
                             data.extend(f'{m}.{p}.{j}.{x}' for x in z)
                     else:
-                        print(d,'========')
-                        data.extend(f'{m}.{p}.{d}' for x in d)
+                        data.extend(f'{m}.{p}.{x}' for x in d)
             return data
         else:
             return []
