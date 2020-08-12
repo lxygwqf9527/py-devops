@@ -121,11 +121,12 @@ class User(Model):
             perms = json.loads(self.role.page_perms)
             for m, v in perms.items():
                 for p, d in v.items():
-                    print(d,'==========')
-                    for j, z in d.items():
-                        
-                        print(j, z)
-                        data.extend(f'{m}.{p}.{j}.{x}' for x in z)
+                    if type(d) = dict:
+                        for j, z in d.items():
+                            data.extend(f'{m}.{p}.{j}.{x}' for x in z)
+                            
+                    else:
+                        data.extend(f'{m}.{p}.{d}' for x in d)
             return data
         else:
             return []
