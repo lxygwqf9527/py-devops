@@ -3,7 +3,7 @@ from flask import current_app
 
 from api.extensions import celery
 from api.models.host import Host
-from api.libs.utils import AppSetting
+from api.config.Appsetting import AppSetting
 
 @celery.task(name="ssl.acme.install", queue="devops_queue")
 def acme_install_task(host_ids):
