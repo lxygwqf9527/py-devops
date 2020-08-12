@@ -28,10 +28,9 @@ class SSLType(Model):
     __tablename__ = 'ssl_type'
 
     name = db.Column(db.String(20),nullable=True)
-    # value = db.Column(db.Text)
 
     def __str__(self):
-        return '<SSLType %r>' % self.key
+        return '<SSLType %r>' % self.name
     
 class SSL(Model):
     __tablename__ = 'ssls'
