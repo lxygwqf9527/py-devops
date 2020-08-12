@@ -12,4 +12,4 @@ def acme_install_task(host_ids):
     for i in hosts:
         cli = SSH(hosts.hostname, hosts.port, hosts.username, private_key)
         code, out = cli.exec_command('echo 1>>/opt/a')
-        print(out,'===========')
+        print(code, out,'===========')
