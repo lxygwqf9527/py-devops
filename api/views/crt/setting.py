@@ -29,7 +29,7 @@ class AcmeSettingView(APIView):
                 acme['type'] = d.name
                 acmes.append(acme)
 
-        return self.jsonify({'acme_type': acme_type, 'acmes': acmes})
+        return self.jsonify({'acme_types': acme_type, 'acmes': acmes})
     
     def post(self):
         print(request.values)
