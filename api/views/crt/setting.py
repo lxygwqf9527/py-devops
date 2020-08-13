@@ -18,7 +18,7 @@ class SSLSettingView(APIView):
 
 class AcmeSettingView(APIView):
     url_prefix = '/setting/acme'
-    {'type': 'cloudflare', 'user': 'aaa', 'key': 'aaaa', 'id': 1}
+    # {'type': 'cloudflare', 'user': 'aaa', 'key': 'aaaa', 'id': 1}
 
     def get(self):
         acme_type = []
