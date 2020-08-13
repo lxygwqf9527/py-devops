@@ -41,4 +41,4 @@ class AcmeSettingView(APIView):
         '''
         acme = Acme.get_by(id=request.values['id'])
         acme.update(**request.values)
-        return self.jsonify(data='')
+        return self.jsonify(error='')
