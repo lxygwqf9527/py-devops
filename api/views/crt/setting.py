@@ -20,12 +20,16 @@ class AcmeSettingView(APIView):
     url_prefix = '/setting/acme'
 
     def get(self):
-        data = {}
+        acme_type = []
+        acmes = []
         for d in AcmeType.query.all():
+            acme_type.append(d.name)
             res = Acme.get_by(acme_type_id=d.id, to_dict=True)
-            data[d.name] = res
-        
-        return self.jsonify(data)
+            for acme in res:
+                acme['type'] = d.name
+                acmes.append(acme)
+
+        return self.jsonify({'acme_type': acme_type, 'acmes': acmes})
     
     def post(self):
         print(request.values)
