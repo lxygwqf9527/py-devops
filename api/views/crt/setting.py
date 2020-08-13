@@ -18,6 +18,7 @@ class SSLSettingView(APIView):
 
 class AcmeSettingView(APIView):
     url_prefix = '/setting/acme'
+    {'type': 'cloudflare', 'user': 'aaa', 'key': 'aaaa', 'id': 1}
 
     def get(self):
         acme_type = []
@@ -33,3 +34,11 @@ class AcmeSettingView(APIView):
     
     def post(self):
         print(request.values)
+    
+    def patch(self):
+        '''
+            更新
+        '''
+        acme = Acme.get_by(id=request.values['id'])
+        acme.update(**request.values)
+        return self.jsonify(data='')
