@@ -55,7 +55,7 @@ class AcmeSettingView(APIView):
             Acme.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
         elif acme_type_qy:
             if Acme.query.filter(db.exists().where(and_(Acme.user==user,Acme.deleted_by.is_(None),Acme.acme_type_id==acme_type_qy.id))).scalar():
-            return self.jsonify(error='%s已存在的用户【%s】' % (acme_type,user))
+                return self.jsonify(error='%s已存在的用户【%s】' % (acme_type,user))
         else:
             request.values['created_by'] = g.user.id
             acme = Acme.create(**request.values)
