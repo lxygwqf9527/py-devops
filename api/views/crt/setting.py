@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import request
+import json
+import CloudFlare
 
 from api.resource import APIView
 from api.models.ssl import SSL, SSLSetting, Acme, AcmeType
@@ -15,6 +17,14 @@ class SSLSettingView(APIView):
     
     def post(self):
         print(request.values)
+
+def acme_cloudflare_test(user,key):
+    cf = CloudFlare.CloudFlare(email=user,token=key)
+    try:
+        zones = cf.zones.get(params={'per_page':1})
+        return True
+    except:
+        return False
 
 class AcmeSettingView(APIView):
     url_prefix = '/setting/acme'
@@ -33,12 +43,19 @@ class AcmeSettingView(APIView):
         return self.jsonify({'acme_types': acme_type, 'acmes': acmes})
     
     def post(self):
-        print(request.values)
+        id = request.values.get('id', None)
+        user = request.values.get('user', None)
+        key = request.values.get('key', None)
+        acme_type = request.values.get('acme_type', None)
+        if request.values.get('id'):
+            Acme.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
+        elif Acme.query.filter(db.exists().where(and_(Acme.user==user,Acme.deleted_by.is_(None)))).scalar():
+            return self.jsonify(error='已存在的主机名称【%s】' % name)
+        return self.jsonify(error='')
     
     def patch(self):
         '''
             更新
         '''
-        acme = Acme.get_by(id=request.values['id'], first=True, to_dict=False)
-        acme.update(**request.values)
+        
         return self.jsonify(error='')

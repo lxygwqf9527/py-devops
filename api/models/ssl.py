@@ -21,6 +21,11 @@ class Acme(Model):
     acme_type_id = db.Column(db.Integer, db.ForeignKey('acme_type.id'))
     acme_type = db.relationship('AcmeType', backref=db.backref('acme'), lazy='subquery', foreign_keys=[acme_type_id])
 
+    created_at = db.Column(db.String(20), default=human_datetime)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    deleted_at = db.Column(db.String(20), nullable=True)
+    deleted_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+
     def __str__(self):
         return '<Acme %r>' % self.user
 
