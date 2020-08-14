@@ -45,9 +45,7 @@ class HostView(APIView):
         if valid_ssh(hostname, port, username, password) is False:
             return self.jsonify('auth fail')
         if id:
-            print(request.values)
             host = Host.get_by(id=id, to_dict=False, first=True)
-            print(host)
             host.update(**request.values)
         elif Host.query.filter(db.exists().where(and_(Host.name==name,Host.deleted_by.is_(None)))).scalar():
             return self.jsonify(error='已存在的主机名称【%s】' % name)

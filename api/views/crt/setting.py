@@ -5,6 +5,7 @@ import CloudFlare
 
 from api.resource import APIView
 from api.models.ssl import SSL, SSLSetting, Acme, AcmeType
+from api.extensions import db
 
 class SSLSettingView(APIView):
     '''

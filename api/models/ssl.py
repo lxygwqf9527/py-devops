@@ -45,11 +45,12 @@ class SSL(Model):
     ssl_type = db.relationship('SSLType', backref=db.backref('ssl'), lazy='subquery', foreign_keys=[ssl_type_id])
     cer = db.Column(db.Text)
     key = db.Column(db.Text)
-
-    create_at = db.Column(db.String(20), default=human_datetime)
-    deleted_at = db.Column(db.String(20))
     expiration =  db.Column(db.String(20), nullable=True)
 
+    created_at = db.Column(db.String(20), default=human_datetime)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    deleted_at = db.Column(db.String(20), nullable=True)
+    deleted_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __str__(self):
         return '<SSL %r>' % self.name

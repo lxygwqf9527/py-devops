@@ -30,8 +30,11 @@ class SSLView(APIView):
             ssl_list.append(x)
         return self.jsonify({'ssl_types': ssl_types, 'ssls': ssl_list, 'perms': perms})
 
-    # def post(self):
-    #     '''
+    def post(self):
+        '''
+            更新
+        '''
+        print(request.values)
 
     def patch(self):
         '''
