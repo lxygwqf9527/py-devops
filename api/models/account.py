@@ -154,6 +154,13 @@ class User(Model):
         '''
         return json.loads(self.role.ssl_perms) if self.role and self.role.ssl_perms else []
 
+    @property
+    def acme_perms(self):
+        '''
+            返回acme权限
+        '''
+        return json.loads(self.role.acme_perms) if self.role and self.role.acme_perms else []
+
     def has_host_perm(self, host_id):
         '''
             返回用户主机权限

@@ -30,16 +30,17 @@ class AcmeSettingView(APIView):
     url_prefix = '/setting/acme'
 
     def get(self):
-        acme_type = []
+        acme_types = []
         acmes = []
         for d in AcmeType.query.all():
-            acme_type.append(d.name)
+            acme_types.append(d.name)
             res = Acme.get_by(acme_type_id=d.id, to_dict=True)
             for acme in res:
                 acme['type'] = d.name
                 acmes.append(acme)
 
-        return self.jsonify({'acme_types': acme_type, 'acmes': acmes})
+        perms = [x.id for x in acmes] if g.user.is_supper else g.user.acme_perms
+        return self.jsonify({'acme_types': acme_types, 'acmes': acmes, 'perms': perms})
     
     def post(self):
         id = request.values.get('id', None)
