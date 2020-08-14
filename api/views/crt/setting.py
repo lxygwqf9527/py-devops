@@ -4,6 +4,7 @@ import json
 import CloudFlare
 from sqlalchemy import and_
 
+from api.extensions import db
 from api.resource import APIView
 from api.models.ssl import SSL, SSLSetting, Acme, AcmeType
 
