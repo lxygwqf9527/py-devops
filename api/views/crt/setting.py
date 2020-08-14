@@ -2,10 +2,11 @@
 from flask import request, g
 import json
 import CloudFlare
+from sqlalchemy import and_
 
 from api.resource import APIView
 from api.models.ssl import SSL, SSLSetting, Acme, AcmeType
-from api.extensions import db
+
 
 class SSLSettingView(APIView):
     '''
@@ -22,7 +23,7 @@ class SSLSettingView(APIView):
 def acme_cloudflare_test(user,key):
     cf = CloudFlare.CloudFlare(email=user,token=key)
     try:
-        zones = cf.zones.get(params={'per_page':1})
+        cf.zones.get(params={'per_page':1})
         return True
     except:
         return False
