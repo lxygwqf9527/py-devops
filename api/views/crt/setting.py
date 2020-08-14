@@ -28,7 +28,6 @@ def acme_cloudflare_test(user,key):
 
 class AcmeSettingView(APIView):
     url_prefix = '/setting/acme'
-    # {'type': 'cloudflare', 'user': 'aaa', 'key': 'aaaa', 'id': 1}
 
     def get(self):
         acme_type = []
@@ -49,8 +48,13 @@ class AcmeSettingView(APIView):
         acme_type = request.values.get('acme_type', None)
         if request.values.get('id'):
             Acme.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
-        elif Acme.query.filter(db.exists().where(and_(Acme.user==user,Acme.deleted_by.is_(None)))).scalar():
-            return self.jsonify(error='已存在的主机名称【%s】' % name)
+        elif Acme.query.filter(db.exists().where(and_(Acme.user==user,Acme.deleted_by.is_(None),Acme.acme_type.name=acme_type))).scalar():
+            return self.jsonify(error='%s已存在的用户【%s】' % (acme_type,user))
+        else:
+            request.values['created_by'] = g.user.id
+            acme = Acme.create(**request.values)
+            if g.user.role:
+                g.user.role.add_acme_perm(acme.id)
         return self.jsonify(error='')
     
     def patch(self):

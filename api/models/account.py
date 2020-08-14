@@ -186,6 +186,7 @@ class Role(CRUDModel):
     deploy_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     host_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     ssl_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
+    acme_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
 
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -216,7 +217,25 @@ class Role(CRUDModel):
         perms.append(value)
         self.host_perms = json.dumps(perms)
         self.save()
-    
+        
+    def add_ssl_perm(self, value):
+        '''
+            添加主机权限列表
+        '''
+        perms = json.loads(self.ssl_perms) if self.ssl_perms else []
+        perms.append(value)
+        self.ssl_perms = json.dumps(perms)
+        self.save()
+
+    def add_acme_perm(self, value):
+        '''
+            添加主机权限列表
+        '''
+        perms = json.loads(self.acme_perms) if self.acme_perms else []
+        perms.append(value)
+        self.acme_perms = json.dumps(perms)
+        self.save()
+
     def users_count(self):
         return len(self.users)
 
