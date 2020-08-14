@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import request
+from flask import request, g
 import json
 import CloudFlare
 
