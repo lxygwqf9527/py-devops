@@ -49,10 +49,11 @@ class AcmeSettingView(APIView):
         id = request.values.get('id', None)
         user = request.values.get('user', None)
         key = request.values.get('key', None)
+        
         acme_type = request.values.get('acme_type', None)
         if request.values.get('id'):
             Acme.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
-        elif Acme.query.filter(db.exists().where(and_(Acme.user==user,Acme.deleted_by.is_(None),Acme.acme_type.name==acme_type))).scalar():
+        elif Acme.query.filter(db.exists().where(and_(Acme.user==user,Acme.deleted_by.is_(None),Acme.acme_type_id==AcmeType.get_by(name=acme_type,to_dict=False,first=True).name))).scalar():
             return self.jsonify(error='%s已存在的用户【%s】' % (acme_type,user))
         else:
             request.values['created_by'] = g.user.id
