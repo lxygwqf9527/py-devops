@@ -35,6 +35,7 @@ class SSLView(APIView):
             更新
         '''
         print(request.values)
+        return self.jsonify(error='')
 
     def patch(self):
         '''
@@ -49,3 +50,8 @@ class SSLView(APIView):
             return self.jsonify(SSL.query.filter_by(ssl_type_id=ssl_type.id, deleted_at=None).count())
         else:
             return self.jsonify(error="不能跟原来的名字一样")
+
+# class AcmeSSLView(APIView):
+#     '''
+#         acme
+#     '''
