@@ -13,3 +13,6 @@ def acme_install_task(host_id):
     cli = SSH(host.hostname, host.port, host.username, private_key)
     code, out = cli.exec_command('echo 1 >> /opt/a')
     print(out,'===========')
+
+@celery.task(name="ssl.acme.install", queue="devops_queue")
+def acme_install_task(domain,ssl_domain,acme_type,user):

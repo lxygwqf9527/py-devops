@@ -34,7 +34,10 @@ class SSLView(APIView):
         '''
             更新
         '''
-        print(request.values)
+        if request.values.get('acme_type',None):
+            
+        else:
+            print(request.values)
         return self.jsonify(error='')
 
     def patch(self):
