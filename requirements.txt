@@ -41,3 +41,5 @@ paramiko==2.6.0
 cffi==1.14.0
 bcrypt==3.1.7
 cloudflare==3.0.4
+
+acme.sh --issue  -d cqyytm.com  -d *.cqyytm.com --challenge-alias ahdraktea.com --dns dns_cf
