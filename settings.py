@@ -23,7 +23,7 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 ERROR_CODES = [400, 401, 403, 404, 405, 500, 502]
 
 # # database
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@192.168.190.128:3306/{db}?charset=utf8'.format(
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@192.168.190.128:3307/{db}?charset=utf8'.format(
     user='root',
     password='123456',
     db='ptdevops')
