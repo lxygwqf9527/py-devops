@@ -16,3 +16,4 @@ def acme_install_task(host_id):
 
 @celery.task(name="ssl.acme.install", queue="devops_queue")
 def acme_install_task(domain,ssl_domain,acme_type,user):
+    print(domain,ssl_domain,acme_type,user)
