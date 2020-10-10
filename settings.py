@@ -23,12 +23,12 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 ERROR_CODES = [400, 401, 403, 404, 405, 500, 502]
 
 # # database
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@192.168.17.128:3306/{db}?charset=utf8'.format(
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{user}:{password}@192.168.190.128:3306/{db}?charset=utf8'.format(
     user='root',
     password='123456',
     db='ptdevops')
 SQLALCHEMY_BINDS = {
-    "user": 'mysql+pymysql://{user}:{password}@192.168.17.128:3306/{db}?charset=utf8'.format(
+    "user": 'mysql+pymysql://{user}:{password}@192.168.190.128:3306/{db}?charset=utf8'.format(
     user='root',
     password='123456',
     db='ptdevops')
@@ -41,7 +41,7 @@ SQLALCHEMY_ENGINE_OPTIONS = {
 
 # # cache
 CACHE_TYPE = "redis"
-CACHE_REDIS_HOST = "192.168.17.128"
+CACHE_REDIS_HOST = "192.168.190.128"
 CACHE_REDIS_PORT = 6379
 CACHE_KEY_PREFIX = "Devops:"
 CACHE_DEFAULT_TIMEOUT = 3000
@@ -64,8 +64,8 @@ DEFAULT_MAIL_SENDER = ''
 
 # # queue
 REDIS_MAX_CONN = 100
-CELERY_RESULT_BACKEND = "redis://192.168.17.128:6379/2"
-CELERY_BROKER_URL = 'redis://192.168.17.128:6379/2'
+CELERY_RESULT_BACKEND = "redis://192.168.190.128:6379/2"
+CELERY_BROKER_URL = 'redis://192.168.190.128:6379/2'
 # CELERY_BROKER_VHOST = '/'
 REDIS_DB = 2
 
