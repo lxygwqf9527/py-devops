@@ -32,7 +32,6 @@ class RedisHandler(object):
                 db=config.get("REDIS_DB"))
             self.r = redis.Redis(connection_pool=pool)
         except Exception as e:
-            print(e,'---------------------')
             current_app.logger.warning(str(e))
             current_app.logger.error("init redis connection failed")
 
