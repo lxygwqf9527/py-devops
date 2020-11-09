@@ -35,10 +35,11 @@ class SSLView(APIView):
             更新,或者添加
         '''
         if request.values.get('acme_type',None):
-            '添加'
+            # 添加
             print(request.values,'添加')
         else:
             print(request.values,'更新')
+
         return self.jsonify(error='')
 
     def patch(self):
