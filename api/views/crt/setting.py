@@ -49,7 +49,7 @@ class AcmeSettingView(APIView):
         id = request.values.get('id', None)
         user = request.values.get('user', None)
         key = request.values.get('key', None)
-        acme_type = request.values.get('type', None)
+        acme_type = request.values.get('acme_type', None)
         acme_type_qy = AcmeType.get_by(name=acme_type,to_dict=False,first=True)
         if request.values.get('id'):
             Acme.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
