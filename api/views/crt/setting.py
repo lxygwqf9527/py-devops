@@ -58,6 +58,7 @@ class AcmeSettingView(APIView):
         else:
             request.values['created_by'] = g.user.id
             request.values['acme_type_id'] = acme_type_qy.id
+            request.values.pop('acme_type')
             acme = Acme.create(**request.values)
             if g.user.role:
                 g.user.role.add_acme_perm(acme.id)
