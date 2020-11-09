@@ -57,6 +57,7 @@ class AcmeSettingView(APIView):
             return self.jsonify(error='%s已存在的用户【%s】' % (acme_type,user))
         else:
             request.values['created_by'] = g.user.id
+            request.values['acme_type'] = acme_type_qy.id
             acme = Acme.create(**request.values)
             if g.user.role:
                 g.user.role.add_acme_perm(acme.id)
