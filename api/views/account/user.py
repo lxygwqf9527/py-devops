@@ -46,7 +46,7 @@ class NotifyView(APIView):
     """
         notify视图
     """
-    url_prefix = "/notify"
+    url_prefix = "/user/notify"
 
     def get(self):
         notifies = Notify.get_by(unread=True)
