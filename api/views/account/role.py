@@ -8,7 +8,6 @@ class RoleView(APIView):
     url_prefix = "/role"
 
     def get(self):
-        roles = Role.query.all()
-        roles = AttrDict(roles=roles)
+        roles = [i.to_dict() for i in Role.query.all()]
         print(roles)
         return self.jsonify(error="")
