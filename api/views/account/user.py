@@ -6,6 +6,8 @@ from flask_login import current_user
 
 from api.resource import APIView
 from api.libs.perm.crud import UserCRUD
+from api.models import Notify
+
 
 class GetUserInfoView(APIView):
     url_prefix = "/user/info"
@@ -40,5 +42,18 @@ class SelfView(APIView):
         
         return self.jsonify(error='')
         
-            
+class NotifyView(APIView):
+    """
+        notify视图
+    """
+    url_prefix = "/notify"
 
+    def get(self):
+        notifies = Notify.get_by(unread=True)
+        return self.jsonify(notifies)
+    
+    def patch(self):
+        for notify in Notify.get_by_in_id(ids=request.values['ids'],to_dict=False):
+            notify.update(unread=False)
+        
+        return self.jsonify(error='')
