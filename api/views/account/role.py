@@ -7,5 +7,5 @@ class RoleView(APIView):
     url_prefix = "/role"
 
     def get(self):
-        roles = Role.query().all()
+        roles = Role.query.all()
         print(roles)
