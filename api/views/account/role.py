@@ -9,3 +9,4 @@ class RoleView(APIView):
     def get(self):
         roles = Role.query.all()
         print(roles)
+        return self.jsonify(error="")
