@@ -8,7 +8,7 @@ from api.resource import APIView
 from api.libs.perm.crud import UserCRUD
 
 class GetUserInfoView(APIView):
-    url_prefix = "/info"
+    url_prefix = "/user/info"
 
     def get(self):
         # name = session.get("CAS_USERNAME") or current_user.nickname
@@ -21,7 +21,7 @@ class GetUserInfoView(APIView):
         return abort(404,'呵呵')
 
 class SelfView(APIView):
-    url_prefix = "/self"
+    url_prefix = "/user/self"
     
     def patch(self):
         new_password = request.values.get('new_password', None)
