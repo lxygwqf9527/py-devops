@@ -9,4 +9,4 @@ class RoleView(APIView):
 
     def get(self):
         roles = [i.to_dict() for i in Role.query.all()]
-        return self.jsonify(data="roles",error="")
+        return self.jsonify(roles)
