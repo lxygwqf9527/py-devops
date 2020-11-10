@@ -1,6 +1,10 @@
 # -*- coding:utf-8 -*-
 
-# class RoleView(APIView):
-#     url_prefix = "/role"
+from api.models.account import Role
 
-#     def get(self):
+class RoleView(APIView):
+    url_prefix = "/role"
+
+    def get(self):
+        roles = Role.query().all()
+        print(roles)

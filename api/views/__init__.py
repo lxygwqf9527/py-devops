@@ -10,12 +10,6 @@ from api.resource import register_resources
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 # account
-# blueprint_account = Blueprint('account_api', __name__, url_prefix='/api')
-# account_rest = Api(blueprint_account)
-# account_rest.add_resource(LoginView, LoginView.url_prefix)
-# account_rest.add_resource(LogoutView, LogoutView.url_prefix)
-
-# account
 blueprint_account_v1 = Blueprint('account_api_v1', __name__, url_prefix='/api/v1/account')
 account_rest = Api(blueprint_account_v1)
 register_resources(os.path.join(HERE, "account"), account_rest)
