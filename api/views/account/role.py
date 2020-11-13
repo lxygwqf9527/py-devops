@@ -27,4 +27,4 @@ class RoleView(APIView):
             # role.update(page_perms=json.dumps(page_perms))
             # Role.update(**request.values)
         role.save()
-        # return self.jsonify(error='')
+        return self.jsonify(error='')
