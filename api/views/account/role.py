@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+import json
+
 from api.models.account import Role
 from api.resource import APIView
 from api.libs.utils import AttrDict
@@ -13,4 +15,13 @@ class RoleView(APIView):
         return self.jsonify(roles)
     
     def patch(self):
-        print(request.values)
+        rid = request.values.get('id', None)
+        page_perms = request.values.get('page_perms', None)
+        deploy_perms = request.values.get('deploy_perms', None)
+        host_perms = request.values.get('host_perms', None)
+        role = Role.get_by(id=rid)
+        if not role:
+            return self.jsonify(error='未找到指定角色')
+        if  page_perms is not None:
+            role.update(page_perms=json.dumps(page_perms))
+        
