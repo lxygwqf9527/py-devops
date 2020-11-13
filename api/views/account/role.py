@@ -23,5 +23,5 @@ class RoleView(APIView):
         if not role:
             return self.jsonify(error='未找到指定角色')
         if  page_perms is not None:
-            role.update(page_perms=json.dumps(page_perms))
+            Role.update(request.values)
         
