@@ -19,7 +19,7 @@ class RoleView(APIView):
         page_perms = request.values.get('page_perms', None)
         deploy_perms = request.values.get('deploy_perms', None)
         host_perms = request.values.get('host_perms', None)
-        role = Role.get_by(id=rid,first=True)
+        role = Role.get_by(id=rid, first=True, to_dict=False)
         if not role:
             return self.jsonify(error='未找到指定角色')
         if  page_perms is not None:
