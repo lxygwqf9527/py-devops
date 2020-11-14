@@ -53,16 +53,21 @@ class DnsSettingView(APIView):
         acme_dns_type_qy = AcmeDnsType.get_by(name=acme_dns_type,to_dict=False,first=True)
         if request.values.get('id'):
             AcmeDns.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
+            return self.jsonify(error='')
         elif acme_dns_type_qy is not None and AcmeDns.query.filter(db.exists().where(and_(AcmeDns.user==user,AcmeDns.deleted_by.is_(None),AcmeDns.acme_dns_type_id==acme_dns_type_qy.id))).scalar():
             return self.jsonify(error='%s已存在的用户【%s】' % (acme_dns_type,user))
-        else:
-            request.values['created_by'] = g.user.id
-            request.values['acme_dns_type_id'] = acme_dns_type_qy.id
-            request.values.pop('acme_dns_type')
-            acmedns = AcmeDns.create(**request.values)
-            if g.user.role:
-                g.user.role.add_acme_dns_perm(acmedns.id)
+        elif acme_dns_type_qy is None and not AcmeDns.query.filter(db.exists().where(and_(AcmeDns.user==user,AcmeDns.deleted_by.is_(None),AcmeDns.acme_dns_type_id==acme_dns_type_qy.id))).scalar():
+            kwargs = {"name": acme_dns_type}
+            AcmeDnsType.create(**kwargs)
+
+        request.values['acme_dns_type_id'] = AcmeDnsType.get_by(name=acme_dns_type,to_dict=False,first=True)
+        request.values['created_by'] = g.user.id
+        request.values.pop('acme_dns_type')
+        acmedns = AcmeDns.create(**request.values)
+        if g.user.role:
+            g.user.role.add_acme_dns_perm(acmedns.id)
         return self.jsonify(error='')
+        
     
     def patch(self):
         '''
