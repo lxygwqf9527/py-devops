@@ -60,7 +60,7 @@ class DnsSettingView(APIView):
             kwargs = {"name": acme_dns_type}
             AcmeDnsType.create(**kwargs)
 
-        request.values['acme_dns_type_id'] = AcmeDnsType.get_by(name=acme_dns_type,to_dict=False,first=True)
+        request.values['acme_dns_type_id'] = AcmeDnsType.get_by(name=acme_dns_type,to_dict=False,first=True).id
         request.values['created_by'] = g.user.id
         request.values.pop('acme_dns_type')
         print(request.values,'===========')
