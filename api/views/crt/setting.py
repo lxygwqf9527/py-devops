@@ -63,6 +63,7 @@ class DnsSettingView(APIView):
         request.values['acme_dns_type_id'] = AcmeDnsType.get_by(name=acme_dns_type,to_dict=False,first=True)
         request.values['created_by'] = g.user.id
         request.values.pop('acme_dns_type')
+        print(request.values)
         acmedns = AcmeDns.create(**request.values)
         if g.user.role:
             g.user.role.add_acme_dns_perm(acmedns.id)
