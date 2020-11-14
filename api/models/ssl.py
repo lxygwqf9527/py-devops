@@ -5,21 +5,21 @@ from api.extensions import db
 from api.libs.utils import human_datetime
 from api.libs.database import Model
 
-class AcmeType(Model):
-    __tablename__ = 'acme_type'
+class AcmeDnsType(Model):
+    __tablename__ = 'acme_dns_type'
 
     name = db.Column(db.String(20),nullable=True)
 
     def __str__(self):
-        return '<AcmeType %r>' % self.name
+        return '<DnsType %r>' % self.name
 
-class Acme(Model):
-    __tablename__ = 'acme'
+class AcmeDns(Model):
+    __tablename__ = 'acme_dns'
     
     user = db.Column(db.String(50),nullable=True)
     key  = db.Column(db.String(50),nullable=True)
-    acme_type_id = db.Column(db.Integer, db.ForeignKey('acme_type.id'))
-    acme_type = db.relationship('AcmeType', backref=db.backref('acme'), lazy='subquery', foreign_keys=[acme_type_id])
+    acme_dns_type_id = db.Column(db.Integer, db.ForeignKey('acme_dns_type.id'))
+    acme_dns_type = db.relationship('AcmeDnsType', backref=db.backref('acme_dns'), lazy='subquery', foreign_keys=[acme_dns_type_id])
 
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -27,7 +27,7 @@ class Acme(Model):
     deleted_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __str__(self):
-        return '<Acme %r>' % self.user
+        return '<Dns %r>' % self.user
 
 class SSLType(Model):
     __tablename__ = 'ssl_type'

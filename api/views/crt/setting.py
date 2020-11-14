@@ -6,7 +6,7 @@ from sqlalchemy import and_
 
 from api.extensions import db
 from api.resource import APIView
-from api.models.ssl import SSL, SSLSetting, Acme, AcmeType
+from api.models.ssl import SSL, SSLSetting, AcmeDns, AcmeDnsType
 
 
 class SSLSettingView(APIView):
@@ -21,7 +21,7 @@ class SSLSettingView(APIView):
     def post(self):
         print(request.values)
 
-def acme_cloudflare_test(user,key):
+def dns_cloudflare_test(user,key):
     cf = CloudFlare.CloudFlare(email=user,token=key)
     try:
         cf.zones.get(params={'per_page':1})
@@ -29,39 +29,39 @@ def acme_cloudflare_test(user,key):
     except:
         return False
 
-class AcmeSettingView(APIView):
-    url_prefix = '/setting/acme'
+class DnsSettingView(APIView):
+    url_prefix = '/setting/acme/dns'
 
     def get(self):
-        acme_types = []
-        acmes = []
-        for d in AcmeType.query.all():
-            acme_types.append(d.name)
-            res = Acme.get_by(acme_type_id=d.id, to_dict=True)
-            for acme in res:
-                acme['type'] = d.name
-                acmes.append(acme)
+        acme_dns_types = []
+        acme_dnss = []
+        for d in DnsType.query.all():
+            dns_types.append(d.name)
+            res = Dns.get_by(dns_type_id=d.id, to_dict=True)
+            for dns in res:
+                dns['type'] = d.name
+                dnss.append(dns)
 
-        perms = [x.id for x in acmes] if g.user.is_supper else g.user.acme_perms
-        return self.jsonify({'acme_types': acme_types, 'acmes': acmes, 'perms': perms})
+        perms = [x.id for x in dnss] if g.user.is_supper else g.user.dns_perms
+        return self.jsonify({'acme_dns_types': acme_dns_types, 'acme_dnss': acme_dnss, 'perms': perms})
     
     def post(self):
         id = request.values.get('id', None)
         user = request.values.get('user', None)
         key = request.values.get('key', None)
-        acme_type = request.values.get('acme_type', None)
-        acme_type_qy = AcmeType.get_by(name=acme_type,to_dict=False,first=True)
+        acme_dns_type = request.values.get('acme_dns_type', None)
+        acme_dns_type_qy = AcmeDnsType.get_by(name=acme_dns_type,to_dict=False,first=True)
         if request.values.get('id'):
-            Acme.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
-        elif acme_type_qy is not None and Acme.query.filter(db.exists().where(and_(Acme.user==user,Acme.deleted_by.is_(None),Acme.acme_type_id==acme_type_qy.id))).scalar():
-            return self.jsonify(error='%s已存在的用户【%s】' % (acme_type,user))
+            AcmeDns.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
+        elif acme_dns_type_qy is not None and AcmeDns.query.filter(db.exists().where(and_(AcmeDns.user==user,AcmeDns.deleted_by.is_(None),AcmeDns.acme_dns_type_id==acme_dns_type_qy.id))).scalar():
+            return self.jsonify(error='%s已存在的用户【%s】' % (acme_dns_type,user))
         else:
             request.values['created_by'] = g.user.id
-            request.values['acme_type_id'] = acme_type_qy.id
-            request.values.pop('acme_type')
-            acme = Acme.create(**request.values)
+            request.values['acme_dns_type_id'] = acme_dns_type_qy.id
+            request.values.pop('acme_dns_type')
+            acmedns = AcmeDns.create(**request.values)
             if g.user.role:
-                g.user.role.add_acme_perm(acme.id)
+                g.user.role.add_acme_dns_perm(acmedns.id)
         return self.jsonify(error='')
     
     def patch(self):

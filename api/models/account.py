@@ -155,11 +155,11 @@ class User(Model):
         return json.loads(self.role.ssl_perms) if self.role and self.role.ssl_perms else []
 
     @property
-    def acme_perms(self):
+    def acme_dns_perms(self):
         '''
-            返回acme权限
+            返回acme_dns权限
         '''
-        return json.loads(self.role.acme_perms) if self.role and self.role.acme_perms else []
+        return json.loads(self.role.acme_dns_perms) if self.role and self.role.acme_perms else []
 
     def has_host_perm(self, host_id):
         '''
@@ -193,7 +193,7 @@ class Role(CRUDModel):
     deploy_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     host_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     ssl_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
-    acme_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
+    acme_dns_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
 
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -234,13 +234,13 @@ class Role(CRUDModel):
         self.ssl_perms = json.dumps(perms)
         self.save()
 
-    def add_acme_perm(self, value):
+    def add_acme_dns_perm(self, value):
         '''
             添加主机权限列表
         '''
-        perms = json.loads(self.acme_perms) if self.acme_perms else []
+        perms = json.loads(self.acme_dns_perms) if self.acme_dns_perms else []
         perms.append(value)
-        self.acme_perms = json.dumps(perms)
+        self.acme_dns_perms = json.dumps(perms)
         self.save()
 
     def users_count(self):
