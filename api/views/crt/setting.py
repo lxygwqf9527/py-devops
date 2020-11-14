@@ -37,12 +37,12 @@ class DnsSettingView(APIView):
         acme_dnss = []
         for d in AcmeDnsType.query.all():
             acme_dns_types.append(d.name)
-            res = AcmeDns.get_by(acme_dns_type_id=d.id, to_dict=False)
+            res = AcmeDns.get_by(acme_dns_type_id=d.id, to_dict=True)
             for dns in res:
                 dns['type'] = d.name
                 acme_dnss.append(dns)
 
-        perms = [x.id for x in acme_dnss] if g.user.is_supper else g.user.dns_perms
+        perms = [x['id'] for x in acme_dnss] if g.user.is_supper else g.user.dns_perms
         return self.jsonify({'acme_dns_types': acme_dns_types, 'acme_dnss': acme_dnss, 'perms': perms})
     
     def post(self):
