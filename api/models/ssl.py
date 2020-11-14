@@ -11,7 +11,7 @@ class AcmeDnsType(Model):
     name = db.Column(db.String(20),nullable=True)
 
     def __str__(self):
-        return '<DnsType %r>' % self.name
+        return '<AcmeDnsType %r>' % self.name
 
 class AcmeDns(Model):
     __tablename__ = 'acme_dns'
