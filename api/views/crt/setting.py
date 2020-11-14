@@ -37,7 +37,7 @@ class DnsSettingView(APIView):
         acme_dnss = []
         for d in AcmeDnsType.query.all():
             acme_dns_types.append(d.name)
-            res = AcmeDns.get_by(dns_type_id=d.id, to_dict=True)
+            res = AcmeDns.get_by(acme_dns_type_id=d.id, to_dict=True)
             for dns in res:
                 dns['type'] = d.name
                 acme_dnss.append(dns)
