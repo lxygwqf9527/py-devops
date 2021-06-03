@@ -51,7 +51,6 @@ REDIS_MAX_CONN = "100"
 LOG_PATH = './logs/app.log'
 LOG_LEVEL = 'DEBUG'
 
-
 # # mail
 MAIL_SERVER = ''
 MAIL_PORT = 25
