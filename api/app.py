@@ -102,7 +102,6 @@ def register_extensions(app):
     celery.conf.update(app.config)
     
 
-
 def register_blueprints(app):
     for item in getmembers(api.views):
         if item[0].startswith("blueprint") and isinstance(item[1], Blueprint):
