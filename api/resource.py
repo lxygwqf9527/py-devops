@@ -5,8 +5,7 @@ import sys
 from inspect import getmembers, isclass
 
 import six
-import json
-from flask import jsonify, Response, jsonify
+from flask import jsonify, Response
 from flask_restful import Resource
 from flask_sqlalchemy import BaseQuery
 

@@ -80,6 +80,7 @@ class User(Model):
     token_expired = db.Column(db.Integer, nullable=True)
     last_login = db.Column(db.String(20))
     last_ip = db.Column(db.String(50))
+    avatar = db.Column(db.String(24))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
 
     role = db.relationship('Role', backref=db.backref('users'), lazy='subquery', foreign_keys=[role_id])
@@ -183,7 +184,7 @@ class User(Model):
 
 class Role(CRUDModel):
     """
-        用户表
+        角色表
     """
     __tablename__ = "roles"
 

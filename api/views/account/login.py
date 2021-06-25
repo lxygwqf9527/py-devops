@@ -1,8 +1,5 @@
 # -*- coding:utf-8 -*-
 
-import datetime
-
-import jwt
 import uuid
 import time
 from flask import g
@@ -39,7 +36,6 @@ class LoginView(APIView):
         if not user:
             return abort(403, "User <{0}> does not exist".format(username))
         if not authenticated:
-            
             value = UserCache.get_count_error(username)
             if value >= 3:
                 if user and user.is_active:
