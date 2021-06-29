@@ -13,7 +13,7 @@ class GetUserInfoView(APIView):
     url_prefix = "/user/info"
 
     def get(self):
-        
+        # 返回个人信息
         # print(current_user)
         # name = session.get("CAS_USERNAME") or current_user.nickname
         # role = dict(roles=session.get("acl", {}).get("parentRoles", []))
@@ -23,9 +23,10 @@ class GetUserInfoView(APIView):
         # return self.jsonify(result=dict(name=name,
         #                                 role=role,
         #                                 avatar=avatar))
-        return self.jsonify({'is_supper': current_user.is_supper,
+        return self.jsonify({'username': current_user.username,
+                            'is_supper': current_user.is_supper,
                             'host_perms': [] if current_user.is_supper else current_user.host_perms,
-                            'permissions': [] if user.is_supper else user.page_perms
+                            'permissions': [] if current_user.is_supper else user.page_perms
                             })
 
 class SelfView(APIView):
