@@ -62,5 +62,5 @@ class NotifyView(APIView):
     def patch(self):
         for notify in Notify.get_by_in_id(ids=request.values['ids'],to_dict=False):
             notify.update(unread=False)
-        
+            
         return self.jsonify(error='')

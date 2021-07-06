@@ -195,6 +195,7 @@ class Role(CRUDModel):
     host_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     ssl_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     acme_dns_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
+    routers = db.Column(db.Text, nullable=True) # 
 
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
