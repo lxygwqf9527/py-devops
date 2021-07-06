@@ -26,8 +26,8 @@ class GetUserInfoView(APIView):
         return self.jsonify({'username': current_user.username,
                             'is_supper': current_user.is_supper,
                             'host_perms': [] if current_user.is_supper else current_user.host_perms,
-                            'permissions': [] if current_user.is_supper else user.page_perms,
-                            'routers': [] if current_user.is_supper else user.routers_perms
+                            'permissions': [] if current_user.is_supper else current_user.page_perms,
+                            'routers': [] if current_user.is_supper else current_user.routers_perms
                             })
 
 class SelfView(APIView):
