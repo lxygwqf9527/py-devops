@@ -27,7 +27,7 @@ class GetUserInfoView(APIView):
                             'is_supper': current_user.is_supper,
                             'host_perms': [] if current_user.is_supper else current_user.host_perms,
                             'permissions': [] if current_user.is_supper else current_user.page_perms,
-                            'routers': [] if current_user.is_supper else current_user.routers_perms.replace('\\n','').replace('\\r','').replace('\\','')
+                            'routers': [] if current_user.is_supper else current_user.routers_perms
                             })
 
 class SelfView(APIView):
