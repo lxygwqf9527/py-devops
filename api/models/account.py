@@ -160,8 +160,15 @@ class User(Model):
         '''
             返回acme_dns权限
         '''
-        return json.loads(self.role.acme_dns_perms) if self.role and self.role.acme_perms else []
+        return json.loads(self.role.acme_dns_perms) if self.role and self.role.acme_dns_perms else []
 
+    @property
+    def routers_perms(self):
+        '''
+        返回routers
+        '''
+        return json.loads(self.role.routers) if self.role and self.role.routers else []
+        
     def has_host_perm(self, host_id):
         '''
             返回用户主机权限
