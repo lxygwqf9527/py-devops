@@ -167,7 +167,7 @@ class User(Model):
         '''
         返回routers
         '''
-        return json.loads(self.role.routers) if self.role and self.role.routers else []
+        return json.dumps(self.role.routers) if self.role and self.role.routers else []
         
     def has_host_perm(self, host_id):
         '''
