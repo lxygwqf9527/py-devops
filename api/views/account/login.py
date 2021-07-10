@@ -69,11 +69,8 @@ class LoginView(APIView):
         login_user(user)
         return self.jsonify({
             "access_token" :  user.access_token,
-            "nickname" : user.nickname,
-            "is_supper" : user.is_supper,
-            "has_real_ip" : True if x_real_ip else False,
-            'host_perms': [] if user.is_supper else user.host_perms,
-            "permissions" : [] if user.is_supper else user.page_perms})
+            "nickname" : user.nickname
+            })
 
 class LogoutView(APIView):
     url_prefix = "/logout"
