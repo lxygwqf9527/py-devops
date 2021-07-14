@@ -112,24 +112,24 @@ class User(Model):
             return False
         return self.password == password
 
-    @property
-    def page_perms(self):
-        '''
-            前端页面权限
-        '''
-        if self.role and self.role.page_perms:
-            data = []
-            perms = json.loads(self.role.page_perms)
-            for m, v in perms.items():
-                for p, d in v.items():
-                    if type(d) == dict:
-                        for j, z in d.items():
-                            data.extend(f'{m}.{p}.{j}.{x}' for x in z)
-                    else:
-                        data.extend(f'{m}.{p}.{x}' for x in d)
-            return data
-        else:
-            return []
+    # @property
+    # def page_perms(self):
+    #     '''
+    #         前端页面权限
+    #     '''
+    #     if self.role and self.role.page_perms:
+    #         data = []
+    #         perms = json.loads(self.role.page_perms)
+    #         for m, v in perms.items():
+    #             for p, d in v.items():
+    #                 if type(d) == dict:
+    #                     for j, z in d.items():
+    #                         data.extend(f'{m}.{p}.{j}.{x}' for x in z)
+    #                 else:
+    #                     data.extend(f'{m}.{p}.{x}' for x in d)
+    #         return data
+    #     else:
+    #         return []
 
     @property
     def deploy_perms(self):
@@ -197,7 +197,7 @@ class Role(CRUDModel):
 
     name = db.Column(db.String(50))
     desc = db.Column(db.String(255), nullable=True)
-    page_perms = db.Column(db.Text, nullable=True)  # 格式为{"home":{"home":["view"]}} # 第一个home为一级菜单，第二个home为二级菜单，["views"]为三级菜单
+    # page_perms = db.Column(db.Text, nullable=True)  # 格式为{"home":{"home":["view"]}} # 第一个home为一级菜单，第二个home为二级菜单，["views"]为三级菜单
     deploy_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     host_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
     ssl_perms = db.Column(db.Text, nullable=True) # [1,2,3,4] id
@@ -209,7 +209,7 @@ class Role(CRUDModel):
 
     def to_dict(self, *args, **kwargs):
         tmp = super().to_dict(*args, **kwargs)
-        tmp['page_perms'] = json.loads(self.page_perms) if self.page_perms else None
+        # tmp['page_perms'] = json.loads(self.page_perms) if self.page_perms else None
         tmp['deploy_perms'] = json.loads(self.deploy_perms) if self.deploy_perms else None
         tmp['host_perms'] = json.loads(self.host_perms) if self.host_perms else None
         tmp['ssl_perms'] = json.loads(self.ssl_perms) if self.ssl_perms else None
