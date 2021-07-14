@@ -36,6 +36,14 @@ class UserQuery(BaseQuery):
             authenticated = False
             
         return user, authenticated
+    
+    def get_by_access_token(self, token):
+        '''
+            根据access_token查询
+        '''
+        user = self.filter(User.access_token == token).filter(User.deleted_by.is_(None)).first()
+        
+        return user
 
     def get_by_username(self, username):
         '''

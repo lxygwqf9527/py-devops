@@ -1,12 +1,12 @@
 # -*- coding:utf-8 -*-
 
 from flask import g
-from flask import request, abort, session
-from flask_login import current_user
+from flask import request
 
 from api.resource import APIView
 from api.libs.perm.crud import UserCRUD
 from api.models import Notify
+from api.models.account import User
 
 
 class GetUserInfoView(APIView):
@@ -14,10 +14,12 @@ class GetUserInfoView(APIView):
 
     def get(self):
         # 返回个人信息
-        return self.jsonify({'username': current_user.username,
-                            'is_supper': current_user.is_supper,
-                            'host_perms': [] if current_user.is_supper else current_user.host_perms,
-                            'routers': [] if current_user.is_supper else current_user.routers_perms
+        access_token = request.headers.get('x-token')
+        user = User.query.get_by_access_token(access_token)
+        return self.jsonify({'username': user.username,
+                            'is_supper': user.is_supper,
+                            'host_perms': [] if user.is_supper else user.host_perms,
+                            'routers': [] if user.is_supper else user.routers_perms
                             })
 
 class SelfView(APIView):
