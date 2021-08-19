@@ -71,7 +71,7 @@ def auth_required(func):
         if _auth_with_session() or _auth_with_token():
             return func(*args, **kwargs)
         # 再判断session or key or token or ip_white_list，满足一样即可
-        abort(401)
+        abort(401,'认证未通过')
 
     return wrapper
 
