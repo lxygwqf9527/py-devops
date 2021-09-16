@@ -7,7 +7,7 @@ from api.resource import APIView
 
 class Monitor(APIView):
 
-    url_prefix = "/monitor"
+    # url_prefix = "/monitor"
 
     def get(self):
         detections = Detection.query.all()
