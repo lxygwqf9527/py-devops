@@ -2,12 +2,10 @@
 
 import uuid
 import time
-from flask import g
 from flask import abort
-from flask import current_app
 from flask import request
 from flask import session
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user
 
 from api.models import User, Role
 from api.resource import APIView
