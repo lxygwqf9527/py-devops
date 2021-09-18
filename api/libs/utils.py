@@ -45,28 +45,13 @@ class DateTimeEncoder(json.JSONEncoder):
 
         return json.JSONEncoder.default(self, o)
 
-
-# class AppSetting:
-#     keys = ('public_key', 'private_key', 'mail_service', 'api_key', 'spug_key', 'ldap_service')
-
-#     @classmethod
-#     @lru_cache(maxsize=64)
-#     def get(cls, key):
-#         info = Setting.objects.filter(key=key).first()
-#         if not info:
-#             raise KeyError(f'no such key for {key!r}')
-#         return info.value
-
-#     @classmethod
-#     def get_default(cls, key, default=None):
-#         info = Setting.objects.filter(key=key).first()
-#         if not info:
-#             return default
-#         return info.value
-
-#     @classmethod
-#     def set(cls, key, value, desc=None):
-#         if key in cls.keys:
-#             Setting.objects.update_or_create(key=key, defaults={'value': value, 'desc': desc})
-#         else:
-#             raise KeyError('invalid key')
+# 解析时间类型的数据
+def parse_time(value):
+    if isinstance(value, datetime):
+        return value
+    if isinstance(value, str):
+        if len(value) == 10:
+            return datetime.strptime(value, '%Y-%m-%d')
+        elif len(value) == 19:
+            return datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
+    raise TypeError('Expect a datetime.datetime value')

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
-# from flask import request
+from flask import request
 from sqlalchemy import and_
 import json
 
-from api.libs.utils import human_date
+from api.libs.utils import human_date, parse_time
 from api.resource import APIView
 from api.models import App, Host, Task, Detection, Alarm, DeployRequest, Deploy
 
@@ -41,15 +41,18 @@ class GetAlarm(APIView):
         data = [{'date': k, 'value': v} for k, v in data.items()]
         return self.jsonify(data)
 
-class GetRequest(APIView):
+class Request(APIView):
     '''
         deploy发布展示
     '''
     url_prefix = '/request'
 
     def get(self):
+        duration = request.values.get('duration')
+        s_date = duration[0]
+        e_date = (parse_time(duration[1]) + timedelta(days=1)).strftime('%Y-%m-%d')
         data = { x.id: {'name': x.name, 'count': 0 } for x in App.query.all() }
-        for req in DeployRequest.query.filter(DeployRequest.create_at.__gt__(human_date())):
+        for req in DeployRequest.query.filter(DeployRequest.create_at.__gt__(s_date),DeployRequest.create_at.__lt__(e_date)):
             data[req.deploy.app_id]['count'] += 1
         data = sorted(data.values(), key=lambda x: x['count'], reverse=True)[:5]
         return self.jsonify(data)
