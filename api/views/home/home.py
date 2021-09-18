@@ -47,7 +47,7 @@ class Request(APIView):
     '''
     url_prefix = '/request'
 
-    def get(self):
+    def post(self):
         duration = request.values.get('duration')
         s_date = duration[0]
         e_date = (parse_time(duration[1]) + timedelta(days=1)).strftime('%Y-%m-%d')
