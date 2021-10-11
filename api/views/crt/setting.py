@@ -54,7 +54,7 @@ class DnsSettingView(APIView):
         if request.values.get('id'):
             AcmeDns.get_by(id=request.values['id'], first=True, to_dict=False).update(**request.values)
             return self.jsonify(error='')
-        elif acme_dns_type_qy is not None and AcmeDns.query.filter(db.exists().where(and_(AcmeDns.user==user,AcmeDns.deleted_by.is_(None),AcmeDns.acme_dns_type_id==acme_dns_type_qy.id))).scalar():
+        elif acme_dns_type_qy is not None and AcmeDns.query.(db.exists().where(and_(AcmeDns.user==user,AcmeDns.deleted_by.is_(None),AcmeDns.acme_dns_type_id==acme_dns_type_qy.id))).scalar():
             return self.jsonify(error='%s已存在的用户【%s】' % (acme_dns_type,user))
         elif acme_dns_type_qy is None:
             kwargs = {"name": acme_dns_type}

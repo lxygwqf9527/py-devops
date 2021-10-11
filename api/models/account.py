@@ -3,8 +3,8 @@
 import copy
 import hashlib
 import json
-import time
-from datetime import datetime
+# import time
+# from datetime import datetime
 
 from flask import current_app
 from flask_sqlalchemy import BaseQuery
@@ -12,9 +12,6 @@ from flask_sqlalchemy import BaseQuery
 from api.extensions import db
 from api.libs.database import Model, CRUDModel
 from api.libs.utils import human_datetime
-
-
-
 
 class UserQuery(BaseQuery):
     """
@@ -90,10 +87,8 @@ class User(Model):
     last_ip = db.Column(db.String(50))
     avatar = db.Column(db.String(24))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=True)
-
     role = db.relationship('Role', backref=db.backref('users'), lazy='subquery', foreign_keys=[role_id])
-    
-    
+
     created_at = db.Column(db.String(20), default=human_datetime)
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     deleted_at = db.Column(db.String(20), nullable=True)
@@ -265,3 +260,11 @@ class Role(CRUDModel):
 
     def __str__(self):
         return '<Role %r>' % self.name
+
+class History(Model):
+    __tablename__ = 'login_histories'
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
+    user = db.relationship('User', backref=db.backref('login_histories'), cascade="all,delete", lazy='subquery', foreign_keys=[user_id])
+    ip = db.Column(db.String(50))
+    created_at = db.Column(db.String(20), human_datetime)

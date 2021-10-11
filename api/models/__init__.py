@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*- 
 
-from .account import User, Role
+from .account import User, Role, History
 from .notify import Notify
 from .app import App, Deploy, DeployExtends, DeployExtend1, DeployExtend2
 from .config import Environment, Service, Config, ConfigHistory, ConfigType, ConfigHistoryAction

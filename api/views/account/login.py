@@ -7,7 +7,7 @@ from flask import request
 from flask import session
 from flask_login import login_user, logout_user
 
-from api.models import User, Role
+from api.models import User, Role, History
 from api.resource import APIView
 from api.libs.utils import human_datetime
 from api.libs.decorator import  args_required
@@ -56,20 +56,25 @@ class LoginView(APIView):
                               username=user.username,
                               nickname=user.nickname,
                               role=role)
+
+        # cache删除登录错误的计数
         UserCache.del_count_error(user.username)
         token_isvalid = user.access_token and len(user.access_token) == 32 and user.token_expired >= time.time()
         access_token = user.access_token if token_isvalid else uuid.uuid4().hex
         token_expired = time.time() + 8 * 60 * 60
         last_login = human_datetime()
         last_ip = x_real_ip
-        UserCRUD.update(user.id,access_token=access_token,token_expired=token_expired,
-                                last_login=last_login,last_ip=last_ip)
+        # 更新用户信息
+        UserCRUD.update(user.id, access_token=access_token, token_expired=token_expired,
+                                last_login=last_login, last_ip=last_ip)
         login_user(user)
+        # 登录记录
+        History.create(user=user, ip=x_real_ip)
         return self.jsonify({
             "user": {"nickname": user.nickname},
             "access_token" :  user.access_token,
             'expireAt': user.token_expired
-            })
+        })
 
 class LogoutView(APIView):
     url_prefix = "/logout"
