@@ -15,4 +15,5 @@ class HistoryView(APIView):
                 'ip': item.ip,
                 'created_at': item.created_at.split('-', 1)[1],
             })
-    return self.jsonify(data='histories')
+
+        return self.jsonify(data='histories')
