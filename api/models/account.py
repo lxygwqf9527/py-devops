@@ -267,4 +267,4 @@ class History(Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     user = db.relationship('User', backref=db.backref('login_histories'), cascade="all,delete", lazy='subquery', foreign_keys=[user_id])
     ip = db.Column(db.String(50))
-    created_at = db.Column(db.String(20), human_datetime)
+    created_at = db.Column(db.String(20), default=human_datetime)
